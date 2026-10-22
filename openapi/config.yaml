@@ -1,0 +1,11 @@
+# Options of the OpenAPI Generator "kotlin" generator for the API client of core:network (docs/02 §4.4).
+# Packages, input and output are set in core/network/build.gradle.kts.
+library: jvm-retrofit2
+serializationLibrary: kotlinx_serialization
+dateLibrary: java8
+useCoroutines: "true"
+enumPropertyNaming: UPPERCASE
+omitGradleWrapper: "true"
+omitGradlePluginVersions: "true"
+sortParamsByRequiredFlag: "true"
+sortModelPropertiesByRequiredFlag: "true"

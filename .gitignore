@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+**/build/
+!build-logic/**/src/**/build/
+.kotlin/
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing: only the shared debug keystore is committed
+*.jks
+*.keystore
+!app/debug.keystore
+
+# Firebase config is committed per flavor once the project exists; nothing else from the console
+/app/src/*/google-services.json.example
+
+# OS
+.DS_Store
+Thumbs.db

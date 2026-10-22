@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The brand accent, used by the launcher icon and the splash screen; the Compose theme has its own copy -->
+    <color name="cobalt">#0D52A8</color>
+</resources>

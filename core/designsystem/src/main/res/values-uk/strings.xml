@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_designsystem_gallery_title">Дизайн-система</string>
+    <string name="core_designsystem_gallery_colors">Кольори</string>
+    <string name="core_designsystem_gallery_typography">Типографіка</string>
+    <string name="core_designsystem_gallery_palette">Палітра</string>
+    <string name="core_designsystem_gallery_components">Компоненти</string>
+    <string name="core_designsystem_gallery_icons">Іконки</string>
+    <string name="core_designsystem_gallery_button">Кнопка</string>
+    <string name="core_designsystem_gallery_chip">Чип</string>
+    <string name="core_designsystem_gallery_card_title">Заголовок картки</string>
+    <string name="core_designsystem_gallery_card_body">Картки пласкі, з тонкою рамкою, як на вебі.</string>
+</resources>

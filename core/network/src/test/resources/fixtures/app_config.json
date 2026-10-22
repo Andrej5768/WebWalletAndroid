@@ -1,0 +1,13 @@
+{
+  "android": {
+    "minSupportedVersionCode": 1,
+    "latestVersionCode": 1,
+    "storeUrl": "https://play.google.com/store/apps/details?id=org.andrewdev.webwallet"
+  },
+  "features": {
+    "googleSignIn": true,
+    "marketSearch": true,
+    "telegram": true,
+    "push": false
+  }
+}

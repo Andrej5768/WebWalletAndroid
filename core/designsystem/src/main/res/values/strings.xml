@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_designsystem_gallery_title">Design system</string>
+    <string name="core_designsystem_gallery_colors">Colours</string>
+    <string name="core_designsystem_gallery_typography">Typography</string>
+    <string name="core_designsystem_gallery_palette">Palette</string>
+    <string name="core_designsystem_gallery_components">Components</string>
+    <string name="core_designsystem_gallery_icons">Icons</string>
+    <string name="core_designsystem_gallery_button">Button</string>
+    <string name="core_designsystem_gallery_chip">Chip</string>
+    <string name="core_designsystem_gallery_card_title">Card title</string>
+    <string name="core_designsystem_gallery_card_body">Cards are flat with a thin border, like on the web.</string>
+</resources>

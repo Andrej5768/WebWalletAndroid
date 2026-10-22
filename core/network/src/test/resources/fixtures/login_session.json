@@ -1,0 +1,7 @@
+{
+  "accessToken": "a-1",
+  "tokenType": "Bearer",
+  "expiresIn": 900,
+  "twoFactorChallenge": null,
+  "refreshToken": "r-1"
+}
