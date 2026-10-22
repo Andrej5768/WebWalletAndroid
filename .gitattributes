@@ -1,0 +1,9 @@
+# Line endings are LF in the repository whatever the platform; CI runs on Linux
+* text=auto eol=lf
+*.bat text eol=crlf
+
+# Binaries
+*.ttf binary
+*.png binary
+*.jar binary
+*.keystore binary
