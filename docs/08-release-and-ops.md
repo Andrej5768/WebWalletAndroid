@@ -26,6 +26,11 @@ mode, resource shrinking, no logging). Flavors × types = 4 variants; CI builds 
 
 - Play App Signing. The upload key lives only in GitHub Actions secrets (`UPLOAD_KEYSTORE_B64`,
   `UPLOAD_KEYSTORE_PASSWORD`, `UPLOAD_KEY_ALIAS`, `UPLOAD_KEY_PASSWORD`); never in the repo.
+  Gradle reads it from the properties `uploadKeystore`, `uploadKeystorePassword`, `uploadKeyAlias`,
+  `uploadKeyPassword` (`~/.gradle/gradle.properties` locally, `ORG_GRADLE_PROJECT_*` env in CI)
+  and signs `release` with it; without them `release` is unsigned.
+  Upload key SHA-256: `A4:4B:29:0B:BB:A9:57:B3:D1:ED:3A:6A:7D:46:F2:6D:F7:43:90:F5:6F:4F:43:C9:29:BC:FC:73:F8:D1:4F:7A`;
+  the Play App Signing key fingerprint is taken from Play Console → App integrity once the app exists.
 - Debug builds use a committed, shared `debug.keystore` so every machine and CI have the same
   SHA-1/SHA-256 for App Links and the Google Android OAuth client.
 - SHA-256 fingerprints needed in: `assetlinks.json` (B7), Firebase console, Google Cloud OAuth

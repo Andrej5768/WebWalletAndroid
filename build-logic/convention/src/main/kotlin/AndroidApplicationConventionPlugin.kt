@@ -25,6 +25,17 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         keyAlias = "androiddebugkey"
                         keyPassword = "android"
                     }
+                    // Play App Signing upload key from the Gradle properties uploadKeystore, uploadKeystorePassword,
+                    // uploadKeyAlias and uploadKeyPassword: ~/.gradle/gradle.properties locally, ORG_GRADLE_PROJECT_*
+                    // from the repository secrets in CI. Without them release builds stay unsigned (docs/08 §3).
+                    providers.gradleProperty("uploadKeystore").orNull?.let { keystore ->
+                        create("upload") {
+                            storeFile = file(keystore)
+                            storePassword = providers.gradleProperty("uploadKeystorePassword").get()
+                            keyAlias = providers.gradleProperty("uploadKeyAlias").getOrElse("upload")
+                            keyPassword = providers.gradleProperty("uploadKeyPassword").get()
+                        }
+                    }
                 }
 
                 buildTypes {
@@ -39,6 +50,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                             getDefaultProguardFile("proguard-android-optimize.txt"),
                             "proguard-rules.pro",
                         )
+                        signingConfig = signingConfigs.findByName("upload")
                     }
                 }
 
