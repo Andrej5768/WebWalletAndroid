@@ -39,9 +39,10 @@ The `dev` flavor (`org.andrewdev.webwallet.dev`, "WebWallet Dev") talks to `apiB
 The `prod` flavor talks to `https://wallet.andrew-dev.org`.
 
 Firebase (Crashlytics, Analytics, Cloud Messaging) is wired but off: the Google Services plugins apply only once
-`app/src/{dev,prod}/google-services.json` exist, and telemetry collects nothing until the user consents in the app.
-Set up the Firebase project as described in [docs/08-release-and-ops.md](docs/08-release-and-ops.md) §6 and commit
-the two files.
+`app/google-services.json` exists, and telemetry collects nothing until the user consents in the app. The file is
+not committed: download it from the Firebase console (it must list both packages, `org.andrewdev.webwallet` and
+`org.andrewdev.webwallet.dev`) as described in [docs/08-release-and-ops.md](docs/08-release-and-ops.md) §6. CI writes
+it from the `GOOGLE_SERVICES_JSON` repository secret.
 
 ## Project layout
 

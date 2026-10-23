@@ -84,8 +84,10 @@ the backend. Dependabot/Renovate weekly for the version catalog.
 - Crashlytics custom keys: `screen`, `milestone_build`, `flavor`; never user ids or amounts.
   Non-fatal logging for `ApiError.Unexpected` with status and path (no body).
 - Mapping files uploaded by the Crashlytics Gradle plugin in `release.yml`.
-- Firebase config files `google-services.json` are committed per flavor (they contain no
-  secrets); Firebase API key restricted to the Android package + SHA in the console.
+- Firebase config `app/google-services.json` (one file with clients for both packages,
+  `org.andrewdev.webwallet` and `org.andrewdev.webwallet.dev`) is ignored by Git: downloaded from
+  the console locally, written from the `GOOGLE_SERVICES_JSON` repository secret in CI. Firebase
+  API key restricted to the Android packages + SHA in the console.
 
 ## 7. Backend / infrastructure touchpoints
 

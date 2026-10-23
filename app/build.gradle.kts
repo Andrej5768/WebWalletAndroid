@@ -38,9 +38,10 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
 
-// The Firebase plugins need google-services.json, which exists only once the Firebase project is set up
-// (docs/08 §6). Until then the app builds without them, so that a fresh checkout and CI stay green.
-val hasGoogleServices = listOf("dev", "prod").any { file("src/$it/google-services.json").exists() }
+// The Firebase plugins need app/google-services.json, which is not committed: locally it is downloaded from the
+// Firebase console, in CI it is written from the GOOGLE_SERVICES_JSON secret (docs/08 §6). Without the file the
+// app builds without the plugins, so that a fresh checkout and a fork PR stay green.
+val hasGoogleServices = file("google-services.json").exists()
 if (hasGoogleServices) {
     apply(plugin = libs.plugins.google.services.get().pluginId)
     apply(plugin = libs.plugins.firebase.crashlytics.get().pluginId)

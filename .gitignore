@@ -18,8 +18,9 @@ captures/
 *.keystore
 !app/debug.keystore
 
-# Firebase config is committed per flavor once the project exists; nothing else from the console
-/app/src/*/google-services.json.example
+# Firebase config: downloaded from the console locally, written from the GOOGLE_SERVICES_JSON secret in CI
+/app/google-services.json
+/app/src/*/google-services.json
 
 # OS
 .DS_Store
