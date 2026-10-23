@@ -11,7 +11,7 @@ Kotlin, Jetpack Compose, Material 3 with the web brand, online with a read cache
 
 Milestone **M0, project skeleton**: the build, the module layout, the design system with a debug gallery and the
 generated API client. No user-visible features yet; the app opens on the gallery. The plan is in
-[docs/01-scope-and-milestones.md](docs/01-scope-and-milestones.md):
+`docs/01-scope-and-milestones.md`:
 
 | Milestone | Contents |
 |---|---|
@@ -41,7 +41,7 @@ The `prod` flavor talks to `https://wallet.andrew-dev.org`.
 Firebase (Crashlytics, Analytics, Cloud Messaging) is wired but off: the Google Services plugins apply only once
 `app/google-services.json` exists, and telemetry collects nothing until the user consents in the app. The file is
 not committed: download it from the Firebase console (it must list both packages, `org.andrewdev.webwallet` and
-`org.andrewdev.webwallet.dev`) as described in [docs/08-release-and-ops.md](docs/08-release-and-ops.md) §6. CI writes
+`org.andrewdev.webwallet.dev`) as described in `docs/08-release-and-ops.md` §6. CI writes
 it from the `GOOGLE_SERVICES_JSON` repository secret.
 
 ## Project layout
@@ -55,10 +55,10 @@ core/network         The API client generated from openapi/openapi.json, OkHttp,
 core/designsystem    Theme, colours, typography, shapes, icons, the debug gallery
 core/testing         Test helpers shared by the modules
 openapi/             openapi.json, a verbatim copy of the backend contract, and the generator options
-docs/                The specification this app is built from (copied from the backend repository, docs/mobile-android)
+docs/                The specification this app is built from; kept locally, not in Git (copy of the backend repository's docs/mobile-android)
 ```
 
-Feature modules (`feature/*`) and the other `core/*` modules of [docs/02-architecture.md](docs/02-architecture.md)
+Feature modules (`feature/*`) and the other `core/*` modules of `docs/02-architecture.md`
 are added with the milestone that first needs them.
 
 ## The API client
@@ -76,7 +76,7 @@ Before generation the build drops the cookie parameters of the contract (the web
 trusted-device cookies): the app gets those tokens in the body and the Kotlin generator cannot express cookies.
 CI compares the committed copy with the backend's `master` branch (`api-drift` job): informational on branches
 and pull requests, blocking on `main`. Decisions that depart from the specification are recorded in
-[docs/decisions](docs/decisions).
+`docs/decisions`.
 
 ## Checks
 
@@ -93,8 +93,8 @@ the first screens in M1.
 
 ## Conventions
 
-The rules for code written in this repository are in [docs/02-architecture.md](docs/02-architecture.md) §10 and the
-Definition of Done in [docs/09-testing-and-dod.md](docs/09-testing-and-dod.md): one milestone at a time, strings in
+The rules for code written in this repository are in `docs/02-architecture.md` §10 and the
+Definition of Done in `docs/09-testing-and-dod.md`: one milestone at a time, strings in
 both `values/` and `values-uk/`, previews for every screen state, tests for every ViewModel, mapper and repository
 path, `BigDecimal` for money, `KyivClock` for "today", dependencies only through `gradle/libs.versions.toml`.
 
