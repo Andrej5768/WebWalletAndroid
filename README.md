@@ -22,27 +22,16 @@ generated API client. No user-visible features yet; the app opens on the gallery
 | M4 | Taxes and imports |
 | M5 | Push, widgets, shortcuts, Play release |
 
-## Getting started
+## Flavors
 
-Requirements: JDK 21, the latest stable Android Studio (or the Android SDK with platform 37), Docker for the backend.
+Two product flavors share one code base. The `dev` flavor (`org.andrewdev.webwallet.dev`, "WebWallet Dev") talks to
+a backend on the developer's machine, and the `prod` flavor talks to `https://wallet.andrew-dev.org`. Each combines
+with the `debug` and `release` build types; `release` is shrunk with R8 and, for publishing, signed with the Play
+upload key.
 
-1. Run the backend locally from the backend repository: `docker compose --profile app up -d --build`
-   (see its README). The API answers on `http://localhost:8080`, which the emulator reaches as `10.0.2.2`.
-2. Open this project in Android Studio and run the `devDebug` variant on an emulator, or from the command line:
-
-```bash
-./gradlew :app:installDevDebug
-```
-
-The `dev` flavor (`org.andrewdev.webwallet.dev`, "WebWallet Dev") talks to `apiBaseUrl` from `gradle.properties`,
-`http://10.0.2.2:8080` by default; override it with `-PapiBaseUrl=http://192.168.1.10:8080` for a real device.
-The `prod` flavor talks to `https://wallet.andrew-dev.org`.
-
-Firebase (Crashlytics, Analytics, Cloud Messaging) is wired but off: the Google Services plugins apply only once
-`app/google-services.json` exists, and telemetry collects nothing until the user consents in the app. The file is
-not committed: download it from the Firebase console (it must list both packages, `org.andrewdev.webwallet` and
-`org.andrewdev.webwallet.dev`) as described in `docs/08-release-and-ops.md` §6. CI writes
-it from the `GOOGLE_SERVICES_JSON` repository secret.
+Firebase Crashlytics and Analytics are wired but off: the Google Services plugins apply only when the Firebase
+configuration is present, it is never committed, and telemetry collects nothing until the user consents in the app.
+Cloud Messaging arrives with push notifications in M5.
 
 ## Project layout
 
@@ -65,13 +54,6 @@ are added with the milestone that first needs them.
 
 The backend contract `openapi/openapi.json` is the source of truth; `core:network` generates the Kotlin models
 and Retrofit interfaces from it at build time (nothing generated is committed), and DTOs are never written by hand.
-After a backend change:
-
-```bash
-cp ../WebWallet/api/openapi.json openapi/openapi.json
-./gradlew :core:network:openApiGenerate
-```
-
 Before generation the build drops the cookie parameters of the contract (the web client's refresh-token and
 trusted-device cookies): the app gets those tokens in the body and the Kotlin generator cannot express cookies.
 CI compares the committed copy with the backend's `master` branch (`api-drift` job): informational on branches
@@ -80,16 +62,9 @@ and pull requests, blocking on `main`. Decisions that depart from the specificat
 
 ## Checks
 
-```bash
-./gradlew detekt                         # ktlint-style formatting and the Compose rules; -PdetektAutoCorrect=true fixes
-./gradlew lintDevDebug                   # Android Lint, warnings are errors
-./gradlew testDevDebugUnitTest test      # unit tests of the Android and the JVM modules
-./gradlew assembleDevDebug bundleProdRelease
-```
-
-CI (`.github/workflows/ci.yml`) runs the same on every push and pull request with `-PwarningsAsErrors=true`, so a
-compiler warning that passes locally fails there. Screenshot tests (Roborazzi) and instrumented tests arrive with
-the first screens in M1.
+CI runs detekt (ktlint-style formatting and the Compose rules), Android Lint, the unit tests of every module and the
+`devDebug` and `prodRelease` builds on every push to `dev` and `main` and on every pull request, with compiler warnings treated as errors.
+Screenshot tests (Roborazzi) and instrumented tests arrive with the first screens in M1.
 
 ## Conventions
 
