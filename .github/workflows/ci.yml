@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Firebase config from the repository secret
         if: env.GOOGLE_SERVICES_JSON != ''
         run: printf '%s' "$GOOGLE_SERVICES_JSON" > app/google-services.json
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Firebase config from the repository secret
         if: env.GOOGLE_SERVICES_JSON != ''
         run: printf '%s' "$GOOGLE_SERVICES_JSON" > app/google-services.json
@@ -84,7 +84,7 @@ jobs:
     # Informational on branches and PRs, blocking on main (docs/02 §4.4)
     continue-on-error: ${{ github.ref != 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Compare openapi/openapi.json with the backend
         run: |
           curl -sSfL -o backend-openapi.json https://raw.githubusercontent.com/Andrej5768/WebWallet/master/api/openapi.json
