@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_auth_email">Електронна пошта</string>
+    <string name="feature_auth_password">Пароль</string>
+    <string name="feature_auth_new_password">Новий пароль</string>
+    <string name="feature_auth_repeat_password">Повторіть пароль</string>
+    <string name="feature_auth_password_hint">Щонайменше 8 символів</string>
+    <string name="feature_auth_password_long">Задовгий пароль: не більше 72 байтів (близько 36 кириличних літер)</string>
+    <string name="feature_auth_passwords_differ">Паролі не збігаються</string>
+    <string name="feature_auth_email_invalid">Перевірте адресу пошти</string>
+    <string name="feature_auth_required">Обов’язкове поле</string>
+    <string name="feature_auth_first_name">Ім’я</string>
+    <string name="feature_auth_last_name">Прізвище (необов’язково)</string>
+    <string name="feature_auth_show_password">Показати пароль</string>
+    <string name="feature_auth_hide_password">Сховати пароль</string>
+    <string name="feature_auth_back_to_login">Повернутися до входу</string>
+    <string name="feature_auth_privacy">Конфіденційність</string>
+    <string name="feature_auth_terms">Умови використання</string>
+    <string name="feature_auth_language">Мова</string>
+    <string name="feature_auth_theme">Тема</string>
+
+    <string name="feature_auth_login_title">Вхід</string>
+    <string name="feature_auth_login_subtitle">Раді бачити вас знову</string>
+    <string name="feature_auth_login_forgot">Забули пароль?</string>
+    <string name="feature_auth_login_submit">Увійти</string>
+    <string name="feature_auth_login_wait">Увійти (%1$d с)</string>
+    <string name="feature_auth_login_no_account">Немає акаунта?</string>
+    <string name="feature_auth_login_register">Зареєструватися</string>
+    <string name="feature_auth_login_resend">Надіслати лист ще раз</string>
+    <string name="feature_auth_login_session_expired">Сесія завершилася. Увійдіть знову.</string>
+    <string name="feature_auth_login_code_expired">Час на код вийшов. Увійдіть знову.</string>
+    <string name="feature_auth_login_password_changed">Пароль змінено. Увійдіть із новим паролем.</string>
+    <string name="feature_auth_login_verified">Пошту підтверджено. Увійдіть, щоб почати.</string>
+    <string name="feature_auth_login_restored">Видалення скасовано. Увійдіть, щоб продовжити.</string>
+
+    <string name="feature_auth_two_factor_title">Підтвердження входу</string>
+    <string name="feature_auth_two_factor_app_text">Введіть 6-значний код із застосунку-автентифікатора.</string>
+    <string name="feature_auth_two_factor_recovery_text">Введіть один із резервних кодів. Кожен код працює лише один раз.</string>
+    <string name="feature_auth_two_factor_recovery_code">Резервний код</string>
+    <string name="feature_auth_two_factor_trust">Довіряти цьому пристрою 90 днів</string>
+    <string name="feature_auth_two_factor_submit">Підтвердити</string>
+    <string name="feature_auth_two_factor_use_recovery">Використати резервний код</string>
+    <string name="feature_auth_two_factor_use_app">Код із застосунку</string>
+
+    <string name="feature_auth_register_title">Реєстрація</string>
+    <string name="feature_auth_register_subtitle">Це займе хвилину</string>
+    <string name="feature_auth_register_submit">Створити акаунт</string>
+    <string name="feature_auth_register_have_account">Вже є акаунт?</string>
+    <string name="feature_auth_register_agree">Створюючи акаунт, ви погоджуєтеся з умовами використання та політикою конфіденційності.</string>
+
+    <string name="feature_auth_check_mail_title">Перевірте пошту</string>
+    <string name="feature_auth_check_mail_registered">Ми надіслали лист на %1$s. Перейдіть за посиланням у ньому, щоб підтвердити пошту й увійти.</string>
+    <string name="feature_auth_check_mail_reset">Якщо акаунт із такою адресою існує, лист із посиланням уже летить на %1$s.</string>
+    <string name="feature_auth_check_mail_no_mail">Лист не прийшов?</string>
+    <string name="feature_auth_check_mail_resend">Надіслати ще раз</string>
+    <string name="feature_auth_check_mail_resent">Надіслали ще раз. Перевірте також папку «Спам».</string>
+    <string name="feature_auth_check_mail_open">Відкрити пошту</string>
+
+    <string name="feature_auth_forgot_title">Відновлення пароля</string>
+    <string name="feature_auth_forgot_subtitle">Вкажіть пошту, і ми надішлемо посилання для нового пароля</string>
+    <string name="feature_auth_forgot_submit">Надіслати посилання</string>
+
+    <string name="feature_auth_reset_title">Новий пароль</string>
+    <string name="feature_auth_reset_subtitle">На інших пристроях доведеться увійти знову</string>
+    <string name="feature_auth_reset_submit">Зберегти пароль</string>
+    <string name="feature_auth_reset_done_title">Пароль змінено</string>
+    <string name="feature_auth_reset_done_text">Увійдіть із новим паролем.</string>
+    <string name="feature_auth_reset_expired">Посилання для нового пароля вже використане або застаріло. Попросіть нове.</string>
+    <string name="feature_auth_reset_request_new">Попросити нове посилання</string>
+
+    <string name="feature_auth_verify_working">Підтверджуємо пошту…</string>
+    <string name="feature_auth_verify_done_title">Пошту підтверджено</string>
+    <string name="feature_auth_verify_done_text">Акаунт готовий. Увійдіть, щоб почати.</string>
+    <string name="feature_auth_verify_expired">Вкажіть пошту, і ми надішлемо нове посилання для підтвердження.</string>
+
+    <string name="feature_auth_expired_oops">Упс!</string>
+    <string name="feature_auth_expired_title">Посилання застаріло</string>
+
+    <string name="feature_auth_deletion_title">Акаунт буде видалено %1$s</string>
+    <string name="feature_auth_deletion_text">Ви попросили видалити акаунт. До %1$s його можна відновити, усі дані залишаться на місці. Після цієї дати їх буде стерто назавжди.</string>
+    <string name="feature_auth_deletion_restore">Залишити акаунт</string>
+    <string name="feature_auth_deletion_leave">Вийти</string>
+    <string name="feature_auth_deletion_restored_title">Видалення скасовано</string>
+    <string name="feature_auth_deletion_restored_text">Акаунт і всі дані залишаються.</string>
+    <string name="feature_auth_deletion_failed_title">Не вдалося скасувати видалення</string>
+    <string name="feature_auth_deletion_bad_link">Посилання неповне. Відкрийте його з листа ще раз.</string>
+
+    <string name="feature_auth_unsubscribe_done_title">Ви відписалися від дайджесту</string>
+    <string name="feature_auth_unsubscribe_done_text">Листи з аналізом витрат більше не приходитимуть. Інші листи, як-от підтвердження й відновлення пароля, приходитимуть як і раніше.</string>
+    <string name="feature_auth_unsubscribe_again">Підписатися знову</string>
+    <string name="feature_auth_unsubscribe_back_title">Дайджест знову увімкнено</string>
+    <string name="feature_auth_unsubscribe_back_text">Наступний лист прийде в понеділок.</string>
+    <string name="feature_auth_unsubscribe_invalid">Посилання недійсне</string>
+
+    <string name="feature_auth_consent_title">Допоможіть покращити WebWallet</string>
+    <string name="feature_auth_consent_text">Застосунок може надсилати анонімні звіти про збої та статистику використання (які екрани відкривають). Ніколи не суми, не імена й не дані рахунків. Змінити це можна будь-коли в Налаштуваннях → Приватність.</string>
+    <string name="feature_auth_consent_allow">Дозволити</string>
+    <string name="feature_auth_consent_not_now">Не зараз</string>
+    <string name="feature_auth_sign_in_link">Увійти</string>
+</resources>

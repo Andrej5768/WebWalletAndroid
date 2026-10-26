@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_overview_title">Огляд</string>
+    <string name="feature_overview_balance_mode">Обрати, що показує сума</string>
+    <string name="feature_overview_net_worth">Чистий капітал</string>
+    <string name="feature_overview_net_worth_hint">Усе, що маєте, мінус борги</string>
+    <string name="feature_overview_available_with_credit">Доступно з кредитними лімітами</string>
+    <string name="feature_overview_available_with_credit_hint">Картки й готівка плюс невикористані ліміти</string>
+    <string name="feature_overview_ready_to_assign">Вільно після плану</string>
+    <string name="feature_overview_ready_to_assign_hint">Дохід місяця мінус план</string>
+    <string name="feature_overview_unconverted">Без курсу: %1$s</string>
+    <string name="feature_overview_income">Доходи за місяць</string>
+    <string name="feature_overview_expense">Витрати за місяць</string>
+    <string name="feature_overview_savings_rate">Заощаджено %1$s доходу</string>
+    <string name="feature_overview_to_budget">Відкрити бюджет</string>
+    <string name="feature_overview_monobank_difference">Розбіжність із банком: %1$s. Перевірте, чи всі операції враховано.</string>
+    <string name="feature_overview_to_accounts">До рахунків</string>
+    <plurals name="feature_overview_overdue">
+        <item quantity="one">Прострочено %d запланований платіж</item>
+        <item quantity="few">Прострочено %d заплановані платежі</item>
+        <item quantity="many">Прострочено %d запланованих платежів</item>
+        <item quantity="other">Прострочено %d запланованого платежу</item>
+    </plurals>
+    <string name="feature_overview_to_transactions">До операцій</string>
+    <string name="feature_overview_update_available">Доступна нова версія застосунку.</string>
+    <string name="feature_overview_update_action">Оновити</string>
+    <string name="feature_overview_recent">Останні операції</string>
+    <string name="feature_overview_all_transactions">Усі</string>
+    <string name="feature_overview_no_transactions">Операцій ще немає. Додайте першу або імпортуйте з банку.</string>
+    <string name="feature_overview_no_payee">Без отримувача</string>
+    <string name="feature_overview_empty_title">Додайте перший рахунок</string>
+    <string name="feature_overview_empty_text">Рахунок — це де лежать гроші: картка, готівка чи депозит.</string>
+    <string name="feature_overview_empty_action">Додати рахунок</string>
+</resources>

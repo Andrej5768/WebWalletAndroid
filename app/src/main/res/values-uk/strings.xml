@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WebWallet</string>
+    <string name="app_tab_overview">Огляд</string>
+    <string name="app_tab_transactions">Операції</string>
+    <string name="app_tab_budget">Бюджет</string>
+    <string name="app_tab_accounts">Рахунки</string>
+    <string name="app_tab_more">Ще</string>
+    <string name="app_add_transaction">Додати операцію</string>
+    <string name="app_saved">Збережено</string>
+    <string name="app_add_another">Додати ще</string>
+    <string name="app_update_required_title">Потрібне оновлення</string>
+    <string name="app_update_required_text">Ця версія WebWallet застаріла й не працює із сервісом. Оновіть її, щоб продовжити.</string>
+    <string name="app_update_required_action">Оновити</string>
 </resources>

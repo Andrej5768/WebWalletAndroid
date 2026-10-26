@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_accounts_title">Accounts</string>
+    <string name="feature_accounts_add">Add account</string>
+    <string name="feature_accounts_available">Available</string>
+    <string name="feature_accounts_credit_debt">Loans and credit cards</string>
+    <string name="feature_accounts_people_debt">Debts</string>
+    <string name="feature_accounts_show_archived">Show archived</string>
+    <string name="feature_accounts_hide_archived">Hide archived</string>
+    <string name="feature_accounts_collapse">Collapse group</string>
+    <string name="feature_accounts_expand">Expand group</string>
+    <string name="feature_accounts_synced">Synced</string>
+    <string name="feature_accounts_manual">Manual</string>
+    <string name="feature_accounts_archived">Archived</string>
+    <string name="feature_accounts_differs">Differs from the bank by %1$s</string>
+    <string name="feature_accounts_monobank_error">Monobank: could not update</string>
+    <string name="feature_accounts_sync_now">Sync now</string>
+    <string name="feature_accounts_limit">Limit %1$s</string>
+    <string name="feature_accounts_without_rate">Some currencies have no exchange rate, so the total is incomplete.</string>
+    <string name="feature_accounts_empty_title">No accounts yet</string>
+    <string name="feature_accounts_empty_text">Add an account by hand or connect Monobank on the web in Import.</string>
+    <string name="feature_accounts_actions">Account actions</string>
+    <string name="feature_accounts_menu_edit">Edit</string>
+    <string name="feature_accounts_menu_transactions">Account transactions</string>
+    <string name="feature_accounts_menu_new_transaction">New transaction</string>
+    <string name="feature_accounts_menu_archive">Archive</string>
+    <string name="feature_accounts_menu_unarchive">Restore from archive</string>
+
+    <string name="feature_accounts_groups_cards">Cards and accounts</string>
+    <string name="feature_accounts_groups_fop">FOP</string>
+    <string name="feature_accounts_groups_cash">Cash</string>
+    <string name="feature_accounts_groups_credit">Credit cards</string>
+    <string name="feature_accounts_groups_savings">Savings</string>
+    <string name="feature_accounts_groups_debts">Loans and debts</string>
+    <string name="feature_accounts_groups_investments">Investments</string>
+    <string name="feature_accounts_groups_archived">Archive</string>
+
+    <string name="feature_accounts_type_card">Card</string>
+    <string name="feature_accounts_type_credit_card">Credit card</string>
+    <string name="feature_accounts_type_cash">Cash</string>
+    <string name="feature_accounts_type_savings">Savings</string>
+    <string name="feature_accounts_type_deposit">Deposit</string>
+    <string name="feature_accounts_type_loan">Loan</string>
+    <string name="feature_accounts_type_debt">Debts to people</string>
+    <string name="feature_accounts_type_investment">Investments</string>
+    <string name="feature_accounts_type_fop">FOP</string>
+
+    <string name="feature_accounts_debts_title">Debts</string>
+    <string name="feature_accounts_debts_owes_you">Owes you</string>
+    <string name="feature_accounts_debts_you_owe">You owe</string>
+    <string name="feature_accounts_debts_settled">Settled</string>
+    <string name="feature_accounts_debts_show_settled">Show settled (%1$d)</string>
+    <string name="feature_accounts_debts_hide_settled">Hide settled</string>
+    <string name="feature_accounts_debts_no_name">No name</string>
+
+    <string name="feature_accounts_form_new">New account</string>
+    <string name="feature_accounts_form_edit">Edit account</string>
+    <string name="feature_accounts_form_name">Name</string>
+    <string name="feature_accounts_form_name_required">Enter a name</string>
+    <string name="feature_accounts_form_type">Type</string>
+    <string name="feature_accounts_form_currency">Currency</string>
+    <string name="feature_accounts_form_currency_locked">The currency of an account cannot be changed</string>
+    <string name="feature_accounts_form_opening_balance">Opening balance</string>
+    <string name="feature_accounts_form_credit_limit">Credit limit</string>
+    <string name="feature_accounts_form_credit_limit_hint">0 means no limit</string>
+    <string name="feature_accounts_form_interest_rate">Interest rate, %</string>
+    <string name="feature_accounts_form_in_budget">Count in the budget</string>
+    <string name="feature_accounts_form_in_budget_hint">Money on the account is planned across categories.</string>
+    <string name="feature_accounts_form_archived">Archived</string>
+    <string name="feature_accounts_form_save">Save</string>
+    <string name="feature_accounts_form_close">Close</string>
+    <string name="feature_accounts_form_delete">Delete account</string>
+    <string name="feature_accounts_form_delete_title">Delete account “%1$s”?</string>
+    <string name="feature_accounts_form_delete_text">An account can be deleted only while it has no transactions. Otherwise archive it.</string>
+    <string name="feature_accounts_form_delete_blocked">The account has transactions. Archive it instead.</string>
+    <string name="feature_accounts_form_discard_title">Discard changes?</string>
+    <string name="feature_accounts_form_discard">Discard</string>
+    <string name="feature_accounts_form_search_currency">Search currency</string>
+</resources>

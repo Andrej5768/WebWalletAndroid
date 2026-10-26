@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_lock_enter_pin">Enter PIN</string>
+    <string name="feature_lock_wrong_pin">Wrong PIN</string>
+    <plurals name="feature_lock_attempts_left">
+        <item quantity="one">%d attempt left before a pause</item>
+        <item quantity="other">%d attempts left before a pause</item>
+    </plurals>
+    <string name="feature_lock_cooldown">Try again in %1$d s</string>
+    <string name="feature_lock_unlock">Unlock</string>
+    <string name="feature_lock_forgot">Forgot PIN? Sign out</string>
+    <string name="feature_lock_forgot_title">Sign out?</string>
+    <string name="feature_lock_forgot_text">You will need to sign in again with your password.</string>
+    <string name="feature_lock_sign_out">Sign out</string>
+    <string name="feature_lock_biometric">Unlock with fingerprint or face</string>
+    <string name="feature_lock_biometric_title">Unlock WebWallet</string>
+    <string name="feature_lock_biometric_negative">Use PIN</string>
+    <string name="feature_lock_biometric_invalidated">Biometrics changed on this device. Unlock with your PIN and turn biometric unlock on again in Settings.</string>
+
+    <string name="feature_lock_offer_title">Protect the app with a PIN</string>
+    <string name="feature_lock_offer_text">Ask for a PIN or your fingerprint when the app opens. Balances stay hidden from anyone who picks up the phone.</string>
+    <string name="feature_lock_offer_setup">Set up</string>
+    <string name="feature_lock_offer_not_now">Not now</string>
+
+    <string name="feature_lock_setup_current">Enter your current PIN</string>
+    <string name="feature_lock_setup_create">Choose a PIN of 4 to 8 digits</string>
+    <string name="feature_lock_setup_repeat">Repeat the PIN</string>
+    <string name="feature_lock_setup_weak">This PIN is easy to guess. Press Next again to keep it anyway.</string>
+    <string name="feature_lock_setup_mismatch">The PINs do not match. Start again.</string>
+    <string name="feature_lock_setup_next">Next</string>
+    <string name="feature_lock_setup_options_title">Lock options</string>
+    <string name="feature_lock_setup_timeout">Lock after</string>
+    <string name="feature_lock_timeout_immediately">Immediately</string>
+    <string name="feature_lock_timeout_minutes">%1$d min</string>
+    <string name="feature_lock_setup_done">Done</string>
+    <string name="feature_lock_close">Close</string>
+</resources>

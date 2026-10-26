@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_more_title">Ще</string>
+    <string name="feature_more_verified">Підтверджено</string>
+    <string name="feature_more_reports">Звіти</string>
+    <string name="feature_more_reports_hint">Витрати, доходи, капітал, отримувачі</string>
+    <string name="feature_more_goals">Цілі</string>
+    <string name="feature_more_goals_hint">Накопичення, FIRE і калькулятори</string>
+    <string name="feature_more_investments">Інвестиції</string>
+    <string name="feature_more_investments_hint">Портфель, позиції, дивіденди</string>
+    <string name="feature_more_taxes">Податки</string>
+    <string name="feature_more_taxes_hint">ФОП та інвестиційні податки</string>
+    <string name="feature_more_imports">Імпорт</string>
+    <string name="feature_more_imports_hint">Monobank, виписки банків, Дзен-мані</string>
+    <string name="feature_more_settings">Налаштування</string>
+    <string name="feature_more_settings_hint">Профіль, безпека, блокування</string>
+    <string name="feature_more_lock_now">Заблокувати зараз</string>
+    <string name="feature_more_about">Про застосунок</string>
+    <string name="feature_more_sign_out">Вийти</string>
+    <string name="feature_more_sign_out_title">Вийти з WebWallet?</string>
+    <string name="feature_more_coming_soon_title">Незабаром</string>
+    <string name="feature_more_coming_soon_text">Цей розділ ще в дорозі до застосунку. Поки що він доступний на сайті.</string>
+    <string name="feature_more_open_web">Відкрити на сайті</string>
+</resources>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:name=".WebWalletApplication"
@@ -40,6 +41,33 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Email links and web routes of the domain (docs/03 §7); verified through assetlinks.json (B7) -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="wallet.andrew-dev.org" />
+                <data android:path="/verify-email" />
+                <data android:path="/reset-password" />
+                <data android:path="/restore-account" />
+                <data android:path="/unsubscribe" />
+                <data android:path="/transactions" />
+                <data android:path="/accounts" />
+                <data android:path="/budget" />
+                <data android:path="/goals" />
+                <data android:path="/investments" />
+                <data android:path="/taxes" />
+                <data android:path="/reports" />
+                <data android:path="/settings" />
+            </intent-filter>
+            <!-- Internal shortcuts and widgets, not advertised -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="webwallet" />
             </intent-filter>
         </activity>
     </application>

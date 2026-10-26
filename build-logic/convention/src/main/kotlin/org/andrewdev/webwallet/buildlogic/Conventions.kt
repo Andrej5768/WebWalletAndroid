@@ -58,6 +58,8 @@ internal fun Project.configureKotlinJvm() {
     configureKotlinCompileTasks()
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
+        // A module without tests yet is not a misconfiguration
+        failOnNoDiscoveredTests.set(false)
     }
     dependencies {
         add("testImplementation", libs.findLibrary("junit-jupiter").get())
@@ -77,6 +79,10 @@ private fun Project.configureKotlinCompileTasks() {
 /** JUnit 5 for the unit tests of an Android module. */
 private fun Project.configureJUnit5() {
     pluginManager.apply("de.mannodermaus.android-junit5")
+    tasks.withType<Test>().configureEach {
+        // A module without tests yet is not a misconfiguration
+        failOnNoDiscoveredTests.set(false)
+    }
     dependencies {
         add("testImplementation", libs.findLibrary("junit-jupiter").get())
         add("testRuntimeOnly", libs.findLibrary("junit-platform-launcher").get())

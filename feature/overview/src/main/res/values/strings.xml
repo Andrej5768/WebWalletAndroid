@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_overview_title">Overview</string>
+    <string name="feature_overview_balance_mode">Choose what the figure shows</string>
+    <string name="feature_overview_net_worth">Net worth</string>
+    <string name="feature_overview_net_worth_hint">Everything you have minus debts</string>
+    <string name="feature_overview_available_with_credit">Available with credit limits</string>
+    <string name="feature_overview_available_with_credit_hint">Cards and cash plus unused limits</string>
+    <string name="feature_overview_ready_to_assign">Free after the plan</string>
+    <string name="feature_overview_ready_to_assign_hint">Income of the month minus the plan</string>
+    <string name="feature_overview_unconverted">No exchange rate: %1$s</string>
+    <string name="feature_overview_income">Income this month</string>
+    <string name="feature_overview_expense">Expenses this month</string>
+    <string name="feature_overview_savings_rate">%1$s of income saved</string>
+    <string name="feature_overview_to_budget">Open the budget</string>
+    <string name="feature_overview_monobank_difference">Differs from the bank: %1$s. Check that every transaction is recorded.</string>
+    <string name="feature_overview_to_accounts">To accounts</string>
+    <plurals name="feature_overview_overdue">
+        <item quantity="one">%d planned payment is overdue</item>
+        <item quantity="other">%d planned payments are overdue</item>
+    </plurals>
+    <string name="feature_overview_to_transactions">To transactions</string>
+    <string name="feature_overview_update_available">A new version of the app is available.</string>
+    <string name="feature_overview_update_action">Update</string>
+    <string name="feature_overview_recent">Recent transactions</string>
+    <string name="feature_overview_all_transactions">All</string>
+    <string name="feature_overview_no_transactions">No transactions yet. Add the first one or import from the bank.</string>
+    <string name="feature_overview_no_payee">No payee</string>
+    <string name="feature_overview_empty_title">Add your first account</string>
+    <string name="feature_overview_empty_text">An account is where your money lives: a card, cash or a deposit.</string>
+    <string name="feature_overview_empty_action">Add account</string>
+</resources>

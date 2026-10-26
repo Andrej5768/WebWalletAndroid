@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_settings_title">Settings</string>
+    <string name="feature_settings_back">Back</string>
+    <string name="feature_settings_profile">Profile</string>
+    <string name="feature_settings_security">Security</string>
+    <string name="feature_settings_app_lock">App lock</string>
+    <string name="feature_settings_privacy">Privacy</string>
+    <string name="feature_settings_about">About</string>
+    <string name="feature_settings_verified">Verified</string>
+    <string name="feature_settings_first_name">First name</string>
+    <string name="feature_settings_last_name">Last name</string>
+    <string name="feature_settings_base_currency">Base currency</string>
+    <string name="feature_settings_base_currency_hint">Net worth, reports and the budget are in this currency. It cannot change while the budget has a plan.</string>
+    <string name="feature_settings_saved">Saved</string>
+    <string name="feature_settings_save">Save</string>
+    <string name="feature_settings_language">Interface language</string>
+    <string name="feature_settings_language_system">System</string>
+    <string name="feature_settings_language_uk">Українська</string>
+    <string name="feature_settings_language_en">English</string>
+    <string name="feature_settings_theme">Theme</string>
+    <string name="feature_settings_theme_system">System</string>
+    <string name="feature_settings_theme_light">Light</string>
+    <string name="feature_settings_theme_dark">Dark</string>
+
+    <string name="feature_settings_password_title">Change password</string>
+    <string name="feature_settings_password_none">No password yet: you sign in with Google. Set one on the web, in Settings → Security.</string>
+    <string name="feature_settings_current_password">Current password</string>
+    <string name="feature_settings_new_password">New password</string>
+    <string name="feature_settings_repeat_password">Repeat password</string>
+    <string name="feature_settings_passwords_differ">Passwords do not match</string>
+    <string name="feature_settings_others_signed_out">Other devices will be signed out.</string>
+    <string name="feature_settings_password_changed">Password changed</string>
+    <string name="feature_settings_change_password">Change password</string>
+
+    <string name="feature_settings_two_factor_title">Two-factor authentication</string>
+    <string name="feature_settings_two_factor_text">Signing in needs a code from an authenticator app besides the password: Google Authenticator, 1Password, Bitwarden and the like.</string>
+    <string name="feature_settings_two_factor_on">On</string>
+    <string name="feature_settings_two_factor_enable">Turn on</string>
+    <string name="feature_settings_two_factor_disable">Turn off</string>
+    <string name="feature_settings_new_codes">New recovery codes</string>
+    <plurals name="feature_settings_codes_left">
+        <item quantity="one">%d recovery code left</item>
+        <item quantity="other">%d recovery codes left</item>
+    </plurals>
+    <string name="feature_settings_two_factor_setup">Turn on two-factor authentication</string>
+    <string name="feature_settings_scan">Scan the QR code with an authenticator app and enter the code it shows.</string>
+    <string name="feature_settings_qr">QR code for the authenticator app</string>
+    <string name="feature_settings_manual">Cannot scan? Enter the key by hand:</string>
+    <string name="feature_settings_copy_key">Copy the key</string>
+    <string name="feature_settings_open_authenticator">Open in authenticator</string>
+    <string name="feature_settings_app_code">Code from the app</string>
+    <string name="feature_settings_confirm">Confirm</string>
+    <string name="feature_settings_recovery_codes">Recovery codes</string>
+    <string name="feature_settings_codes_warning">Keep these codes somewhere safe. If you lose your phone, only they will let you sign in. Each code works once, and we show them only now.</string>
+    <string name="feature_settings_copy_all">Copy all</string>
+    <string name="feature_settings_share">Share</string>
+    <string name="feature_settings_codes_saved">I have saved the recovery codes</string>
+    <string name="feature_settings_done">Done</string>
+    <string name="feature_settings_disable_title">Turn off two-factor authentication?</string>
+    <string name="feature_settings_disable_text">Signing in will need only the password again. Recovery codes and trusted devices will be deleted.</string>
+    <string name="feature_settings_code_or_recovery">Code from the app or a recovery code</string>
+    <string name="feature_settings_new_codes_title">New recovery codes</string>
+    <string name="feature_settings_new_codes_text">The old recovery codes will stop working. Confirm with a code from the app.</string>
+    <string name="feature_settings_new_codes_submit">Create new codes</string>
+    <string name="feature_settings_confirm_identity">Confirm it is you</string>
+    <string name="feature_settings_confirm_password_hint">To change how you sign in, enter your current password.</string>
+    <string name="feature_settings_confirm_code_hint">To change how you sign in, enter a code from the authenticator app or a recovery code.</string>
+    <string name="feature_settings_continue">Continue</string>
+    <string name="feature_settings_cancel">Cancel</string>
+
+    <string name="feature_settings_app_lock_on">On</string>
+    <string name="feature_settings_app_lock_off">Off</string>
+    <string name="feature_settings_app_lock_off_text">Ask for a PIN or your fingerprint when the app opens.</string>
+    <string name="feature_settings_app_lock_enable">Set up</string>
+    <string name="feature_settings_change_pin">Change PIN</string>
+    <string name="feature_settings_biometric">Unlock with fingerprint or face</string>
+    <string name="feature_settings_timeout">Lock after</string>
+    <string name="feature_settings_timeout_immediately">Immediately</string>
+    <string name="feature_settings_timeout_minutes">%1$d min</string>
+    <string name="feature_settings_widgets_balances">Show balances in widgets when locked</string>
+    <string name="feature_settings_app_lock_disable">Turn off the lock</string>
+    <string name="feature_settings_current_pin">Current PIN</string>
+    <string name="feature_settings_wrong_pin">Wrong PIN</string>
+
+    <string name="feature_settings_telemetry">Crash reports and usage statistics</string>
+    <string name="feature_settings_telemetry_hint">Anonymous: which screens are opened and what crashed. Never amounts, names or account details.</string>
+    <string name="feature_settings_privacy_policy">Privacy policy</string>
+    <string name="feature_settings_terms">Terms of service</string>
+    <string name="feature_settings_backend">Backend: %1$s</string>
+    <string name="feature_settings_support">Contact support</string>
+    <string name="feature_settings_rate">Rate on Google Play</string>
+</resources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_settings_title">Налаштування</string>
+    <string name="feature_settings_back">Назад</string>
+    <string name="feature_settings_profile">Профіль</string>
+    <string name="feature_settings_security">Безпека</string>
+    <string name="feature_settings_app_lock">Блокування застосунку</string>
+    <string name="feature_settings_privacy">Приватність</string>
+    <string name="feature_settings_about">Про застосунок</string>
+    <string name="feature_settings_verified">Підтверджено</string>
+    <string name="feature_settings_first_name">Ім’я</string>
+    <string name="feature_settings_last_name">Прізвище</string>
+    <string name="feature_settings_base_currency">Основна валюта</string>
+    <string name="feature_settings_base_currency_hint">У ній рахуються капітал, звіти й бюджет. Змінити не можна, поки в бюджеті є план.</string>
+    <string name="feature_settings_saved">Збережено</string>
+    <string name="feature_settings_save">Зберегти</string>
+    <string name="feature_settings_language">Мова інтерфейсу</string>
+    <string name="feature_settings_language_system">Як у системі</string>
+    <string name="feature_settings_language_uk">Українська</string>
+    <string name="feature_settings_language_en">English</string>
+    <string name="feature_settings_theme">Тема</string>
+    <string name="feature_settings_theme_system">Як у системі</string>
+    <string name="feature_settings_theme_light">Світла</string>
+    <string name="feature_settings_theme_dark">Темна</string>
+
+    <string name="feature_settings_password_title">Зміна пароля</string>
+    <string name="feature_settings_password_none">Пароль ще не встановлено: ви входите через Google. Встановіть його на сайті в Налаштуваннях → Безпека.</string>
+    <string name="feature_settings_current_password">Поточний пароль</string>
+    <string name="feature_settings_new_password">Новий пароль</string>
+    <string name="feature_settings_repeat_password">Повторіть пароль</string>
+    <string name="feature_settings_passwords_differ">Паролі не збігаються</string>
+    <string name="feature_settings_others_signed_out">На інших пристроях доведеться увійти знову.</string>
+    <string name="feature_settings_password_changed">Пароль змінено</string>
+    <string name="feature_settings_change_password">Змінити пароль</string>
+
+    <string name="feature_settings_two_factor_title">Двофакторна автентифікація</string>
+    <string name="feature_settings_two_factor_text">Під час входу, крім пароля, потрібен код із застосунку-автентифікатора: Google Authenticator, 1Password, Bitwarden тощо.</string>
+    <string name="feature_settings_two_factor_on">Увімкнено</string>
+    <string name="feature_settings_two_factor_enable">Увімкнути</string>
+    <string name="feature_settings_two_factor_disable">Вимкнути</string>
+    <string name="feature_settings_new_codes">Нові резервні коди</string>
+    <plurals name="feature_settings_codes_left">
+        <item quantity="one">Залишився %d резервний код</item>
+        <item quantity="few">Залишилось %d резервні коди</item>
+        <item quantity="many">Залишилось %d резервних кодів</item>
+        <item quantity="other">Залишилось %d резервного коду</item>
+    </plurals>
+    <string name="feature_settings_two_factor_setup">Увімкнення двофакторної автентифікації</string>
+    <string name="feature_settings_scan">Відскануйте QR-код застосунком-автентифікатором і введіть код, який він покаже.</string>
+    <string name="feature_settings_qr">QR-код для застосунку-автентифікатора</string>
+    <string name="feature_settings_manual">Не виходить сканувати? Введіть ключ вручну:</string>
+    <string name="feature_settings_copy_key">Скопіювати ключ</string>
+    <string name="feature_settings_open_authenticator">Відкрити в автентифікаторі</string>
+    <string name="feature_settings_app_code">Код із застосунку</string>
+    <string name="feature_settings_confirm">Підтвердити</string>
+    <string name="feature_settings_recovery_codes">Резервні коди</string>
+    <string name="feature_settings_codes_warning">Збережіть ці коди в надійному місці. Якщо втратите телефон, лише вони допоможуть увійти. Кожен код працює один раз, і показуємо ми їх тільки зараз.</string>
+    <string name="feature_settings_copy_all">Скопіювати всі</string>
+    <string name="feature_settings_share">Поділитися</string>
+    <string name="feature_settings_codes_saved">Резервні коди збережено</string>
+    <string name="feature_settings_done">Готово</string>
+    <string name="feature_settings_disable_title">Вимкнути двофакторну автентифікацію?</string>
+    <string name="feature_settings_disable_text">Вхід знову потребуватиме лише пароля. Резервні коди й довірені пристрої буде видалено.</string>
+    <string name="feature_settings_code_or_recovery">Код із застосунку або резервний код</string>
+    <string name="feature_settings_new_codes_title">Нові резервні коди</string>
+    <string name="feature_settings_new_codes_text">Старі резервні коди перестануть працювати. Підтвердіть кодом із застосунку.</string>
+    <string name="feature_settings_new_codes_submit">Створити нові коди</string>
+    <string name="feature_settings_confirm_identity">Підтвердіть, що це ви</string>
+    <string name="feature_settings_confirm_password_hint">Щоб змінити спосіб входу, введіть поточний пароль.</string>
+    <string name="feature_settings_confirm_code_hint">Щоб змінити спосіб входу, введіть код із застосунку-автентифікатора або резервний код.</string>
+    <string name="feature_settings_continue">Продовжити</string>
+    <string name="feature_settings_cancel">Скасувати</string>
+
+    <string name="feature_settings_app_lock_on">Увімкнено</string>
+    <string name="feature_settings_app_lock_off">Вимкнено</string>
+    <string name="feature_settings_app_lock_off_text">Під час відкриття застосунок питатиме PIN-код або відбиток.</string>
+    <string name="feature_settings_app_lock_enable">Налаштувати</string>
+    <string name="feature_settings_change_pin">Змінити PIN-код</string>
+    <string name="feature_settings_biometric">Розблокувати відбитком або обличчям</string>
+    <string name="feature_settings_timeout">Блокувати через</string>
+    <string name="feature_settings_timeout_immediately">Одразу</string>
+    <string name="feature_settings_timeout_minutes">%1$d хв</string>
+    <string name="feature_settings_widgets_balances">Показувати баланси у віджетах, коли заблоковано</string>
+    <string name="feature_settings_app_lock_disable">Вимкнути блокування</string>
+    <string name="feature_settings_current_pin">Поточний PIN-код</string>
+    <string name="feature_settings_wrong_pin">Неправильний PIN-код</string>
+
+    <string name="feature_settings_telemetry">Звіти про збої та статистика</string>
+    <string name="feature_settings_telemetry_hint">Анонімно: які екрани відкривають і що зламалося. Ніколи не суми, не імена й не дані рахунків.</string>
+    <string name="feature_settings_privacy_policy">Політика конфіденційності</string>
+    <string name="feature_settings_terms">Умови використання</string>
+    <string name="feature_settings_backend">Сервер: %1$s</string>
+    <string name="feature_settings_support">Написати в підтримку</string>
+    <string name="feature_settings_rate">Оцінити в Google Play</string>
+</resources>

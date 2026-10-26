@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.webwallet.android.library)
+    alias(libs.plugins.webwallet.hilt)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.openapi.generator)
 }
@@ -82,12 +83,14 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.model)
 
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit)
+    api(libs.kotlinx.serialization.json)
+    api(libs.retrofit)
     implementation(libs.retrofit.converter.scalars)
     implementation(libs.retrofit.converter.kotlinx.serialization)
-    implementation(libs.okhttp)
+    api(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.timber)
 
+    testImplementation(projects.core.testing)
     testImplementation(libs.okhttp.mockwebserver)
 }

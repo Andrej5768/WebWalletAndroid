@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WebWallet</string>
+    <string name="app_tab_overview">Overview</string>
+    <string name="app_tab_transactions">Transactions</string>
+    <string name="app_tab_budget">Budget</string>
+    <string name="app_tab_accounts">Accounts</string>
+    <string name="app_tab_more">More</string>
+    <string name="app_add_transaction">Add transaction</string>
+    <string name="app_saved">Saved</string>
+    <string name="app_add_another">Add another</string>
+    <string name="app_update_required_title">Update required</string>
+    <string name="app_update_required_text">This version of WebWallet is too old to work with the service. Update it to go on.</string>
+    <string name="app_update_required_action">Update</string>
 </resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_accounts_title">Рахунки</string>
+    <string name="feature_accounts_add">Додати рахунок</string>
+    <string name="feature_accounts_available">Доступно</string>
+    <string name="feature_accounts_credit_debt">Кредити й кредитки</string>
+    <string name="feature_accounts_people_debt">Борги</string>
+    <string name="feature_accounts_show_archived">Показати архівні</string>
+    <string name="feature_accounts_hide_archived">Сховати архівні</string>
+    <string name="feature_accounts_collapse">Згорнути групу</string>
+    <string name="feature_accounts_expand">Розгорнути групу</string>
+    <string name="feature_accounts_synced">Синхронізовано</string>
+    <string name="feature_accounts_manual">Вручну</string>
+    <string name="feature_accounts_archived">Архівний</string>
+    <string name="feature_accounts_differs">Розбіжність із банком %1$s</string>
+    <string name="feature_accounts_monobank_error">Monobank: не вдалося оновити</string>
+    <string name="feature_accounts_sync_now">Синхронізувати зараз</string>
+    <string name="feature_accounts_limit">Ліміт %1$s</string>
+    <string name="feature_accounts_without_rate">Для частини валют немає курсу, тому сума неповна.</string>
+    <string name="feature_accounts_empty_title">Рахунків ще немає</string>
+    <string name="feature_accounts_empty_text">Додайте рахунок вручну або підключіть Monobank на сайті в «Імпорті».</string>
+    <string name="feature_accounts_actions">Дії з рахунком</string>
+    <string name="feature_accounts_menu_edit">Редагувати</string>
+    <string name="feature_accounts_menu_transactions">Операції рахунку</string>
+    <string name="feature_accounts_menu_new_transaction">Нова операція</string>
+    <string name="feature_accounts_menu_archive">Зробити архівним</string>
+    <string name="feature_accounts_menu_unarchive">Повернути з архіву</string>
+
+    <string name="feature_accounts_groups_cards">Картки та рахунки</string>
+    <string name="feature_accounts_groups_fop">ФОП</string>
+    <string name="feature_accounts_groups_cash">Готівка</string>
+    <string name="feature_accounts_groups_credit">Кредитні картки</string>
+    <string name="feature_accounts_groups_savings">Заощадження</string>
+    <string name="feature_accounts_groups_debts">Кредити й борги</string>
+    <string name="feature_accounts_groups_investments">Інвестиції</string>
+    <string name="feature_accounts_groups_archived">Архів</string>
+
+    <string name="feature_accounts_type_card">Картка</string>
+    <string name="feature_accounts_type_credit_card">Кредитна картка</string>
+    <string name="feature_accounts_type_cash">Готівка</string>
+    <string name="feature_accounts_type_savings">Заощадження</string>
+    <string name="feature_accounts_type_deposit">Депозит</string>
+    <string name="feature_accounts_type_loan">Кредит</string>
+    <string name="feature_accounts_type_debt">Борги людям</string>
+    <string name="feature_accounts_type_investment">Інвестиції</string>
+    <string name="feature_accounts_type_fop">ФОП</string>
+
+    <string name="feature_accounts_debts_title">Борги</string>
+    <string name="feature_accounts_debts_owes_you">Вам винні</string>
+    <string name="feature_accounts_debts_you_owe">Ви винні</string>
+    <string name="feature_accounts_debts_settled">Погашено</string>
+    <string name="feature_accounts_debts_show_settled">Показати погашені (%1$d)</string>
+    <string name="feature_accounts_debts_hide_settled">Сховати погашені</string>
+    <string name="feature_accounts_debts_no_name">Без імені</string>
+
+    <string name="feature_accounts_form_new">Новий рахунок</string>
+    <string name="feature_accounts_form_edit">Редагувати рахунок</string>
+    <string name="feature_accounts_form_name">Назва</string>
+    <string name="feature_accounts_form_name_required">Вкажіть назву</string>
+    <string name="feature_accounts_form_type">Тип</string>
+    <string name="feature_accounts_form_currency">Валюта</string>
+    <string name="feature_accounts_form_currency_locked">Валюту рахунку змінити не можна</string>
+    <string name="feature_accounts_form_opening_balance">Початковий баланс</string>
+    <string name="feature_accounts_form_credit_limit">Кредитний ліміт</string>
+    <string name="feature_accounts_form_credit_limit_hint">0 — без ліміту</string>
+    <string name="feature_accounts_form_interest_rate">Відсоткова ставка, %</string>
+    <string name="feature_accounts_form_in_budget">Враховувати в бюджеті</string>
+    <string name="feature_accounts_form_in_budget_hint">Гроші на рахунку в бюджеті розподіляються по категоріях.</string>
+    <string name="feature_accounts_form_archived">Архівний</string>
+    <string name="feature_accounts_form_save">Зберегти</string>
+    <string name="feature_accounts_form_close">Закрити</string>
+    <string name="feature_accounts_form_delete">Видалити рахунок</string>
+    <string name="feature_accounts_form_delete_title">Видалити рахунок «%1$s»?</string>
+    <string name="feature_accounts_form_delete_text">Рахунок можна видалити, лише поки на ньому немає операцій. Інакше зробіть його архівним.</string>
+    <string name="feature_accounts_form_delete_blocked">На рахунку є операції. Зробіть його архівним.</string>
+    <string name="feature_accounts_form_discard_title">Відкинути зміни?</string>
+    <string name="feature_accounts_form_discard">Відкинути</string>
+    <string name="feature_accounts_form_search_currency">Пошук валюти</string>
+</resources>

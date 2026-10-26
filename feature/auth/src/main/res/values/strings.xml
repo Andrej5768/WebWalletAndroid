@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_auth_email">Email</string>
+    <string name="feature_auth_password">Password</string>
+    <string name="feature_auth_new_password">New password</string>
+    <string name="feature_auth_repeat_password">Repeat password</string>
+    <string name="feature_auth_password_hint">At least 8 characters</string>
+    <string name="feature_auth_password_long">Password is too long: at most 72 bytes (about 36 Cyrillic letters)</string>
+    <string name="feature_auth_passwords_differ">Passwords do not match</string>
+    <string name="feature_auth_email_invalid">Check the email address</string>
+    <string name="feature_auth_required">Required field</string>
+    <string name="feature_auth_first_name">First name</string>
+    <string name="feature_auth_last_name">Last name (optional)</string>
+    <string name="feature_auth_show_password">Show password</string>
+    <string name="feature_auth_hide_password">Hide password</string>
+    <string name="feature_auth_back_to_login">Back to sign in</string>
+    <string name="feature_auth_privacy">Privacy</string>
+    <string name="feature_auth_terms">Terms</string>
+    <string name="feature_auth_language">Language</string>
+    <string name="feature_auth_theme">Theme</string>
+
+    <string name="feature_auth_login_title">Sign in</string>
+    <string name="feature_auth_login_subtitle">Welcome back</string>
+    <string name="feature_auth_login_forgot">Forgot password?</string>
+    <string name="feature_auth_login_submit">Sign in</string>
+    <string name="feature_auth_login_wait">Sign in (%1$d s)</string>
+    <string name="feature_auth_login_no_account">No account yet?</string>
+    <string name="feature_auth_login_register">Create one</string>
+    <string name="feature_auth_login_resend">Resend verification email</string>
+    <string name="feature_auth_login_session_expired">Your session has expired. Sign in again.</string>
+    <string name="feature_auth_login_code_expired">The code has expired. Sign in again.</string>
+    <string name="feature_auth_login_password_changed">Password changed. Sign in with the new one.</string>
+    <string name="feature_auth_login_verified">Email confirmed. Sign in to start.</string>
+    <string name="feature_auth_login_restored">Deletion cancelled. Sign in to go on.</string>
+
+    <string name="feature_auth_two_factor_title">Confirm sign-in</string>
+    <string name="feature_auth_two_factor_app_text">Enter the 6-digit code from your authenticator app.</string>
+    <string name="feature_auth_two_factor_recovery_text">Enter one of your recovery codes. Each code works only once.</string>
+    <string name="feature_auth_two_factor_recovery_code">Recovery code</string>
+    <string name="feature_auth_two_factor_trust">Trust this device for 90 days</string>
+    <string name="feature_auth_two_factor_submit">Confirm</string>
+    <string name="feature_auth_two_factor_use_recovery">Use a recovery code</string>
+    <string name="feature_auth_two_factor_use_app">Code from the app</string>
+
+    <string name="feature_auth_register_title">Create account</string>
+    <string name="feature_auth_register_subtitle">It takes a minute</string>
+    <string name="feature_auth_register_submit">Create account</string>
+    <string name="feature_auth_register_have_account">Already have an account?</string>
+    <string name="feature_auth_register_agree">By creating an account you agree to the terms of service and the privacy policy.</string>
+
+    <string name="feature_auth_check_mail_title">Check your email</string>
+    <string name="feature_auth_check_mail_registered">We sent a message to %1$s. Follow the link in it to confirm your email and sign in.</string>
+    <string name="feature_auth_check_mail_reset">If an account with this email exists, a reset link is on its way to %1$s.</string>
+    <string name="feature_auth_check_mail_no_mail">No email?</string>
+    <string name="feature_auth_check_mail_resend">Send again</string>
+    <string name="feature_auth_check_mail_resent">Sent again. Please also check the spam folder.</string>
+    <string name="feature_auth_check_mail_open">Open email app</string>
+
+    <string name="feature_auth_forgot_title">Reset password</string>
+    <string name="feature_auth_forgot_subtitle">Enter your email and we will send you a link to set a new password</string>
+    <string name="feature_auth_forgot_submit">Send link</string>
+
+    <string name="feature_auth_reset_title">New password</string>
+    <string name="feature_auth_reset_subtitle">Other devices will be signed out</string>
+    <string name="feature_auth_reset_submit">Save password</string>
+    <string name="feature_auth_reset_done_title">Password changed</string>
+    <string name="feature_auth_reset_done_text">Sign in with the new password.</string>
+    <string name="feature_auth_reset_expired">This reset link has already been used or has expired. Ask for a new one.</string>
+    <string name="feature_auth_reset_request_new">Request a new link</string>
+
+    <string name="feature_auth_verify_working">Confirming your email…</string>
+    <string name="feature_auth_verify_done_title">Email confirmed</string>
+    <string name="feature_auth_verify_done_text">Your account is ready. Sign in to start.</string>
+    <string name="feature_auth_verify_expired">Enter your email and we will send a new confirmation link.</string>
+
+    <string name="feature_auth_expired_oops">Oops!</string>
+    <string name="feature_auth_expired_title">The link has expired</string>
+
+    <string name="feature_auth_deletion_title">The account will be deleted on %1$s</string>
+    <string name="feature_auth_deletion_text">You asked to delete the account. Until %1$s you can keep it, all data stays. After that date it is erased for good.</string>
+    <string name="feature_auth_deletion_restore">Keep my account</string>
+    <string name="feature_auth_deletion_leave">Leave</string>
+    <string name="feature_auth_deletion_restored_title">Deletion cancelled</string>
+    <string name="feature_auth_deletion_restored_text">The account and all data stay.</string>
+    <string name="feature_auth_deletion_failed_title">Could not cancel the deletion</string>
+    <string name="feature_auth_deletion_bad_link">The link is incomplete. Open it from the email again.</string>
+
+    <string name="feature_auth_unsubscribe_done_title">You have unsubscribed from the digest</string>
+    <string name="feature_auth_unsubscribe_done_text">Spending analysis emails will no longer arrive. Other emails, such as confirmations and password resets, will still come as before.</string>
+    <string name="feature_auth_unsubscribe_again">Subscribe again</string>
+    <string name="feature_auth_unsubscribe_back_title">The digest is on again</string>
+    <string name="feature_auth_unsubscribe_back_text">The next email will arrive on Monday.</string>
+    <string name="feature_auth_unsubscribe_invalid">The link is not valid</string>
+
+    <string name="feature_auth_consent_title">Help improve WebWallet</string>
+    <string name="feature_auth_consent_text">The app can send anonymous crash reports and usage statistics (which screens are opened). Never amounts, names or account details. You can change this in Settings → Privacy at any time.</string>
+    <string name="feature_auth_consent_allow">Allow</string>
+    <string name="feature_auth_consent_not_now">Not now</string>
+    <string name="feature_auth_sign_in_link">Sign in</string>
+</resources>

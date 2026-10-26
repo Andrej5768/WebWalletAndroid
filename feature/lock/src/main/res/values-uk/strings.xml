@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_lock_enter_pin">Введіть PIN-код</string>
+    <string name="feature_lock_wrong_pin">Неправильний PIN-код</string>
+    <plurals name="feature_lock_attempts_left">
+        <item quantity="one">Залишилась %d спроба до паузи</item>
+        <item quantity="few">Залишилось %d спроби до паузи</item>
+        <item quantity="many">Залишилось %d спроб до паузи</item>
+        <item quantity="other">Залишилось %d спроби до паузи</item>
+    </plurals>
+    <string name="feature_lock_cooldown">Спробуйте через %1$d с</string>
+    <string name="feature_lock_unlock">Розблокувати</string>
+    <string name="feature_lock_forgot">Забули PIN-код? Вийти</string>
+    <string name="feature_lock_forgot_title">Вийти з акаунта?</string>
+    <string name="feature_lock_forgot_text">Доведеться увійти знову з паролем.</string>
+    <string name="feature_lock_sign_out">Вийти</string>
+    <string name="feature_lock_biometric">Розблокувати відбитком або обличчям</string>
+    <string name="feature_lock_biometric_title">Розблокувати WebWallet</string>
+    <string name="feature_lock_biometric_negative">Ввести PIN-код</string>
+    <string name="feature_lock_biometric_invalidated">Біометрія на пристрої змінилася. Розблокуйте PIN-кодом і знову увімкніть біометрію в налаштуваннях.</string>
+
+    <string name="feature_lock_offer_title">Захистіть застосунок PIN-кодом</string>
+    <string name="feature_lock_offer_text">Під час відкриття застосунок питатиме PIN-код або відбиток. Баланси не побачить той, хто візьме телефон.</string>
+    <string name="feature_lock_offer_setup">Налаштувати</string>
+    <string name="feature_lock_offer_not_now">Не зараз</string>
+
+    <string name="feature_lock_setup_current">Введіть поточний PIN-код</string>
+    <string name="feature_lock_setup_create">Придумайте PIN-код із 4–8 цифр</string>
+    <string name="feature_lock_setup_repeat">Повторіть PIN-код</string>
+    <string name="feature_lock_setup_weak">Цей PIN-код легко вгадати. Натисніть «Далі» ще раз, щоб залишити його.</string>
+    <string name="feature_lock_setup_mismatch">PIN-коди не збігаються. Почніть спочатку.</string>
+    <string name="feature_lock_setup_next">Далі</string>
+    <string name="feature_lock_setup_options_title">Параметри блокування</string>
+    <string name="feature_lock_setup_timeout">Блокувати через</string>
+    <string name="feature_lock_timeout_immediately">Одразу</string>
+    <string name="feature_lock_timeout_minutes">%1$d хв</string>
+    <string name="feature_lock_setup_done">Готово</string>
+    <string name="feature_lock_close">Закрити</string>
+</resources>
