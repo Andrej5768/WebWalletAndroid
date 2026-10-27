@@ -55,6 +55,8 @@ import org.andrewdev.webwallet.core.navigation.PinSetupKey
 import org.andrewdev.webwallet.core.navigation.PinSetupMode
 import org.andrewdev.webwallet.core.navigation.PrivacySettingsKey
 import org.andrewdev.webwallet.core.navigation.ProfileSettingsKey
+import org.andrewdev.webwallet.core.navigation.RecurringEditorKey
+import org.andrewdev.webwallet.core.navigation.RecurringListKey
 import org.andrewdev.webwallet.core.navigation.SecuritySettingsKey
 import org.andrewdev.webwallet.core.navigation.SettingsKey
 import org.andrewdev.webwallet.core.navigation.TransactionEditorKey
@@ -86,6 +88,8 @@ import org.andrewdev.webwallet.feature.transactions.ui.EditorRoute
 import org.andrewdev.webwallet.feature.transactions.ui.FeedActions
 import org.andrewdev.webwallet.feature.transactions.ui.FeedRoute
 import org.andrewdev.webwallet.feature.transactions.ui.FeedScope
+import org.andrewdev.webwallet.feature.transactions.ui.RecurringEditorRoute
+import org.andrewdev.webwallet.feature.transactions.ui.RecurringListRoute
 import org.andrewdev.webwallet.feature.transactions.ui.TransferPairsRoute
 
 /** The five tabs (docs/02 §7), each with its own back stack. */
@@ -181,6 +185,15 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                             FeedScope.Payee(key.payeeId, key.name),
                             feedActions(stack, openEditor),
                         )
+                    }
+                    entry<RecurringListKey> {
+                        RecurringListRoute(
+                            onOpen = { stack.add(RecurringEditorKey(it)) },
+                            onBack = { stack.removeLastOrNull() },
+                        )
+                    }
+                    entry<RecurringEditorKey> { key ->
+                        RecurringEditorRoute(id = key.id, onClose = { stack.removeLastOrNull() })
                     }
                     entry<TransferPairsKey> {
                         TransferPairsRoute(
@@ -316,6 +329,8 @@ private fun feedActions(stack: NavBackStack<NavKey>, openEditor: (TransactionEdi
     openEditor = { openEditor(TransactionEditorKey(id = it)) },
     newTransaction = { openEditor(TransactionEditorKey(type = TransactionType.EXPENSE)) },
     openTransferPairs = { stack.add(TransferPairsKey) },
+    openRecurring = { stack.add(RecurringListKey) },
+    editRecurring = { stack.add(RecurringEditorKey(it)) },
     back = { stack.removeLastOrNull() },
 )
 

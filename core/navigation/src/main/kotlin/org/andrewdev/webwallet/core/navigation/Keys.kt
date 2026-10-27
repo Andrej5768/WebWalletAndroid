@@ -76,6 +76,12 @@ data class TransactionEditorKey(
 
 @Serializable data object TransferPairsKey : NavKey
 
+// Recurring payments (docs/04 §6.4)
+
+@Serializable data object RecurringListKey : NavKey
+
+@Serializable data class RecurringEditorKey(val id: Long? = null) : NavKey
+
 /** The transactions of a category in one month, opened from the budget; [month] is `yyyy-MM`. */
 @Serializable data class CategoryTransactionsKey(val categoryId: Long, val name: String, val month: String) : NavKey
 

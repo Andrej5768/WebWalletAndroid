@@ -55,6 +55,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.ArrowLeftRight
 import com.composables.icons.lucide.Clock
+import com.composables.icons.lucide.EllipsisVertical
 import com.composables.icons.lucide.Landmark
 import com.composables.icons.lucide.ListFilter
 import com.composables.icons.lucide.Lucide
@@ -69,11 +70,13 @@ import org.andrewdev.webwallet.core.model.Transaction
 import org.andrewdev.webwallet.core.model.TransactionType
 import org.andrewdev.webwallet.core.ui.Amount
 import org.andrewdev.webwallet.core.ui.AmountTone
+import org.andrewdev.webwallet.core.ui.BottomSheetMenu
 import org.andrewdev.webwallet.core.ui.CategoryIcon
 import org.andrewdev.webwallet.core.ui.ConfirmDialog
 import org.andrewdev.webwallet.core.ui.EmptyState
 import org.andrewdev.webwallet.core.ui.ErrorState
 import org.andrewdev.webwallet.core.ui.IconTile
+import org.andrewdev.webwallet.core.ui.MenuItem
 import org.andrewdev.webwallet.core.ui.SkeletonList
 import org.andrewdev.webwallet.core.ui.StaleBanner
 import org.andrewdev.webwallet.core.ui.WarnCard
@@ -86,6 +89,9 @@ import org.andrewdev.webwallet.feature.transactions.FeedFilters
 import org.andrewdev.webwallet.feature.transactions.FeedRow
 import org.andrewdev.webwallet.feature.transactions.FeedUiState
 import org.andrewdev.webwallet.feature.transactions.FeedViewModel
+import org.andrewdev.webwallet.feature.transactions.PlannedActions
+import org.andrewdev.webwallet.feature.transactions.PlannedUiState
+import org.andrewdev.webwallet.feature.transactions.PlannedViewModel
 import org.andrewdev.webwallet.feature.transactions.R
 import java.time.YearMonth
 
@@ -105,12 +111,20 @@ class FeedActions(
     val openEditor: (id: Long) -> Unit,
     val newTransaction: () -> Unit,
     val openTransferPairs: () -> Unit,
+    val openRecurring: () -> Unit,
+    val editRecurring: (id: Long) -> Unit,
     val back: () -> Unit,
 )
 
 @Composable
-fun FeedRoute(scope: FeedScope, actions: FeedActions, viewModel: FeedViewModel = hiltViewModel()) {
+fun FeedRoute(
+    scope: FeedScope,
+    actions: FeedActions,
+    viewModel: FeedViewModel = hiltViewModel(),
+    plannedViewModel: PlannedViewModel = hiltViewModel(),
+) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val planned by plannedViewModel.uiState.collectAsStateWithLifecycle()
     val filters by viewModel.filters.collectAsStateWithLifecycle()
     val query by viewModel.query.collectAsStateWithLifecycle()
     val accounts by viewModel.accountsList.collectAsStateWithLifecycle()
@@ -153,6 +167,15 @@ fun FeedRoute(scope: FeedScope, actions: FeedActions, viewModel: FeedViewModel =
         onMerge = { viewModel.mergePair(it, report) },
         onDismissPair = { viewModel.dismissPair(it, report) },
         filterOptions = FilterOptions(accounts, (state as? FeedUiState.Content)?.categories.orEmpty(), payees, tags),
+        planned = planned.takeIf { scope == FeedScope.All && filters.activeCount == 0 && query.isBlank() },
+        plannedActions = PlannedActions(
+            confirm = { occurrence, date, amount -> plannedViewModel.confirm(occurrence, date, amount, report) },
+            link = { occurrence, id -> plannedViewModel.link(occurrence, id, report) },
+            skip = { plannedViewModel.skip(it, report) },
+            candidates = plannedViewModel::candidates,
+            editSeries = actions.editRecurring,
+            toggleExpanded = plannedViewModel::toggleExpanded,
+        ),
     )
 }
 
@@ -178,8 +201,11 @@ fun FeedScreen(
     onMerge: (TransferPair) -> Unit,
     onDismissPair: (TransferPair) -> Unit,
     filterOptions: FilterOptions,
+    planned: PlannedUiState? = null,
+    plannedActions: PlannedActions? = null,
 ) {
     var searching by rememberSaveable { mutableStateOf(query.isNotEmpty()) }
+    var menu by remember { mutableStateOf(false) }
     var showFilters by remember { mutableStateOf(false) }
     var showPeriod by remember { mutableStateOf(false) }
     var categorizing by remember { mutableStateOf<Transaction?>(null) }
@@ -219,9 +245,12 @@ fun FeedScreen(
                             }
                         }
                         if (!scoped) {
-                            TextButton(
-                                onClick = actions.openTransferPairs,
-                            ) { Text(stringResource(R.string.feature_transactions_transfer_pairs)) }
+                            IconButton(onClick = { menu = true }) {
+                                Icon(
+                                    Lucide.EllipsisVertical,
+                                    contentDescription = stringResource(R.string.feature_transactions_menu),
+                                )
+                            }
                         }
                     },
                 )
@@ -261,6 +290,8 @@ fun FeedScreen(
                         onDelete = { deleting = it },
                         onMerge = onMerge,
                         onDismissPair = onDismissPair,
+                        planned = planned?.takeIf { !it.isEmpty },
+                        plannedActions = plannedActions,
                     )
                 }
             }
@@ -290,6 +321,20 @@ fun FeedScreen(
                 showPeriod = false
             },
             onDismiss = { showPeriod = false },
+        )
+    }
+    if (menu) {
+        BottomSheetMenu(
+            title = null,
+            items = listOf(
+                MenuItem(stringResource(R.string.feature_transactions_recurring_title), Lucide.Clock) {
+                    actions.openRecurring()
+                },
+                MenuItem(stringResource(R.string.feature_transactions_transfer_pairs), Lucide.ArrowLeftRight) {
+                    actions.openTransferPairs()
+                },
+            ),
+            onDismiss = { menu = false },
         )
     }
     categorizing?.let { transaction ->
@@ -395,6 +440,7 @@ fun presetName(preset: PeriodPreset): String = stringResource(
 )
 
 @Composable
+@Suppress("CyclomaticComplexMethod")
 private fun FeedList(
     state: FeedUiState.Content,
     query: String,
@@ -405,6 +451,8 @@ private fun FeedList(
     onDelete: (Long) -> Unit,
     onMerge: (TransferPair) -> Unit,
     onDismissPair: (TransferPair) -> Unit,
+    planned: PlannedUiState? = null,
+    plannedActions: PlannedActions? = null,
 ) {
     val listState = rememberLazyListState()
     val nearEnd by remember {
@@ -419,6 +467,7 @@ private fun FeedList(
     if (state.isEmpty) {
         Column(modifier = Modifier.fillMaxSize()) {
             if (state.stale) StaleBanner(state.fetchedAt, state.offline, onRefresh)
+            if (planned != null && plannedActions != null) PlannedGroup(planned, plannedActions)
             if (query.isNotBlank()) {
                 EmptyState(title = stringResource(R.string.feature_transactions_search_empty, query))
             } else {
@@ -434,6 +483,7 @@ private fun FeedList(
     }
     LazyColumn(state = listState, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 96.dp)) {
         if (state.stale) item { StaleBanner(state.fetchedAt, state.offline, onRefresh) }
+        if (planned != null && plannedActions != null) item(key = "planned") { PlannedGroup(planned, plannedActions) }
         state.days.forEach { day ->
             item(key = "day:${day.date}") { DayHeader(day) }
             items(day.transactions, key = { it.id }) { transaction ->

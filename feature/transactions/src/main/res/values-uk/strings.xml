@@ -132,4 +132,167 @@
     <string name="feature_transactions_form_more">Ще</string>
     <string name="feature_transactions_form_ok">Готово</string>
     <string name="feature_transactions_form_cancel">Скасувати</string>
+
+    <string name="feature_transactions_menu">Інші дії</string>
+    <string name="feature_transactions_form_required">Обов’язкове поле</string>
+    <string name="feature_transactions_form_delete">Видалити</string>
+
+    <!-- Planned group -->
+    <plurals name="feature_transactions_planned_title">
+        <item quantity="one">Заплановано до %1$s · %2$d платіж</item>
+        <item quantity="few">Заплановано до %1$s · %2$d платежі</item>
+        <item quantity="many">Заплановано до %1$s · %2$d платежів</item>
+        <item quantity="other">Заплановано до %1$s · %2$d платежу</item>
+    </plurals>
+    <plurals name="feature_transactions_planned_more">
+        <item quantity="one">Ще %1$d — до %2$s</item>
+        <item quantity="few">Ще %1$d — до %2$s</item>
+        <item quantity="many">Ще %1$d — до %2$s</item>
+        <item quantity="other">Ще %1$d — до %2$s</item>
+    </plurals>
+    <string name="feature_transactions_planned_less">Згорнути до найближчих</string>
+    <string name="feature_transactions_planned_today">сьогодні</string>
+    <plurals name="feature_transactions_planned_in_days">
+        <item quantity="one">через %d день</item>
+        <item quantity="few">через %d дні</item>
+        <item quantity="many">через %d днів</item>
+        <item quantity="other">через %d дня</item>
+    </plurals>
+    <plurals name="feature_transactions_planned_days_ago">
+        <item quantity="one">%d день тому</item>
+        <item quantity="few">%d дні тому</item>
+        <item quantity="many">%d днів тому</item>
+        <item quantity="other">%d дня тому</item>
+    </plurals>
+    <string name="feature_transactions_planned_not_found">Не знайдено в банку</string>
+    <string name="feature_transactions_planned_auto">Створиться автоматично</string>
+    <plurals name="feature_transactions_planned_repeats">
+        <item quantity="one">×%1$d до %2$s</item>
+        <item quantity="few">×%1$d до %2$s</item>
+        <item quantity="many">×%1$d до %2$s</item>
+        <item quantity="other">×%1$d до %2$s</item>
+    </plurals>
+    <string name="feature_transactions_planned_confirm">Зберегти як операцію</string>
+    <string name="feature_transactions_planned_link">Пов’язати з операцією</string>
+    <string name="feature_transactions_planned_skip">Пропустити цей раз</string>
+    <string name="feature_transactions_planned_edit_series">Редагувати серію</string>
+    <string name="feature_transactions_planned_confirm_title">Зберегти «%1$s» як операцію</string>
+    <string name="feature_transactions_planned_confirm_hint">Сума цього платежу щоразу різна — вкажіть, скільки сплачено.</string>
+    <string name="feature_transactions_planned_link_planned">Заплановано на %1$s · %2$s · %3$s</string>
+    <string name="feature_transactions_planned_link_none">Схожих операцій за 10 днів навколо дати немає</string>
+    <string name="feature_transactions_planned_link_same_account">той самий рахунок</string>
+    <string name="feature_transactions_planned_link_other_account">інший рахунок</string>
+    <string name="feature_transactions_planned_link_more_by">сума більша на %1$s</string>
+    <string name="feature_transactions_planned_link_less_by">сума менша на %1$s</string>
+    <plurals name="feature_transactions_planned_link_earlier">
+        <item quantity="one">на %d день раніше</item>
+        <item quantity="few">на %d дні раніше</item>
+        <item quantity="many">на %d днів раніше</item>
+        <item quantity="other">на %d дня раніше</item>
+    </plurals>
+    <plurals name="feature_transactions_planned_link_later">
+        <item quantity="one">на %d день пізніше</item>
+        <item quantity="few">на %d дні пізніше</item>
+        <item quantity="many">на %d днів пізніше</item>
+        <item quantity="other">на %d дня пізніше</item>
+    </plurals>
+    <string name="feature_transactions_planned_link_submit">Пов’язати</string>
+
+    <!-- Recurring payments -->
+    <string name="feature_transactions_recurring_title">Регулярні платежі</string>
+    <string name="feature_transactions_recurring_add">Новий платіж</string>
+    <string name="feature_transactions_recurring_monthly_out">Витрати на місяць</string>
+    <string name="feature_transactions_recurring_monthly_in">Доходи на місяць</string>
+    <string name="feature_transactions_recurring_active">Активних серій</string>
+    <string name="feature_transactions_recurring_monthly_hint">Щотижневі й щорічні платежі перераховано на місяць. Перекази між своїми рахунками не враховано.</string>
+    <string name="feature_transactions_recurring_empty">Ще немає регулярних платежів. Додайте оренду, підписки чи зарплату — вони з’являться в операціях і прогнозі.</string>
+    <string name="feature_transactions_recurring_auto">Автоматично</string>
+    <string name="feature_transactions_recurring_next">наступний %1$s</string>
+    <string name="feature_transactions_recurring_stopped_on">зупинено %1$s</string>
+    <string name="feature_transactions_recurring_stopped">Зупинені</string>
+    <string name="feature_transactions_schedule_day_of_month">%1$d-го</string>
+    <string name="feature_transactions_schedule_every_day">щодня</string>
+    <string name="feature_transactions_schedule_every_week">щотижня в</string>
+    <string name="feature_transactions_schedule_every_month">щомісяця</string>
+    <string name="feature_transactions_schedule_every_year">щороку</string>
+    <plurals name="feature_transactions_schedule_every_n_days">
+        <item quantity="one">кожні %d день</item>
+        <item quantity="few">кожні %d дні</item>
+        <item quantity="many">кожні %d днів</item>
+        <item quantity="other">кожні %d дня</item>
+    </plurals>
+    <plurals name="feature_transactions_schedule_every_n_weeks">
+        <item quantity="one">кожні %d тиждень,</item>
+        <item quantity="few">кожні %d тижні,</item>
+        <item quantity="many">кожні %d тижнів,</item>
+        <item quantity="other">кожні %d тижня,</item>
+    </plurals>
+    <plurals name="feature_transactions_schedule_every_n_months">
+        <item quantity="one">кожні %d місяць,</item>
+        <item quantity="few">кожні %d місяці,</item>
+        <item quantity="many">кожні %d місяців,</item>
+        <item quantity="other">кожні %d місяця,</item>
+    </plurals>
+    <plurals name="feature_transactions_schedule_every_n_years">
+        <item quantity="one">кожні %d рік,</item>
+        <item quantity="few">кожні %d роки,</item>
+        <item quantity="many">кожні %d років,</item>
+        <item quantity="other">кожні %d року,</item>
+    </plurals>
+    <string name="feature_transactions_recurring_new_title">Новий регулярний платіж</string>
+    <string name="feature_transactions_recurring_edit_title">Регулярний платіж</string>
+    <string name="feature_transactions_recurring_name">Назва</string>
+    <string name="feature_transactions_recurring_variable">Сума щоразу різна — у прогнозі показувати як орієнтовну</string>
+    <string name="feature_transactions_recurring_schedule">Розклад</string>
+    <string name="feature_transactions_recurring_every">Кожні</string>
+    <plurals name="feature_transactions_unit_days">
+        <item quantity="one">день</item>
+        <item quantity="few">дні</item>
+        <item quantity="many">днів</item>
+        <item quantity="other">дня</item>
+    </plurals>
+    <plurals name="feature_transactions_unit_weeks">
+        <item quantity="one">тиждень</item>
+        <item quantity="few">тижні</item>
+        <item quantity="many">тижнів</item>
+        <item quantity="other">тижня</item>
+    </plurals>
+    <plurals name="feature_transactions_unit_months">
+        <item quantity="one">місяць</item>
+        <item quantity="few">місяці</item>
+        <item quantity="many">місяців</item>
+        <item quantity="other">місяця</item>
+    </plurals>
+    <plurals name="feature_transactions_unit_years">
+        <item quantity="one">рік</item>
+        <item quantity="few">роки</item>
+        <item quantity="many">років</item>
+        <item quantity="other">року</item>
+    </plurals>
+    <string name="feature_transactions_frequency_daily">Щодня</string>
+    <string name="feature_transactions_frequency_weekly">Щотижня</string>
+    <string name="feature_transactions_frequency_monthly">Щомісяця</string>
+    <string name="feature_transactions_frequency_yearly">Щороку</string>
+    <string name="feature_transactions_recurring_day_of_month">Число</string>
+    <string name="feature_transactions_recurring_short_months">У коротших місяцях — останній день</string>
+    <string name="feature_transactions_recurring_year_day">День року</string>
+    <string name="feature_transactions_recurring_start_from">Починаючи з</string>
+    <string name="feature_transactions_recurring_preview">Найближчі: %1$s</string>
+    <string name="feature_transactions_recurring_end">Закінчення</string>
+    <string name="feature_transactions_recurring_end_never">Ніколи</string>
+    <string name="feature_transactions_recurring_end_on_date">Дата</string>
+    <string name="feature_transactions_recurring_end_after_count">Кількість</string>
+    <string name="feature_transactions_recurring_end_date_label">Останній платіж не пізніше</string>
+    <string name="feature_transactions_recurring_count_label">Кількість платежів</string>
+    <string name="feature_transactions_recurring_end_before_start">Кінець не може бути раніше за перший платіж</string>
+    <string name="feature_transactions_recurring_mode">Як обробляти</string>
+    <string name="feature_transactions_recurring_remind">Нагадувати й звіряти з банком</string>
+    <string name="feature_transactions_recurring_remind_hint">Коли Monobank чи імпорт принесе схожу операцію, платіж позначиться виконаним. Якщо нічого не прийде — нагадаємо в операціях.</string>
+    <string name="feature_transactions_recurring_auto_hint">Операція з’явиться в день платежу. Підходить для готівки й рахунків без синхронізації.</string>
+    <string name="feature_transactions_recurring_tolerance">Точність суми</string>
+    <string name="feature_transactions_recurring_exact">точна сума</string>
+    <string name="feature_transactions_recurring_percent">сума ±%1$d%%</string>
+    <string name="feature_transactions_recurring_stop">Зупинити</string>
+    <string name="feature_transactions_recurring_delete_title">Видалити платіж «%1$s»?</string>
+    <string name="feature_transactions_recurring_delete_text">Операції, якими його сплачено, залишаться.</string>
 </resources>

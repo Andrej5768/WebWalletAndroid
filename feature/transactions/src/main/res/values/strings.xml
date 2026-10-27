@@ -130,4 +130,137 @@
     <string name="feature_transactions_form_more">More</string>
     <string name="feature_transactions_form_ok">OK</string>
     <string name="feature_transactions_form_cancel">Cancel</string>
+
+    <string name="feature_transactions_menu">More actions</string>
+    <string name="feature_transactions_form_required">Required</string>
+    <string name="feature_transactions_form_delete">Delete</string>
+
+    <!-- Planned group -->
+    <plurals name="feature_transactions_planned_title">
+        <item quantity="one">Planned until %1$s · %2$d payment</item>
+        <item quantity="other">Planned until %1$s · %2$d payments</item>
+    </plurals>
+    <plurals name="feature_transactions_planned_more">
+        <item quantity="one">%1$d more — until %2$s</item>
+        <item quantity="other">%1$d more — until %2$s</item>
+    </plurals>
+    <string name="feature_transactions_planned_less">Show only the nearest</string>
+    <string name="feature_transactions_planned_today">today</string>
+    <plurals name="feature_transactions_planned_in_days">
+        <item quantity="one">in %d day</item>
+        <item quantity="other">in %d days</item>
+    </plurals>
+    <plurals name="feature_transactions_planned_days_ago">
+        <item quantity="one">%d day ago</item>
+        <item quantity="other">%d days ago</item>
+    </plurals>
+    <string name="feature_transactions_planned_not_found">Not found at the bank</string>
+    <string name="feature_transactions_planned_auto">Will be created automatically</string>
+    <plurals name="feature_transactions_planned_repeats">
+        <item quantity="one">×%1$d until %2$s</item>
+        <item quantity="other">×%1$d until %2$s</item>
+    </plurals>
+    <string name="feature_transactions_planned_confirm">Save as a transaction</string>
+    <string name="feature_transactions_planned_link">Link to a transaction</string>
+    <string name="feature_transactions_planned_skip">Skip this time</string>
+    <string name="feature_transactions_planned_edit_series">Edit the series</string>
+    <string name="feature_transactions_planned_confirm_title">Save “%1$s” as a transaction</string>
+    <string name="feature_transactions_planned_confirm_hint">The amount of this payment varies — enter how much was paid.</string>
+    <string name="feature_transactions_planned_link_planned">Planned for %1$s · %2$s · %3$s</string>
+    <string name="feature_transactions_planned_link_none">No similar transactions within 10 days of the date</string>
+    <string name="feature_transactions_planned_link_same_account">same account</string>
+    <string name="feature_transactions_planned_link_other_account">another account</string>
+    <string name="feature_transactions_planned_link_more_by">%1$s more</string>
+    <string name="feature_transactions_planned_link_less_by">%1$s less</string>
+    <plurals name="feature_transactions_planned_link_earlier">
+        <item quantity="one">%d day earlier</item>
+        <item quantity="other">%d days earlier</item>
+    </plurals>
+    <plurals name="feature_transactions_planned_link_later">
+        <item quantity="one">%d day later</item>
+        <item quantity="other">%d days later</item>
+    </plurals>
+    <string name="feature_transactions_planned_link_submit">Link</string>
+
+    <!-- Recurring payments -->
+    <string name="feature_transactions_recurring_title">Recurring payments</string>
+    <string name="feature_transactions_recurring_add">New payment</string>
+    <string name="feature_transactions_recurring_monthly_out">Expenses per month</string>
+    <string name="feature_transactions_recurring_monthly_in">Income per month</string>
+    <string name="feature_transactions_recurring_active">Active series</string>
+    <string name="feature_transactions_recurring_monthly_hint">Weekly and yearly payments are converted to a month. Transfers between own accounts are left out.</string>
+    <string name="feature_transactions_recurring_empty">No recurring payments yet. Add rent, subscriptions or the salary — they will show up in the transactions and the forecast.</string>
+    <string name="feature_transactions_recurring_auto">Automatic</string>
+    <string name="feature_transactions_recurring_next">next %1$s</string>
+    <string name="feature_transactions_recurring_stopped_on">stopped %1$s</string>
+    <string name="feature_transactions_recurring_stopped">Stopped</string>
+    <string name="feature_transactions_schedule_day_of_month">on the %1$d</string>
+    <string name="feature_transactions_schedule_every_day">daily</string>
+    <string name="feature_transactions_schedule_every_week">weekly on</string>
+    <string name="feature_transactions_schedule_every_month">monthly</string>
+    <string name="feature_transactions_schedule_every_year">yearly on</string>
+    <plurals name="feature_transactions_schedule_every_n_days">
+        <item quantity="one">every %d day</item>
+        <item quantity="other">every %d days</item>
+    </plurals>
+    <plurals name="feature_transactions_schedule_every_n_weeks">
+        <item quantity="one">every %d week,</item>
+        <item quantity="other">every %d weeks,</item>
+    </plurals>
+    <plurals name="feature_transactions_schedule_every_n_months">
+        <item quantity="one">every %d month,</item>
+        <item quantity="other">every %d months,</item>
+    </plurals>
+    <plurals name="feature_transactions_schedule_every_n_years">
+        <item quantity="one">every %d year,</item>
+        <item quantity="other">every %d years,</item>
+    </plurals>
+    <string name="feature_transactions_recurring_new_title">New recurring payment</string>
+    <string name="feature_transactions_recurring_edit_title">Recurring payment</string>
+    <string name="feature_transactions_recurring_name">Name</string>
+    <string name="feature_transactions_recurring_variable">The amount varies — show it as an estimate in the forecast</string>
+    <string name="feature_transactions_recurring_schedule">Schedule</string>
+    <string name="feature_transactions_recurring_every">Every</string>
+    <plurals name="feature_transactions_unit_days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <plurals name="feature_transactions_unit_weeks">
+        <item quantity="one">week</item>
+        <item quantity="other">weeks</item>
+    </plurals>
+    <plurals name="feature_transactions_unit_months">
+        <item quantity="one">month</item>
+        <item quantity="other">months</item>
+    </plurals>
+    <plurals name="feature_transactions_unit_years">
+        <item quantity="one">year</item>
+        <item quantity="other">years</item>
+    </plurals>
+    <string name="feature_transactions_frequency_daily">Daily</string>
+    <string name="feature_transactions_frequency_weekly">Weekly</string>
+    <string name="feature_transactions_frequency_monthly">Monthly</string>
+    <string name="feature_transactions_frequency_yearly">Yearly</string>
+    <string name="feature_transactions_recurring_day_of_month">Day</string>
+    <string name="feature_transactions_recurring_short_months">In shorter months — the last day</string>
+    <string name="feature_transactions_recurring_year_day">Day of the year</string>
+    <string name="feature_transactions_recurring_start_from">Starting from</string>
+    <string name="feature_transactions_recurring_preview">Next: %1$s</string>
+    <string name="feature_transactions_recurring_end">Ends</string>
+    <string name="feature_transactions_recurring_end_never">Never</string>
+    <string name="feature_transactions_recurring_end_on_date">On a date</string>
+    <string name="feature_transactions_recurring_end_after_count">After a number</string>
+    <string name="feature_transactions_recurring_end_date_label">Last payment no later than</string>
+    <string name="feature_transactions_recurring_count_label">Number of payments</string>
+    <string name="feature_transactions_recurring_end_before_start">The end cannot be before the first payment</string>
+    <string name="feature_transactions_recurring_mode">How to handle it</string>
+    <string name="feature_transactions_recurring_remind">Remind and match with the bank</string>
+    <string name="feature_transactions_recurring_remind_hint">When Monobank or an import brings a similar transaction, the payment is marked as paid. If nothing comes, it is shown as a reminder in the transactions.</string>
+    <string name="feature_transactions_recurring_auto_hint">The transaction appears on the day of the payment. Suits cash and accounts without synchronization.</string>
+    <string name="feature_transactions_recurring_tolerance">Amount precision</string>
+    <string name="feature_transactions_recurring_exact">exact amount</string>
+    <string name="feature_transactions_recurring_percent">amount ±%1$d%%</string>
+    <string name="feature_transactions_recurring_stop">Stop</string>
+    <string name="feature_transactions_recurring_delete_title">Delete the payment “%1$s”?</string>
+    <string name="feature_transactions_recurring_delete_text">The transactions that paid it stay.</string>
 </resources>
