@@ -97,4 +97,6 @@
     <string name="feature_auth_consent_allow">Allow</string>
     <string name="feature_auth_consent_not_now">Not now</string>
     <string name="feature_auth_sign_in_link">Sign in</string>
+    <string name="feature_auth_login_demo">Try the demo</string>
+    <string name="feature_auth_login_demo_hint">No sign-up: accounts, transactions and the budget are already filled with examples</string>
 </resources>

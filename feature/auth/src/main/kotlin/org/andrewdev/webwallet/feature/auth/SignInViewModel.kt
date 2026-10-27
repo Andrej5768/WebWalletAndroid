@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.andrewdev.webwallet.core.auth.AuthRepository
 import org.andrewdev.webwallet.core.auth.SignInOutcome
+import org.andrewdev.webwallet.core.data.AppConfigRepository
 import org.andrewdev.webwallet.core.network.ApiError
 import org.andrewdev.webwallet.core.network.ApiResult
 import org.andrewdev.webwallet.core.network.ErrorCode
@@ -30,6 +31,9 @@ data class SignInUiState(
     val cooldownSeconds: Int = 0,
     /** EMAIL_NOT_VERIFIED: the error shows a "Resend" action. */
     val notVerified: Boolean = false,
+    /** The server offers a demo sandbox (B8 feature flag). */
+    val demoOffered: Boolean = false,
+    val startingDemo: Boolean = false,
 ) {
     val canSubmit: Boolean get() = email.isNotBlank() && password.isNotEmpty() && !submitting && cooldownSeconds == 0
 }
@@ -43,10 +47,19 @@ sealed interface SignInEffect {
 }
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val auth: AuthRepository) : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val auth: AuthRepository,
+    appConfig: AppConfigRepository,
+) : ViewModel() {
 
     private val state = MutableStateFlow(SignInUiState())
     private val effects = Channel<SignInEffect>(Channel.BUFFERED)
+
+    init {
+        viewModelScope.launch {
+            appConfig.config.collect { config -> state.update { it.copy(demoOffered = config?.demo ?: false) } }
+        }
+    }
 
     val uiState: StateFlow<SignInUiState> = state.asStateFlow()
     val effect = effects.receiveAsFlow()
@@ -86,6 +99,18 @@ class SignInViewModel @Inject constructor(private val auth: AuthRepository) : Vi
                     }
                 }
                 is ApiResult.Err -> fail(result.error)
+            }
+        }
+    }
+
+    /** "Try the demo": a sandbox with example data, signed in like any other session. */
+    fun startDemo() {
+        if (state.value.startingDemo) return
+        state.update { it.copy(startingDemo = true, error = null) }
+        viewModelScope.launch {
+            when (val result = auth.signInDemo()) {
+                is ApiResult.Ok -> state.update { it.copy(startingDemo = false) }
+                is ApiResult.Err -> state.update { it.copy(startingDemo = false, error = result.error) }
             }
         }
     }

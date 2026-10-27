@@ -2,14 +2,18 @@ package org.andrewdev.webwallet.feature.auth
 
 import app.cash.turbine.test
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import org.andrewdev.webwallet.core.auth.AuthRepository
 import org.andrewdev.webwallet.core.auth.SignInOutcome
+import org.andrewdev.webwallet.core.data.AppConfigRepository
+import org.andrewdev.webwallet.core.model.AppConfig
 import org.andrewdev.webwallet.core.network.ApiError
 import org.andrewdev.webwallet.core.network.ApiResult
 import org.andrewdev.webwallet.core.network.ErrorCode
@@ -17,6 +21,7 @@ import org.andrewdev.webwallet.core.testing.MainDispatcherExtension
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -25,7 +30,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 class SignInViewModelTest {
 
     private val auth = mockk<AuthRepository>()
-    private val viewModel = SignInViewModel(auth)
+    private val appConfig = mockk<AppConfigRepository> { every { config } returns flowOf(null) }
+
+    // Built after the extension installed the test Main dispatcher, since the init block launches on it
+    private lateinit var viewModel: SignInViewModel
+
+    @BeforeEach
+    fun createViewModel() {
+        viewModel = SignInViewModel(auth, appConfig)
+    }
 
     private fun problem(code: ErrorCode, status: Int, extensions: Map<String, String> = emptyMap()) = ApiError.Problem(
         status,
@@ -117,5 +130,21 @@ class SignInViewModelTest {
             viewModel.resendVerification()
             assertEquals(SignInEffect.CheckMail("ada@example.com"), awaitItem())
         }
+    }
+
+    @Test
+    fun `the demo is offered only when the server says so, and opens like a sign-in`() = runTest {
+        assertFalse(viewModel.uiState.value.demoOffered)
+        val config = AppConfig(1, 1, "https://example.com/app", false, false, false, false, demo = true)
+        every { appConfig.config } returns flowOf(config)
+        coEvery { auth.signInDemo() } returns ApiResult.Err(problem(ErrorCode.TOO_MANY_ATTEMPTS, 429))
+        viewModel = SignInViewModel(auth, appConfig)
+        advanceUntilIdle()
+        assertTrue(viewModel.uiState.value.demoOffered)
+
+        viewModel.startDemo()
+        advanceUntilIdle()
+        assertFalse(viewModel.uiState.value.startingDemo)
+        assertEquals(ErrorCode.TOO_MANY_ATTEMPTS, (viewModel.uiState.value.error as ApiError.Problem).code)
     }
 }

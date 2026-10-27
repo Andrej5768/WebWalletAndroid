@@ -25,6 +25,7 @@ class GeneratedModelsTest {
         assertEquals("https://play.google.com/store/apps/details?id=org.andrewdev.webwallet", config.android.storeUrl)
         assertTrue(config.features.googleSignIn)
         assertFalse(config.features.push)
+        assertTrue(config.features.demo)
     }
 
     @Test

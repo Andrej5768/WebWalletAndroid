@@ -21,4 +21,14 @@
     <string name="feature_more_coming_soon_title">Незабаром</string>
     <string name="feature_more_coming_soon_text">Цей розділ ще в дорозі до застосунку. Поки що він доступний на сайті.</string>
     <string name="feature_more_open_web">Відкрити на сайті</string>
+    <string name="feature_more_demo_banner">Це демо: дані зникнуть %1$s. Хочете зберегти їх?</string>
+    <string name="feature_more_demo_banner_no_date">Це демо: дані зникнуть через добу. Хочете зберегти їх?</string>
+    <string name="feature_more_demo_keep">Зберегти акаунт</string>
+    <string name="feature_more_demo_claim_text">Усе, що ви зробили в демо, залишиться. Вкажіть пошту та пароль, і ми надішлемо лист для підтвердження.</string>
+    <string name="feature_more_demo_first_name">Ім’я</string>
+    <string name="feature_more_demo_email">Електронна пошта</string>
+    <string name="feature_more_demo_password">Пароль</string>
+    <string name="feature_more_demo_password_hint">Щонайменше 8 символів</string>
+    <string name="feature_more_demo_claimed">Акаунт збережено. Перевірте пошту: лист із підтвердженням уже в дорозі.</string>
+    <string name="feature_more_demo_done">Готово</string>
 </resources>

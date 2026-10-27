@@ -96,5 +96,8 @@ data class TransactionEditorKey(
 
 @Serializable data object ChangePasswordKey : NavKey
 
+/** Keeping a demo sandbox as an account: email, password and name. */
+@Serializable data object ClaimDemoKey : NavKey
+
 /** Sections that arrive with later milestones: the hub shows them as "coming soon". */
 @Serializable data class ComingSoonKey(val section: String) : NavKey

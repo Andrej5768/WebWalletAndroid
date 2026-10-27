@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -69,6 +71,7 @@ fun SignInRoute(
         onPasswordChange = viewModel::onPasswordChange,
         onSubmit = viewModel::submit,
         onResend = viewModel::resendVerification,
+        onDemo = viewModel::startDemo,
     )
 }
 
@@ -81,6 +84,7 @@ fun SignInScreen(
     onPasswordChange: (String) -> Unit,
     onSubmit: () -> Unit,
     onResend: () -> Unit,
+    onDemo: () -> Unit = {},
 ) {
     AuthScaffold(
         title = stringResource(R.string.feature_auth_login_title),
@@ -137,6 +141,22 @@ fun SignInScreen(
         }
         TextButton(onClick = actions.openForgotPassword, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text(stringResource(R.string.feature_auth_login_forgot))
+        }
+        if (state.demoOffered) {
+            OutlinedButton(
+                onClick = onDemo,
+                enabled = !state.startingDemo && !state.submitting,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(R.string.feature_auth_login_demo))
+            }
+            Text(
+                stringResource(R.string.feature_auth_login_demo_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }

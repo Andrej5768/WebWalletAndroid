@@ -261,6 +261,8 @@ fun UserResponse.toModel(): User = User(
     twoFactorEnabled = twoFactorEnabled,
     recoveryCodesLeft = recoveryCodesLeft,
     googleEmail = googleEmail,
+    demo = demo,
+    demoExpiresAt = demoExpiresAt?.toInstant(),
 )
 
 /** The profile as cached in `json_cache`. */
@@ -277,16 +279,19 @@ data class UserJson(
     val twoFactorEnabled: Boolean,
     val recoveryCodesLeft: Long,
     val googleEmail: String?,
+    val demo: Boolean = false,
+    val demoExpiresAt: String? = null,
 ) {
     fun toModel() = User(
         id, email, emailVerified, firstName, lastName, CurrencyCode(baseCurrency), locale, hasPassword,
-        twoFactorEnabled, recoveryCodesLeft, googleEmail,
+        twoFactorEnabled, recoveryCodesLeft, googleEmail, demo, demoExpiresAt?.let(java.time.Instant::parse),
     )
 
     companion object {
         fun of(user: User) = UserJson(
             user.id, user.email, user.emailVerified, user.firstName, user.lastName, user.baseCurrency.code,
             user.locale, user.hasPassword, user.twoFactorEnabled, user.recoveryCodesLeft, user.googleEmail,
+            user.demo, user.demoExpiresAt?.toString(),
         )
     }
 }
@@ -324,4 +329,5 @@ fun AppConfigResponse.toModel(): AppConfig = AppConfig(
     marketSearch = features.marketSearch,
     telegram = features.telegram,
     push = features.push,
+    demo = features.demo,
 )

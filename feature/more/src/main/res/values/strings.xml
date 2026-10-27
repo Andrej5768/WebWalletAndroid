@@ -21,4 +21,14 @@
     <string name="feature_more_coming_soon_title">Coming soon</string>
     <string name="feature_more_coming_soon_text">This section is on its way to the app. Until then it is available on the web.</string>
     <string name="feature_more_open_web">Open on the web</string>
+    <string name="feature_more_demo_banner">This is a demo: the data disappears on %1$s. Want to keep it?</string>
+    <string name="feature_more_demo_banner_no_date">This is a demo: the data disappears in a day. Want to keep it?</string>
+    <string name="feature_more_demo_keep">Keep the account</string>
+    <string name="feature_more_demo_claim_text">Everything you did in the demo stays. Enter your email and a password, and we will send a confirmation email.</string>
+    <string name="feature_more_demo_first_name">First name</string>
+    <string name="feature_more_demo_email">Email</string>
+    <string name="feature_more_demo_password">Password</string>
+    <string name="feature_more_demo_password_hint">At least 8 characters</string>
+    <string name="feature_more_demo_claimed">Account kept. Check your email: the confirmation message is on its way.</string>
+    <string name="feature_more_demo_done">Done</string>
 </resources>

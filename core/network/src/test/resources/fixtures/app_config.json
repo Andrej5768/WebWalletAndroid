@@ -8,6 +8,7 @@
     "googleSignIn": true,
     "marketSearch": true,
     "telegram": true,
-    "push": false
+    "push": false,
+    "demo": true
   }
 }

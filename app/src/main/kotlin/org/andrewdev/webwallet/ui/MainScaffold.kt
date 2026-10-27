@@ -1,6 +1,8 @@
 package org.andrewdev.webwallet.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -42,6 +44,7 @@ import org.andrewdev.webwallet.core.navigation.AccountTransactionsKey
 import org.andrewdev.webwallet.core.navigation.AccountsKey
 import org.andrewdev.webwallet.core.navigation.AppLockSettingsKey
 import org.andrewdev.webwallet.core.navigation.BudgetKey
+import org.andrewdev.webwallet.core.navigation.ClaimDemoKey
 import org.andrewdev.webwallet.core.navigation.ComingSoonKey
 import org.andrewdev.webwallet.core.navigation.DeepLink
 import org.andrewdev.webwallet.core.navigation.MoreKey
@@ -61,7 +64,9 @@ import org.andrewdev.webwallet.feature.accounts.ui.AccountsActions
 import org.andrewdev.webwallet.feature.accounts.ui.AccountsRoute
 import org.andrewdev.webwallet.feature.lock.ui.PinSetupRoute
 import org.andrewdev.webwallet.feature.lock.ui.biometricAvailable
+import org.andrewdev.webwallet.feature.more.ClaimDemoRoute
 import org.andrewdev.webwallet.feature.more.ComingSoonScreen
+import org.andrewdev.webwallet.feature.more.DemoBanner
 import org.andrewdev.webwallet.feature.more.MoreActions
 import org.andrewdev.webwallet.feature.more.MoreRoute
 import org.andrewdev.webwallet.feature.overview.ui.OverviewActions
@@ -137,144 +142,158 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
         },
         snackbarHost = { SnackbarHost(snackbar) },
     ) { padding ->
-        NavDisplay(
-            backStack = stack,
-            modifier = Modifier.padding(padding),
-            onBack = { stack.removeLastOrNull() },
-            entryDecorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator(),
-            ),
-            entryProvider = entryProvider {
-                entry<OverviewKey> {
-                    OverviewRoute(
-                        OverviewActions(
-                            openTransactions = { tab = 1 },
-                            openTransaction = { stack.add(TransactionEditorKey(id = it)) },
-                            openBudget = { tab = 2 },
-                            openAccounts = { tab = 3 },
-                            newAccount = { stack.add(AccountEditorKey()) },
-                        ),
-                    )
-                }
-                entry<TransactionsKey> {
-                    FeedRoute(FeedScope.All, feedActions(stack, openEditor))
-                }
-                entry<AccountTransactionsKey> { key ->
-                    FeedRoute(
-                        FeedScope.Account(key.accountId),
-                        feedActions(stack, openEditor),
-                    )
-                }
-                entry<PayeeTransactionsKey> { key ->
-                    FeedRoute(
-                        FeedScope.Payee(key.payeeId, key.name),
-                        feedActions(stack, openEditor),
-                    )
-                }
-                entry<TransferPairsKey> {
-                    TransferPairsRoute(
-                        onBack = { stack.removeLastOrNull() },
-                        onOpen = { stack.add(TransactionEditorKey(id = it)) },
-                    )
-                }
-                entry<TransactionEditorKey> { key ->
-                    EditorRoute(
-                        args = EditorArgs(key.id, key.type, key.accountId, key.categoryId, key.payeeId, key.fromFab),
-                        onClose = { stack.removeLastOrNull() },
-                        onSaved = { _, fromFab ->
-                            stack.removeLastOrNull()
-                            scope.launch {
-                                val result = snackbar.showSnackbar(
-                                    savedText,
-                                    actionLabel = if (fromFab) addAnotherText else null,
-                                )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    openEditor(TransactionEditorKey(type = TransactionType.EXPENSE, fromFab = true))
+        Column(modifier = Modifier.padding(padding).consumeWindowInsets(padding)) {
+            if (stack.size == 1) DemoBanner(onKeep = { stack.add(ClaimDemoKey) })
+            NavDisplay(
+                backStack = stack,
+                modifier = Modifier.weight(1f),
+                onBack = { stack.removeLastOrNull() },
+                entryDecorators = listOf(
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator(),
+                ),
+                entryProvider = entryProvider {
+                    entry<OverviewKey> {
+                        OverviewRoute(
+                            OverviewActions(
+                                openTransactions = { tab = 1 },
+                                openTransaction = { stack.add(TransactionEditorKey(id = it)) },
+                                openBudget = { tab = 2 },
+                                openAccounts = { tab = 3 },
+                                newAccount = { stack.add(AccountEditorKey()) },
+                            ),
+                        )
+                    }
+                    entry<TransactionsKey> {
+                        FeedRoute(FeedScope.All, feedActions(stack, openEditor))
+                    }
+                    entry<AccountTransactionsKey> { key ->
+                        FeedRoute(
+                            FeedScope.Account(key.accountId),
+                            feedActions(stack, openEditor),
+                        )
+                    }
+                    entry<PayeeTransactionsKey> { key ->
+                        FeedRoute(
+                            FeedScope.Payee(key.payeeId, key.name),
+                            feedActions(stack, openEditor),
+                        )
+                    }
+                    entry<TransferPairsKey> {
+                        TransferPairsRoute(
+                            onBack = { stack.removeLastOrNull() },
+                            onOpen = { stack.add(TransactionEditorKey(id = it)) },
+                        )
+                    }
+                    entry<TransactionEditorKey> { key ->
+                        EditorRoute(
+                            args = EditorArgs(
+                                key.id,
+                                key.type,
+                                key.accountId,
+                                key.categoryId,
+                                key.payeeId,
+                                key.fromFab,
+                            ),
+                            onClose = { stack.removeLastOrNull() },
+                            onSaved = { _, fromFab ->
+                                stack.removeLastOrNull()
+                                scope.launch {
+                                    val result = snackbar.showSnackbar(
+                                        savedText,
+                                        actionLabel = if (fromFab) addAnotherText else null,
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        openEditor(TransactionEditorKey(type = TransactionType.EXPENSE, fromFab = true))
+                                    }
                                 }
-                            }
-                        },
-                    )
-                }
-                entry<BudgetKey> {
-                    ComingSoonScreen(section = "budget", onBack = { tab = 0 })
-                }
-                entry<AccountsKey> {
-                    AccountsRoute(
-                        AccountsActions(
-                            openEditor = { stack.add(AccountEditorKey(it)) },
-                            openTransactions = { stack.add(AccountTransactionsKey(it)) },
-                            openPayee = { id, name -> stack.add(PayeeTransactionsKey(id, name)) },
-                            newTransaction = { accountId, type ->
-                                openEditor(
-                                    TransactionEditorKey(type = type, accountId = accountId),
-                                )
                             },
-                        ),
-                    )
-                }
-                entry<AccountEditorKey> { key ->
-                    AccountEditorRoute(
-                        id = key.id,
-                        onClose = { stack.removeLastOrNull() },
-                    )
-                }
-                entry<MoreKey> {
-                    MoreRoute(
-                        MoreActions(
-                            openSettings = { stack.add(SettingsKey) },
-                            openAbout = { stack.add(AboutKey) },
-                            openSection = { section -> stack.add(ComingSoonKey(section.name.lowercase())) },
-                        ),
-                    )
-                }
-                entry<ComingSoonKey> { key ->
-                    ComingSoonScreen(
-                        section = key.section,
-                        onBack = { stack.removeLastOrNull() },
-                    )
-                }
-                entry<SettingsKey> {
-                    SettingsRootScreen(
-                        SettingsActions(
-                            back = { stack.removeLastOrNull() },
-                            openProfile = { stack.add(ProfileSettingsKey) },
-                            openSecurity = { stack.add(SecuritySettingsKey) },
-                            openAppLock = { stack.add(AppLockSettingsKey) },
-                            openPrivacy = { stack.add(PrivacySettingsKey) },
-                            openAbout = { stack.add(AboutKey) },
-                        ),
-                    )
-                }
-                entry<ProfileSettingsKey> { ProfileRoute(onBack = { stack.removeLastOrNull() }) }
-                entry<SecuritySettingsKey> {
-                    SecurityRoute(onBack = { stack.removeLastOrNull() }, onAppLock = { stack.add(AppLockSettingsKey) })
-                }
-                entry<AppLockSettingsKey> {
-                    AppLockSettingsRoute(
-                        biometricAvailable = biometricAvailable(context),
-                        onBack = { stack.removeLastOrNull() },
-                        onSetUp = { stack.add(PinSetupKey(PinSetupMode.CREATE)) },
-                        onChangePin = { stack.add(PinSetupKey(PinSetupMode.CHANGE)) },
-                    )
-                }
-                entry<PinSetupKey> { key ->
-                    PinSetupRoute(change = key.mode == PinSetupMode.CHANGE, onClose = {
-                        stack.removeLastOrNull()
-                    })
-                }
-                entry<PrivacySettingsKey> { PrivacyRoute(onBack = { stack.removeLastOrNull() }) }
-                entry<AboutKey> {
-                    AboutScreen(
-                        versionName = BuildConfig.VERSION_NAME,
-                        versionCode = BuildConfig.VERSION_CODE,
-                        backendUrl = if (BuildConfig.DEBUG) BuildConfig.API_BASE_URL else null,
-                        storeUrl = STORE_URL,
-                        onBack = { stack.removeLastOrNull() },
-                    )
-                }
-            },
-        )
+                        )
+                    }
+                    entry<BudgetKey> {
+                        ComingSoonScreen(section = "budget", onBack = { tab = 0 })
+                    }
+                    entry<AccountsKey> {
+                        AccountsRoute(
+                            AccountsActions(
+                                openEditor = { stack.add(AccountEditorKey(it)) },
+                                openTransactions = { stack.add(AccountTransactionsKey(it)) },
+                                openPayee = { id, name -> stack.add(PayeeTransactionsKey(id, name)) },
+                                newTransaction = { accountId, type ->
+                                    openEditor(
+                                        TransactionEditorKey(type = type, accountId = accountId),
+                                    )
+                                },
+                            ),
+                        )
+                    }
+                    entry<AccountEditorKey> { key ->
+                        AccountEditorRoute(
+                            id = key.id,
+                            onClose = { stack.removeLastOrNull() },
+                        )
+                    }
+                    entry<MoreKey> {
+                        MoreRoute(
+                            MoreActions(
+                                openSettings = { stack.add(SettingsKey) },
+                                openAbout = { stack.add(AboutKey) },
+                                openSection = { section -> stack.add(ComingSoonKey(section.name.lowercase())) },
+                            ),
+                        )
+                    }
+                    entry<ComingSoonKey> { key ->
+                        ComingSoonScreen(
+                            section = key.section,
+                            onBack = { stack.removeLastOrNull() },
+                        )
+                    }
+                    entry<ClaimDemoKey> { ClaimDemoRoute(onBack = { stack.removeLastOrNull() }) }
+                    entry<SettingsKey> {
+                        SettingsRootScreen(
+                            SettingsActions(
+                                back = { stack.removeLastOrNull() },
+                                openProfile = { stack.add(ProfileSettingsKey) },
+                                openSecurity = { stack.add(SecuritySettingsKey) },
+                                openAppLock = { stack.add(AppLockSettingsKey) },
+                                openPrivacy = { stack.add(PrivacySettingsKey) },
+                                openAbout = { stack.add(AboutKey) },
+                            ),
+                        )
+                    }
+                    entry<ProfileSettingsKey> { ProfileRoute(onBack = { stack.removeLastOrNull() }) }
+                    entry<SecuritySettingsKey> {
+                        SecurityRoute(
+                            onBack = { stack.removeLastOrNull() },
+                            onAppLock = { stack.add(AppLockSettingsKey) },
+                        )
+                    }
+                    entry<AppLockSettingsKey> {
+                        AppLockSettingsRoute(
+                            biometricAvailable = biometricAvailable(context),
+                            onBack = { stack.removeLastOrNull() },
+                            onSetUp = { stack.add(PinSetupKey(PinSetupMode.CREATE)) },
+                            onChangePin = { stack.add(PinSetupKey(PinSetupMode.CHANGE)) },
+                        )
+                    }
+                    entry<PinSetupKey> { key ->
+                        PinSetupRoute(change = key.mode == PinSetupMode.CHANGE, onClose = {
+                            stack.removeLastOrNull()
+                        })
+                    }
+                    entry<PrivacySettingsKey> { PrivacyRoute(onBack = { stack.removeLastOrNull() }) }
+                    entry<AboutKey> {
+                        AboutScreen(
+                            versionName = BuildConfig.VERSION_NAME,
+                            versionCode = BuildConfig.VERSION_CODE,
+                            backendUrl = if (BuildConfig.DEBUG) BuildConfig.API_BASE_URL else null,
+                            storeUrl = STORE_URL,
+                            onBack = { stack.removeLastOrNull() },
+                        )
+                    }
+                },
+            )
+        }
     }
 }
 

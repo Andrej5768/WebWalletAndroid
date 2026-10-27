@@ -1,7 +1,10 @@
 package org.andrewdev.webwallet.ui
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -127,18 +130,26 @@ private fun RootContent(
     }
 }
 
-/** Resources in the chosen language on every Android version: the context is re-created with that locale. */
+/**
+ * Resources in the chosen language on every Android version. The activity stays the base of the context, since
+ * Hilt and the view model stores look for it through the wrapper chain; only the resources are the localized ones.
+ */
 @Composable
 fun LocalizedContent(languageTag: String, content: @Composable () -> Unit) {
     val base = LocalContext.current
     val configuration = LocalConfiguration.current
     val localized = remember(base, languageTag, configuration) {
         val config = Configuration(configuration).apply { setLocale(java.util.Locale.forLanguageTag(languageTag)) }
-        base.createConfigurationContext(config) to config
+        LocalizedContext(base, base.createConfigurationContext(config)) to config
     }
     CompositionLocalProvider(
         LocalContext provides localized.first,
         LocalConfiguration provides localized.second,
         content = content,
     )
+}
+
+/** The activity (or whatever context) with the resources of another locale. */
+private class LocalizedContext(base: Context, private val localized: Context) : ContextWrapper(base) {
+    override fun getResources(): Resources = localized.resources
 }

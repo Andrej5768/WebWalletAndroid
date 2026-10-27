@@ -97,4 +97,6 @@
     <string name="feature_auth_consent_allow">Дозволити</string>
     <string name="feature_auth_consent_not_now">Не зараз</string>
     <string name="feature_auth_sign_in_link">Увійти</string>
+    <string name="feature_auth_login_demo">Спробувати демо</string>
+    <string name="feature_auth_login_demo_hint">Без реєстрації: рахунки, операції та бюджет уже заповнені прикладами</string>
 </resources>

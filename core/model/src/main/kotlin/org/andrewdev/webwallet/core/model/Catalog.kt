@@ -40,6 +40,9 @@ data class User(
     val twoFactorEnabled: Boolean,
     val recoveryCodesLeft: Long,
     val googleEmail: String?,
+    /** A demo sandbox opened without registration; [demoExpiresAt] says when it is deleted. */
+    val demo: Boolean = false,
+    val demoExpiresAt: java.time.Instant? = null,
 ) {
     val fullName: String get() = listOfNotNull(firstName, lastName).joinToString(" ")
 
@@ -57,4 +60,6 @@ data class AppConfig(
     val marketSearch: Boolean,
     val telegram: Boolean,
     val push: Boolean,
+    /** Whether a demo sandbox can be opened without registration. */
+    val demo: Boolean = false,
 )

@@ -41,6 +41,7 @@ class AppConfigRepository @Inject constructor(
                         telegram = model.telegram,
                         push = model.push,
                         fetchedAtEpochMs = clock.now().toEpochMilli(),
+                        demo = model.demo,
                     ),
                 )
             }
@@ -48,7 +49,16 @@ class AppConfigRepository @Inject constructor(
     }
 
     private fun AppConfigData.toModel() =
-        AppConfig(minSupportedVersionCode, latestVersionCode, storeUrl, googleSignIn, marketSearch, telegram, push)
+        AppConfig(
+            minSupportedVersionCode,
+            latestVersionCode,
+            storeUrl,
+            googleSignIn,
+            marketSearch,
+            telegram,
+            push,
+            demo,
+        )
 
     companion object {
         private val REFRESH_EVERY: Duration = Duration.ofHours(24)

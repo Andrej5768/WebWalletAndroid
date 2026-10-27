@@ -20,6 +20,7 @@ import org.andrewdev.webwallet.core.network.generated.api.BudgetApi
 import org.andrewdev.webwallet.core.network.generated.api.CategoriesApi
 import org.andrewdev.webwallet.core.network.generated.api.CurrentUserApi
 import org.andrewdev.webwallet.core.network.generated.api.DebtsApi
+import org.andrewdev.webwallet.core.network.generated.api.DemoApi
 import org.andrewdev.webwallet.core.network.generated.api.ForecastApi
 import org.andrewdev.webwallet.core.network.generated.api.MonobankApi
 import org.andrewdev.webwallet.core.network.generated.api.NotificationsApi
@@ -125,4 +126,7 @@ object NetworkModule {
 
     @Provides @Singleton
     fun notificationsApi(client: ApiClient): NotificationsApi = client.createService(NotificationsApi::class.java)
+
+    @Provides @Singleton
+    fun demoApi(client: ApiClient): DemoApi = client.createService(DemoApi::class.java)
 }

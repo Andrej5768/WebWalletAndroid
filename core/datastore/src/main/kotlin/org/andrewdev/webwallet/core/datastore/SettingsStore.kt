@@ -39,6 +39,7 @@ data class AppConfigData(
     val telegram: Boolean,
     val push: Boolean,
     val fetchedAtEpochMs: Long,
+    val demo: Boolean = false,
 )
 
 @Singleton

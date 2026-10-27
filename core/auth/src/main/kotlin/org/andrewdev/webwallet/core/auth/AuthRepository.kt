@@ -6,6 +6,8 @@ import org.andrewdev.webwallet.core.network.apiCall
 import org.andrewdev.webwallet.core.network.flatMap
 import org.andrewdev.webwallet.core.network.generated.api.AuthenticationApi
 import org.andrewdev.webwallet.core.network.generated.api.CurrentUserApi
+import org.andrewdev.webwallet.core.network.generated.api.DemoApi
+import org.andrewdev.webwallet.core.network.generated.model.ClaimRequest
 import org.andrewdev.webwallet.core.network.generated.model.EmailRequest
 import org.andrewdev.webwallet.core.network.generated.model.LoginRequest
 import org.andrewdev.webwallet.core.network.generated.model.LoginResponse
@@ -30,6 +32,7 @@ sealed interface SignInOutcome {
 class AuthRepository @Inject constructor(
     private val api: AuthenticationApi,
     private val userApi: CurrentUserApi,
+    private val demoApi: DemoApi,
     private val session: SessionManager,
     private val store: SessionStore,
 ) {
@@ -42,6 +45,13 @@ class AuthRepository @Inject constructor(
         )
         return apiCall { api.login(request) }.flatMap { complete(it) }
     }
+
+    /** Opens a demo sandbox with example data and signs in to it; no registration needed. */
+    suspend fun signInDemo(): ApiResult<SignInOutcome> = apiCall { demoApi.startDemo() }.flatMap { complete(it) }
+
+    /** Keeps the demo sandbox as an ordinary account; the email is verified through the usual message. */
+    suspend fun claimDemo(email: String, password: String, firstName: String): ApiResult<Unit> =
+        apiCall { demoApi.claimDemo(ClaimRequest(email.trim().lowercase(), password, firstName.trim())) }
 
     suspend fun confirmTwoFactor(challenge: String, code: String, trustDevice: Boolean): ApiResult<SignInOutcome> =
         apiCall { api.loginTwoFactor(TwoFactorLoginRequest(challenge, code.trim(), trustDevice)) }
