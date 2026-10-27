@@ -250,7 +250,7 @@ class TransactionsRepository @Inject constructor(
     companion object {
         const val PAGE_SIZE = 50
         private const val KEEP_FILTERS = 10
-        private const val FEED_PREFIX = "feed:"
+        const val FEED_PREFIX = "feed:"
         private const val FIRST_YEAR = 1990
         private const val LAST_YEAR = 2100
         private const val LAST_DAY_OF_DECEMBER = 31

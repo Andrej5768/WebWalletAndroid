@@ -90,4 +90,154 @@
     <string name="feature_settings_backend">Backend: %1$s</string>
     <string name="feature_settings_support">Contact support</string>
     <string name="feature_settings_rate">Rate on Google Play</string>
+
+    <string name="feature_settings_name">Name</string>
+    <string name="feature_settings_required">Required</string>
+    <string name="feature_settings_notifications">Notifications</string>
+    <string name="feature_settings_categories">Categories</string>
+    <string name="feature_settings_rules">Rules</string>
+    <string name="feature_settings_payees">Payees</string>
+    <string name="feature_settings_tags">Tags</string>
+    <string name="feature_settings_data">Data</string>
+
+    <!-- Categories -->
+    <string name="feature_settings_categories_expense">Expenses</string>
+    <string name="feature_settings_categories_income">Income</string>
+    <string name="feature_settings_categories_add">New category</string>
+    <string name="feature_settings_categories_add_child">Add a subcategory</string>
+    <string name="feature_settings_categories_edit">Edit</string>
+    <string name="feature_settings_categories_move_up">Move up</string>
+    <string name="feature_settings_categories_move_down">Move down</string>
+    <string name="feature_settings_categories_archive">Archive</string>
+    <string name="feature_settings_categories_unarchive">Make active again</string>
+    <string name="feature_settings_categories_delete">Delete</string>
+    <string name="feature_settings_categories_hint">A subcategory moves within its group or into the one above or below it. Needs or wants is used for 50/30/20 analytics.</string>
+    <string name="feature_settings_categories_empty">No categories of this kind yet</string>
+    <string name="feature_settings_categories_archived">Archived</string>
+    <string name="feature_settings_categories_carry_over">Carry-over</string>
+    <string name="feature_settings_categories_needs">Need</string>
+    <string name="feature_settings_categories_wants">Want</string>
+    <string name="feature_settings_categories_inherit">Same as group</string>
+    <string name="feature_settings_categories_new_title">New category</string>
+    <string name="feature_settings_categories_edit_title">Edit category</string>
+    <string name="feature_settings_categories_name">Name</string>
+    <string name="feature_settings_categories_kind">Type</string>
+    <string name="feature_settings_categories_parent">Group</string>
+    <string name="feature_settings_categories_no_parent">No group (this is a group)</string>
+    <string name="feature_settings_categories_parent_locked">A category with subcategories is a group itself</string>
+    <string name="feature_settings_categories_icon">Icon</string>
+    <string name="feature_settings_categories_inherits_icon">Without its own icon the group icon is used</string>
+    <string name="feature_settings_categories_color">Colour</string>
+    <string name="feature_settings_categories_necessity_label">Spending type</string>
+    <string name="feature_settings_categories_necessity_help">For 50/30/20 analytics: needs, wants, savings.</string>
+    <string name="feature_settings_categories_carry_over_switch">Carry the rest over</string>
+    <string name="feature_settings_categories_carry_over_help">What is not spent moves to the next month, and overspending is taken from the next month\'s free money. Without it the plan is for its month only.</string>
+    <string name="feature_settings_categories_archived_switch">Archived</string>
+    <string name="feature_settings_categories_archived_help">Archived categories are hidden in forms; their transactions and reports stay.</string>
+    <string name="feature_settings_categories_delete_title">Delete the category “%1$s”?</string>
+    <string name="feature_settings_categories_delete_text">A category can be deleted only while it has no transactions or budget amounts. Otherwise archive it.</string>
+
+    <!-- Rules -->
+    <string name="feature_settings_rules_hint">Rules categorize new transactions. When you change a category by hand, a rule for the payee is learned automatically.</string>
+    <string name="feature_settings_rules_apply">Apply to uncategorized transactions</string>
+    <plurals name="feature_settings_rules_applied">
+        <item quantity="one">Categorized %d transaction</item>
+        <item quantity="other">Categorized %d transactions</item>
+    </plurals>
+    <string name="feature_settings_rules_add">New rule</string>
+    <string name="feature_settings_rules_condition">Condition</string>
+    <string name="feature_settings_rules_learned">Learned</string>
+    <string name="feature_settings_rules_delete">Delete rule</string>
+    <string name="feature_settings_rules_empty">No rules yet</string>
+    <string name="feature_settings_rules_payee_contains">Payee contains “%1$s”</string>
+    <string name="feature_settings_rules_payee_is">Payee is %1$s</string>
+    <string name="feature_settings_rules_bank_category">Bank category “%1$s”</string>
+    <string name="feature_settings_rules_new_title">Rule</string>
+    <string name="feature_settings_rules_type_payee">Payee</string>
+    <string name="feature_settings_rules_type_bank">Bank category</string>
+    <string name="feature_settings_rules_payee_label">Payee contains</string>
+    <string name="feature_settings_rules_bank_label">Bank category</string>
+    <string name="feature_settings_rules_category">Category</string>
+    <string name="feature_settings_rules_delete_title">Delete the rule?</string>
+
+    <!-- Payees and tags -->
+    <string name="feature_settings_payees_hint">Payees come from transactions. Deleting one keeps its transactions.</string>
+    <string name="feature_settings_payees_filter">Find a payee</string>
+    <string name="feature_settings_payees_rename">Rename</string>
+    <string name="feature_settings_payees_delete">Delete payee</string>
+    <string name="feature_settings_payees_empty">Nothing found</string>
+    <string name="feature_settings_payees_delete_title">Delete the payee “%1$s”?</string>
+    <string name="feature_settings_payees_delete_text">Transactions stay, without a payee; rules for it are removed.</string>
+    <plurals name="feature_settings_payees_operations">
+        <item quantity="one">%d transaction</item>
+        <item quantity="other">%d transactions</item>
+    </plurals>
+    <string name="feature_settings_tags_hint">Tags group transactions across categories, e.g. #vacation.</string>
+    <string name="feature_settings_tags_add">New tag</string>
+    <string name="feature_settings_tags_empty">No tags yet</string>
+    <string name="feature_settings_tags_new_title">New tag</string>
+    <string name="feature_settings_tags_edit_title">Edit tag</string>
+    <string name="feature_settings_tags_delete">Delete tag</string>
+    <string name="feature_settings_tags_delete_title">Delete the tag #%1$s?</string>
+    <string name="feature_settings_tags_delete_text">The tag is removed from all transactions; the transactions stay.</string>
+
+    <!-- Notifications -->
+    <string name="feature_settings_telegram_text">The bot reminds you of payments, budgets and tax deadlines, and an expense takes one message: “150 coffee”.</string>
+    <string name="feature_settings_telegram_link">Connect Telegram</string>
+    <string name="feature_settings_telegram_pending">Open the bot %1$s and press “Start”. The link works once, for 15 minutes. This page updates by itself.</string>
+    <string name="feature_settings_telegram_linked_as">%1$s, connected on %2$s. You can also disconnect with /stop in the bot.</string>
+    <string name="feature_settings_telegram_unlink">Disconnect</string>
+    <string name="feature_settings_telegram_disabled">The Telegram bot is unavailable right now.</string>
+    <string name="feature_settings_telegram_account">Account for quick entry</string>
+    <string name="feature_settings_telegram_account_hint">“150 coffee” and “+5000 salary” go here when the message names no account.</string>
+    <string name="feature_settings_telegram_account_default">The first card</string>
+    <string name="feature_settings_notifications_hour">Time of reminders and reports</string>
+    <string name="feature_settings_notifications_not_linked">The Telegram switches work once the bot is connected.</string>
+    <string name="feature_settings_notifications_reminders">Reminders</string>
+    <string name="feature_settings_notifications_events">Problems and events</string>
+    <string name="feature_settings_notifications_reports">Spending analysis</string>
+    <string name="feature_settings_notifications_recurring">Recurring payments</string>
+    <string name="feature_settings_notifications_recurring_text">The day before and on the day of a payment not yet linked to a transaction.</string>
+    <string name="feature_settings_notifications_budgets">Budgets</string>
+    <string name="feature_settings_notifications_budgets_text">When the spending of a category reaches 80 % and 100 % of the month\'s budget, once a month each.</string>
+    <string name="feature_settings_notifications_taxes">Sole proprietor taxes</string>
+    <string name="feature_settings_notifications_taxes_text">7 days and a day before the deadline to pay the single tax and the social contribution and to file the declaration.</string>
+    <string name="feature_settings_notifications_banks">Banks</string>
+    <string name="feature_settings_notifications_banks_text">Monobank no longer accepts the token. Comes at once, but not from 22:00 to 8:00 — then in the morning.</string>
+    <string name="feature_settings_notifications_forecast">Balance forecast</string>
+    <string name="feature_settings_notifications_forecast_text">The forecast goes below zero within 30 days. Again only when the date or the amount changes.</string>
+    <string name="feature_settings_notifications_goals">Goals</string>
+    <string name="feature_settings_notifications_goals_text">A goal is reached.</string>
+    <string name="feature_settings_notifications_weekly">Weekly analysis</string>
+    <string name="feature_settings_notifications_weekly_text">Mondays, except in the first week of a month: the spending from the 1st against the same days of the previous month.</string>
+    <string name="feature_settings_notifications_monthly">Month summary</string>
+    <string name="feature_settings_notifications_monthly_text">On the 1st: the previous month against the month before — income, spending, savings.</string>
+    <string name="feature_settings_notifications_email">%1$s: email</string>
+    <string name="feature_settings_notifications_email_hint">The spending analysis goes to %1$s. Every email has an “Unsubscribe” link.</string>
+
+    <!-- Data -->
+    <string name="feature_settings_data_export_title">Export data</string>
+    <string name="feature_settings_data_export_text">A ZIP archive with all your data: accounts, transactions, categories, budget, goals, investments, taxes.</string>
+    <string name="feature_settings_data_export_secrets">Bank tokens and the password are not exported.</string>
+    <string name="feature_settings_data_export_button">Save archive</string>
+    <string name="feature_settings_data_reset_done">Your data is deleted. You can start over.</string>
+    <string name="feature_settings_danger_title">Danger zone</string>
+    <string name="feature_settings_danger_reset_title">Start over</string>
+    <string name="feature_settings_danger_reset_text">Deletes all accounts, transactions, envelopes, payees, tags and bank connections. Your profile and password stay.</string>
+    <string name="feature_settings_danger_reset_button">Start over</string>
+    <string name="feature_settings_danger_reset_warning">This cannot be undone. Consider an export first.</string>
+    <string name="feature_settings_danger_keep_categories">Keep categories and rules</string>
+    <string name="feature_settings_danger_confirm_label">Type %1$s to confirm</string>
+    <string name="feature_settings_danger_reset_submit">Delete everything</string>
+    <string name="feature_settings_danger_delete_title">Delete account</string>
+    <string name="feature_settings_danger_delete_text">The account is blocked and deleted with all its data after 14 days. Until then you can cancel.</string>
+    <string name="feature_settings_danger_delete_button">Delete account</string>
+    <string name="feature_settings_delete_title">Delete the account?</string>
+    <string name="feature_settings_delete_blocked">The account is blocked at once and you are signed out on all devices.</string>
+    <string name="feature_settings_delete_cancel">Until then you can cancel: with the link in the email or by signing in again.</string>
+    <string name="feature_settings_delete_export_first">Save a copy of your data first.</string>
+    <string name="feature_settings_delete_confirm_email">Type the email of this account</string>
+    <string name="feature_settings_delete_done_title">Deletion scheduled</string>
+    <string name="feature_settings_delete_done_text">The account will be deleted on %1$s. We sent a link to cancel to %2$s. You will be signed out now.</string>
+    <string name="feature_settings_delete_ok">Got it</string>
 </resources>

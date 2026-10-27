@@ -45,12 +45,18 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.BadgeCheck
+import com.composables.icons.lucide.Bell
+import com.composables.icons.lucide.Database
 import com.composables.icons.lucide.Info
 import com.composables.icons.lucide.Lock
 import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.Shapes
 import com.composables.icons.lucide.Shield
 import com.composables.icons.lucide.ShieldCheck
+import com.composables.icons.lucide.Store
+import com.composables.icons.lucide.Tag
 import com.composables.icons.lucide.User
+import com.composables.icons.lucide.Wand
 import org.andrewdev.webwallet.core.datastore.LanguageSetting
 import org.andrewdev.webwallet.core.datastore.ThemeSetting
 import org.andrewdev.webwallet.core.designsystem.theme.Spacing
@@ -59,6 +65,7 @@ import org.andrewdev.webwallet.feature.settings.PrivacyViewModel
 import org.andrewdev.webwallet.feature.settings.ProfileViewModel
 import org.andrewdev.webwallet.feature.settings.R
 
+@Suppress("LongParameterList")
 class SettingsActions(
     val back: () -> Unit,
     val openProfile: () -> Unit,
@@ -66,7 +73,22 @@ class SettingsActions(
     val openAppLock: () -> Unit,
     val openPrivacy: () -> Unit,
     val openAbout: () -> Unit,
+    val openNotifications: () -> Unit = {},
+    val openCategories: () -> Unit = {},
+    val openRules: () -> Unit = {},
+    val openPayees: () -> Unit = {},
+    val openTags: () -> Unit = {},
+    val openData: () -> Unit = {},
 )
+
+@Composable
+private fun SettingsEntry(title: Int, icon: androidx.compose.ui.graphics.vector.ImageVector, onClick: () -> Unit) {
+    ListItem(
+        headlineContent = { Text(stringResource(title)) },
+        leadingContent = { Icon(icon, null) },
+        modifier = Modifier.clickable(onClick = onClick),
+    )
+}
 
 /** A pushed settings page: a top bar with a back arrow and a scrolling column. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -134,6 +156,12 @@ fun SettingsRootScreen(actions: SettingsActions) {
                     null,
                 )
             }, modifier = Modifier.clickable(onClick = actions.openAppLock))
+            SettingsEntry(R.string.feature_settings_notifications, Lucide.Bell, actions.openNotifications)
+            SettingsEntry(R.string.feature_settings_categories, Lucide.Shapes, actions.openCategories)
+            SettingsEntry(R.string.feature_settings_rules, Lucide.Wand, actions.openRules)
+            SettingsEntry(R.string.feature_settings_payees, Lucide.Store, actions.openPayees)
+            SettingsEntry(R.string.feature_settings_tags, Lucide.Tag, actions.openTags)
+            SettingsEntry(R.string.feature_settings_data, Lucide.Database, actions.openData)
             ListItem(headlineContent = {
                 Text(stringResource(R.string.feature_settings_privacy))
             }, leadingContent = {

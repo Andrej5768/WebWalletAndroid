@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
 import org.andrewdev.webwallet.BuildConfig
 import org.andrewdev.webwallet.R
 import org.andrewdev.webwallet.core.designsystem.icons.TabIcons
+import org.andrewdev.webwallet.core.model.CategoryKind
 import org.andrewdev.webwallet.core.model.TransactionType
 import org.andrewdev.webwallet.core.navigation.AboutKey
 import org.andrewdev.webwallet.core.navigation.AccountEditorKey
@@ -44,23 +45,31 @@ import org.andrewdev.webwallet.core.navigation.AccountTransactionsKey
 import org.andrewdev.webwallet.core.navigation.AccountsKey
 import org.andrewdev.webwallet.core.navigation.AppLockSettingsKey
 import org.andrewdev.webwallet.core.navigation.BudgetKey
+import org.andrewdev.webwallet.core.navigation.CategoriesSettingsKey
+import org.andrewdev.webwallet.core.navigation.CategoryEditorKey
 import org.andrewdev.webwallet.core.navigation.CategoryTransactionsKey
 import org.andrewdev.webwallet.core.navigation.ClaimDemoKey
 import org.andrewdev.webwallet.core.navigation.ComingSoonKey
+import org.andrewdev.webwallet.core.navigation.DataSettingsKey
 import org.andrewdev.webwallet.core.navigation.DeepLink
 import org.andrewdev.webwallet.core.navigation.GoalEditorKey
 import org.andrewdev.webwallet.core.navigation.GoalsKey
 import org.andrewdev.webwallet.core.navigation.MoreKey
+import org.andrewdev.webwallet.core.navigation.NotificationsSettingsKey
 import org.andrewdev.webwallet.core.navigation.OverviewKey
 import org.andrewdev.webwallet.core.navigation.PayeeTransactionsKey
+import org.andrewdev.webwallet.core.navigation.PayeesSettingsKey
 import org.andrewdev.webwallet.core.navigation.PinSetupKey
 import org.andrewdev.webwallet.core.navigation.PinSetupMode
 import org.andrewdev.webwallet.core.navigation.PrivacySettingsKey
 import org.andrewdev.webwallet.core.navigation.ProfileSettingsKey
 import org.andrewdev.webwallet.core.navigation.RecurringEditorKey
 import org.andrewdev.webwallet.core.navigation.RecurringListKey
+import org.andrewdev.webwallet.core.navigation.RuleEditorKey
+import org.andrewdev.webwallet.core.navigation.RulesSettingsKey
 import org.andrewdev.webwallet.core.navigation.SecuritySettingsKey
 import org.andrewdev.webwallet.core.navigation.SettingsKey
+import org.andrewdev.webwallet.core.navigation.TagsSettingsKey
 import org.andrewdev.webwallet.core.navigation.TransactionEditorKey
 import org.andrewdev.webwallet.core.navigation.TransactionsKey
 import org.andrewdev.webwallet.core.navigation.TransferPairsKey
@@ -82,13 +91,22 @@ import org.andrewdev.webwallet.feature.more.MoreRoute
 import org.andrewdev.webwallet.feature.more.MoreSection
 import org.andrewdev.webwallet.feature.overview.ui.OverviewActions
 import org.andrewdev.webwallet.feature.overview.ui.OverviewRoute
+import org.andrewdev.webwallet.feature.settings.CategoriesActions
 import org.andrewdev.webwallet.feature.settings.ui.AboutScreen
 import org.andrewdev.webwallet.feature.settings.ui.AppLockSettingsRoute
+import org.andrewdev.webwallet.feature.settings.ui.CategoriesRoute
+import org.andrewdev.webwallet.feature.settings.ui.CategoryEditorRoute
+import org.andrewdev.webwallet.feature.settings.ui.DataRoute
+import org.andrewdev.webwallet.feature.settings.ui.NotificationsRoute
+import org.andrewdev.webwallet.feature.settings.ui.PayeesRoute
 import org.andrewdev.webwallet.feature.settings.ui.PrivacyRoute
 import org.andrewdev.webwallet.feature.settings.ui.ProfileRoute
+import org.andrewdev.webwallet.feature.settings.ui.RuleEditorRoute
+import org.andrewdev.webwallet.feature.settings.ui.RulesRoute
 import org.andrewdev.webwallet.feature.settings.ui.SecurityRoute
 import org.andrewdev.webwallet.feature.settings.ui.SettingsActions
 import org.andrewdev.webwallet.feature.settings.ui.SettingsRootScreen
+import org.andrewdev.webwallet.feature.settings.ui.TagsRoute
 import org.andrewdev.webwallet.feature.transactions.ui.EditorArgs
 import org.andrewdev.webwallet.feature.transactions.ui.EditorRoute
 import org.andrewdev.webwallet.feature.transactions.ui.FeedActions
@@ -311,9 +329,46 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                                 openAppLock = { stack.add(AppLockSettingsKey) },
                                 openPrivacy = { stack.add(PrivacySettingsKey) },
                                 openAbout = { stack.add(AboutKey) },
+                                openNotifications = { stack.add(NotificationsSettingsKey) },
+                                openCategories = { stack.add(CategoriesSettingsKey) },
+                                openRules = { stack.add(RulesSettingsKey) },
+                                openPayees = { stack.add(PayeesSettingsKey) },
+                                openTags = { stack.add(TagsSettingsKey) },
+                                openData = { stack.add(DataSettingsKey) },
                             ),
                         )
                     }
+                    entry<NotificationsSettingsKey> { NotificationsRoute(onBack = { stack.removeLastOrNull() }) }
+                    entry<CategoriesSettingsKey> {
+                        CategoriesRoute(
+                            CategoriesActions(
+                                openEditor = { id, kind, parentId ->
+                                    stack.add(CategoryEditorKey(id, kind.name, parentId))
+                                },
+                                back = { stack.removeLastOrNull() },
+                            ),
+                        )
+                    }
+                    entry<CategoryEditorKey> { key ->
+                        CategoryEditorRoute(
+                            id = key.id,
+                            kind = CategoryKind.valueOf(key.kind),
+                            parentId = key.parentId,
+                            onClose = { stack.removeLastOrNull() },
+                        )
+                    }
+                    entry<RulesSettingsKey> {
+                        RulesRoute(
+                            openEditor = { stack.add(RuleEditorKey(it)) },
+                            onBack = { stack.removeLastOrNull() },
+                        )
+                    }
+                    entry<RuleEditorKey> { key ->
+                        RuleEditorRoute(id = key.id, onClose = { stack.removeLastOrNull() })
+                    }
+                    entry<PayeesSettingsKey> { PayeesRoute(onBack = { stack.removeLastOrNull() }) }
+                    entry<TagsSettingsKey> { TagsRoute(onBack = { stack.removeLastOrNull() }) }
+                    entry<DataSettingsKey> { DataRoute(onBack = { stack.removeLastOrNull() }) }
                     entry<ProfileSettingsKey> { ProfileRoute(onBack = { stack.removeLastOrNull() }) }
                     entry<SecuritySettingsKey> {
                         SecurityRoute(

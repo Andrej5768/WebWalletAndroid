@@ -105,6 +105,27 @@ data class TransactionEditorKey(
 
 @Serializable data object AboutKey : NavKey
 
+@Serializable data object NotificationsSettingsKey : NavKey
+
+@Serializable data object CategoriesSettingsKey : NavKey
+
+/** The category editor: an existing one, or a new one of the kind, under the group. */
+@Serializable data class CategoryEditorKey(
+    val id: Long? = null,
+    val kind: String = "EXPENSE",
+    val parentId: Long? = null,
+) : NavKey
+
+@Serializable data object RulesSettingsKey : NavKey
+
+@Serializable data class RuleEditorKey(val id: Long? = null) : NavKey
+
+@Serializable data object PayeesSettingsKey : NavKey
+
+@Serializable data object TagsSettingsKey : NavKey
+
+@Serializable data object DataSettingsKey : NavKey
+
 @Serializable data object TwoFactorSetupKey : NavKey
 
 @Serializable data class RecoveryCodesKey(val codes: List<String>) : NavKey
