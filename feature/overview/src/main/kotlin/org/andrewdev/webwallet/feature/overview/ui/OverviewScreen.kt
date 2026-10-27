@@ -79,12 +79,20 @@ class OverviewActions(
     val openBudget: () -> Unit,
     val openAccounts: () -> Unit,
     val newAccount: () -> Unit,
+    /** The transactions of a category in the month, from the top categories. */
+    val openCategory: (id: Long, name: String, month: java.time.YearMonth) -> Unit = { _, _, _ -> },
 )
 
 @Composable
 fun OverviewRoute(actions: OverviewActions, viewModel: OverviewViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    OverviewScreen(state, actions, onRefresh = viewModel::refresh, onBalanceMode = viewModel::setBalanceMode)
+    OverviewScreen(
+        state,
+        actions,
+        onRefresh = viewModel::refresh,
+        onBalanceMode = viewModel::setBalanceMode,
+        onForecastMinimum = viewModel::setForecastMinimum,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,6 +102,7 @@ fun OverviewScreen(
     actions: OverviewActions,
     onRefresh: () -> Unit,
     onBalanceMode: (BalanceMode) -> Unit,
+    onForecastMinimum: (java.math.BigDecimal?) -> Unit = {},
 ) {
     val f = formatters
     Scaffold(
@@ -117,7 +126,7 @@ fun OverviewScreen(
                 OverviewUiState.Loading -> SkeletonList(rows = 4)
                 is OverviewUiState.Error -> ErrorState(state.error, onRetry = onRefresh)
                 is OverviewUiState.Content -> PullToRefreshBox(isRefreshing = state.refreshing, onRefresh = onRefresh) {
-                    OverviewContent(state, actions, onRefresh, onBalanceMode)
+                    OverviewContent(state, actions, onRefresh, onBalanceMode, onForecastMinimum)
                 }
             }
         }
@@ -130,6 +139,7 @@ private fun OverviewContent(
     actions: OverviewActions,
     onRefresh: () -> Unit,
     onBalanceMode: (BalanceMode) -> Unit,
+    onForecastMinimum: (java.math.BigDecimal?) -> Unit = {},
 ) {
     val context = LocalContext.current
     LazyColumn(
@@ -192,6 +202,14 @@ private fun OverviewContent(
                 )
             }
         }
+        state.forecast?.let { forecast ->
+            item { ForecastCard(forecast, state.forecastMinimum, onForecastMinimum, actions.openTransactions) }
+        }
+        state.spending?.let { spending ->
+            item { TopCategoriesCard(spending, state.categoriesById, state.currentMonth, actions.openCategory) }
+        }
+        state.sixMonths?.let { (_, months) -> item { SixMonthsCard(months) } }
+        state.budget?.let { month -> item { EnvelopesCard(month, state.monthProgress, actions.openBudget) } }
         item { RecentCard(state, actions) }
     }
 }
@@ -450,6 +468,13 @@ private fun OverviewPreview() {
                 overdueCount = 2,
                 updateAvailable = null,
                 hasAccounts = true,
+                forecast = null,
+                forecastMinimum = null,
+                spending = null,
+                sixMonths = null,
+                budget = null,
+                monthProgress = 0.6f,
+                currentMonth = java.time.YearMonth.of(2026, 10),
                 stale = false,
                 fetchedAt = null,
                 offline = false,

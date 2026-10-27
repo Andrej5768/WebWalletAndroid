@@ -174,6 +174,9 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                                 openBudget = { tab = 2 },
                                 openAccounts = { tab = 3 },
                                 newAccount = { stack.add(AccountEditorKey()) },
+                                openCategory = { id, name, month ->
+                                    stack.add(CategoryTransactionsKey(id, name, month.toString()))
+                                },
                             ),
                         )
                     }

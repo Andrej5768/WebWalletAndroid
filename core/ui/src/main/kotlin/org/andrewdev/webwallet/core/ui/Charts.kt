@@ -30,6 +30,8 @@ data class ChartLine(
     val dashed: Boolean = false,
     /** Fill under the line, at a low alpha. */
     val filled: Boolean = false,
+    /** The x position of the first value, when the line covers only part of the axis. */
+    val offset: Int = 0,
 )
 
 /** A horizontal reference line of a [LineChart], e.g. a minimum or a target. */
@@ -48,9 +50,12 @@ fun LineChart(
     height: Dp = 160.dp,
     /** Values the y axis must include besides the data, e.g. zero. */
     include: List<Float> = emptyList(),
+    /** How many x positions the axis has; by default the longest line. */
+    points: Int? = null,
     description: String? = null,
 ) {
     val grid = WwTheme.colors.chartGrid
+    val count = points ?: (lines.maxOfOrNull { it.offset + it.values.size } ?: 0)
     val all = lines.flatMap { it.values } + markers.map { it.value } + include
     val min = all.minOrNull() ?: 0f
     val max = all.maxOrNull() ?: 1f
@@ -75,19 +80,19 @@ fun LineChart(
                 pathEffect = if (marker.dashed) PathEffect.dashPathEffect(floatArrayOf(DASH, DASH)) else null,
             )
         }
+        val step = size.width / (count - 1).coerceAtLeast(1)
         lines.forEach { line ->
             if (line.values.size < 2) return@forEach
-            val step = size.width / (line.values.size - 1)
             val path = Path()
             line.values.forEachIndexed { index, value ->
-                val point = Offset(step * index, y(value))
+                val point = Offset(step * (line.offset + index), y(value))
                 if (index == 0) path.moveTo(point.x, point.y) else path.lineTo(point.x, point.y)
             }
             if (line.filled) {
                 val fill = Path().apply {
                     addPath(path)
-                    lineTo(step * (line.values.size - 1), size.height)
-                    lineTo(0f, size.height)
+                    lineTo(step * (line.offset + line.values.size - 1), size.height)
+                    lineTo(step * line.offset, size.height)
                     close()
                 }
                 drawPath(fill, line.color.copy(alpha = FILL_ALPHA))

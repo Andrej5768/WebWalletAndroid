@@ -12,10 +12,15 @@ import kotlinx.coroutines.launch
 import org.andrewdev.webwallet.core.common.KyivClock
 import org.andrewdev.webwallet.core.data.AccountsRepository
 import org.andrewdev.webwallet.core.data.BankDifference
+import org.andrewdev.webwallet.core.data.BudgetRepository
 import org.andrewdev.webwallet.core.data.CacheState
 import org.andrewdev.webwallet.core.data.CatalogRepository
 import org.andrewdev.webwallet.core.data.FeedFilter
+import org.andrewdev.webwallet.core.data.Forecast
 import org.andrewdev.webwallet.core.data.MonthFigures
+import org.andrewdev.webwallet.core.data.MonthIncomeExpense
+import org.andrewdev.webwallet.core.data.MonthSpending
+import org.andrewdev.webwallet.core.data.OverviewChartsRepository
 import org.andrewdev.webwallet.core.data.OverviewRepository
 import org.andrewdev.webwallet.core.data.TransactionsRepository
 import org.andrewdev.webwallet.core.datastore.SettingsStore
@@ -23,13 +28,17 @@ import org.andrewdev.webwallet.core.model.Account
 import org.andrewdev.webwallet.core.model.AccountSummary
 import org.andrewdev.webwallet.core.model.AppConfig
 import org.andrewdev.webwallet.core.model.BalanceMode
+import org.andrewdev.webwallet.core.model.BudgetMonth
 import org.andrewdev.webwallet.core.model.Category
+import org.andrewdev.webwallet.core.model.CurrencyCode
 import org.andrewdev.webwallet.core.model.Period
 import org.andrewdev.webwallet.core.model.PeriodPreset
 import org.andrewdev.webwallet.core.model.Transaction
 import org.andrewdev.webwallet.core.network.ApiError
 import org.andrewdev.webwallet.core.network.ApiResult
+import java.math.BigDecimal
 import java.time.Instant
+import java.time.YearMonth
 import javax.inject.Inject
 
 sealed interface OverviewUiState {
@@ -48,6 +57,15 @@ sealed interface OverviewUiState {
         val overdueCount: Int,
         val updateAvailable: AppConfig?,
         val hasAccounts: Boolean,
+        /** The M2 charts; each null until its data arrives. */
+        val forecast: Forecast?,
+        val forecastMinimum: BigDecimal?,
+        val spending: MonthSpending?,
+        val sixMonths: Pair<CurrencyCode, List<MonthIncomeExpense>>?,
+        val budget: BudgetMonth?,
+        /** Share of the month that has passed, for the "today" marker of the envelopes. */
+        val monthProgress: Float,
+        val currentMonth: YearMonth,
         val stale: Boolean,
         val fetchedAt: Instant?,
         val offline: Boolean,
@@ -62,6 +80,8 @@ class OverviewViewModel @Inject constructor(
     private val overview: OverviewRepository,
     private val transactions: TransactionsRepository,
     private val catalog: CatalogRepository,
+    private val charts: OverviewChartsRepository,
+    private val budget: BudgetRepository,
     private val settings: SettingsStore,
     private val clock: KyivClock,
     private val versionCode: VersionCode,
@@ -76,8 +96,18 @@ class OverviewViewModel @Inject constructor(
         accounts.accounts,
         overview.monthFigures,
         transactions.feed(recentFilter),
-        combine(catalog.categories, overview.monobank, settings.data, overdue) { c, m, s, o -> Extra(c, m, s, o) },
-    ) { summary, accountList, month, recent, extra ->
+        combine(
+            combine(catalog.categories, overview.monobank, settings.data, overdue) { c, m, s, o -> Extra(c, m, s, o) },
+            combine(
+                charts.forecast,
+                charts.monthSpending,
+                charts.sixMonths,
+                budget.month(clock.thisMonth()),
+            ) { f, s, m, b ->
+                Charts(f.dataOrNull, s.dataOrNull, m.dataOrNull, b.dataOrNull)
+            },
+        ) { extra, chartData -> extra to chartData },
+    ) { summary, accountList, month, recent, (extra, chartData) ->
         if (summary is CacheState.Missing && accountList is CacheState.Missing) {
             val error = summary.error ?: accountList.error
             if (error != null && !summary.loading) OverviewUiState.Error(error) else OverviewUiState.Loading
@@ -104,6 +134,13 @@ class OverviewViewModel @Inject constructor(
                     )
                 },
                 hasAccounts = accountList.dataOrNull?.isNotEmpty() ?: true,
+                forecast = chartData.forecast,
+                forecastMinimum = extra.settings.forecastMinimum?.toBigDecimalOrNull(),
+                spending = chartData.spending,
+                sixMonths = chartData.sixMonths,
+                budget = chartData.budget,
+                monthProgress = clock.today().let { it.dayOfMonth.toFloat() / it.lengthOfMonth() },
+                currentMonth = clock.thisMonth(),
                 stale = summary is CacheState.Stale,
                 fetchedAt = (summary as? CacheState.Stale)?.fetchedAt,
                 offline = summary.errorOrNull is ApiError.Network,
@@ -119,6 +156,7 @@ class OverviewViewModel @Inject constructor(
     fun refresh() {
         accounts.invalidate()
         overview.invalidate()
+        charts.invalidate()
         transactions.invalidateAll()
         viewModelScope.launch { overdue.value = (overview.overdueCount() as? ApiResult.Ok)?.value ?: 0 }
     }
@@ -126,6 +164,18 @@ class OverviewViewModel @Inject constructor(
     fun setBalanceMode(mode: BalanceMode) {
         viewModelScope.launch { settings.update { it.copy(balanceMode = mode) } }
     }
+
+    /** The minimum balance of the forecast, kept on the device like the web's local storage. */
+    fun setForecastMinimum(minimum: BigDecimal?) {
+        viewModelScope.launch { settings.update { it.copy(forecastMinimum = minimum?.toPlainString()) } }
+    }
+
+    private class Charts(
+        val forecast: Forecast?,
+        val spending: MonthSpending?,
+        val sixMonths: Pair<CurrencyCode, List<MonthIncomeExpense>>?,
+        val budget: BudgetMonth?,
+    )
 
     private class Extra(
         val categories: CacheState<List<Category>>,
