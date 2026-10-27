@@ -24,6 +24,7 @@ import org.andrewdev.webwallet.core.network.onOk
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.Month
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -114,8 +115,9 @@ class TransactionsRepository @Inject constructor(
         fetch = { apiCall { api.get(id) }.map { dao.upsert(listOf(it.toEntity())) } },
     )
 
-    suspend fun create(draft: TransactionDraft): ApiResult<Transaction> =
-        apiCall { api.create(draft.toRequest()) }.map { it.toEntity().toModel() }.onOk { stored(it) }
+    /** [key] names the attempt: a retry with the same key gets the first response back instead of a duplicate. */
+    suspend fun create(draft: TransactionDraft, key: UUID): ApiResult<Transaction> =
+        apiCall { api.create(draft.toRequest(), key) }.map { it.toEntity().toModel() }.onOk { stored(it) }
 
     suspend fun update(id: Long, draft: TransactionDraft): ApiResult<Transaction> =
         apiCall { api.update(id, draft.toRequest()) }.map { it.toEntity().toModel() }.onOk { stored(it) }
@@ -154,6 +156,7 @@ class TransactionsRepository @Inject constructor(
 
     fun invalidateAll() {
         cache.invalidatePrefix(FEED_PREFIX)
+        cache.invalidatePrefix(BudgetRepository.PREFIX)
         accounts.invalidate()
     }
 

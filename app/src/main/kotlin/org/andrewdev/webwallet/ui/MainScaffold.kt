@@ -44,6 +44,7 @@ import org.andrewdev.webwallet.core.navigation.AccountTransactionsKey
 import org.andrewdev.webwallet.core.navigation.AccountsKey
 import org.andrewdev.webwallet.core.navigation.AppLockSettingsKey
 import org.andrewdev.webwallet.core.navigation.BudgetKey
+import org.andrewdev.webwallet.core.navigation.CategoryTransactionsKey
 import org.andrewdev.webwallet.core.navigation.ClaimDemoKey
 import org.andrewdev.webwallet.core.navigation.ComingSoonKey
 import org.andrewdev.webwallet.core.navigation.DeepLink
@@ -62,6 +63,8 @@ import org.andrewdev.webwallet.core.navigation.TransferPairsKey
 import org.andrewdev.webwallet.feature.accounts.ui.AccountEditorRoute
 import org.andrewdev.webwallet.feature.accounts.ui.AccountsActions
 import org.andrewdev.webwallet.feature.accounts.ui.AccountsRoute
+import org.andrewdev.webwallet.feature.budget.ui.BudgetActions
+import org.andrewdev.webwallet.feature.budget.ui.BudgetRoute
 import org.andrewdev.webwallet.feature.lock.ui.PinSetupRoute
 import org.andrewdev.webwallet.feature.lock.ui.biometricAvailable
 import org.andrewdev.webwallet.feature.more.ClaimDemoRoute
@@ -211,7 +214,19 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                         )
                     }
                     entry<BudgetKey> {
-                        ComingSoonScreen(section = "budget", onBack = { tab = 0 })
+                        BudgetRoute(
+                            BudgetActions(
+                                openCategoryTransactions = { id, name, month ->
+                                    stack.add(CategoryTransactionsKey(id, name, month.toString()))
+                                },
+                            ),
+                        )
+                    }
+                    entry<CategoryTransactionsKey> { key ->
+                        FeedRoute(
+                            FeedScope.Category(key.categoryId, key.name, key.month),
+                            feedActions(stack, openEditor),
+                        )
                     }
                     entry<AccountsKey> {
                         AccountsRoute(

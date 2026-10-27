@@ -14,7 +14,7 @@ import androidx.room.RoomDatabase
         FeedPageEntity::class,
         JsonCacheEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 abstract class WebWalletDatabase : RoomDatabase() {

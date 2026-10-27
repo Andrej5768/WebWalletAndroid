@@ -19,6 +19,8 @@ data class Category(
     val archived: Boolean,
     val sortOrder: Int,
     val children: List<Category> = emptyList(),
+    /** An envelope: the rest of its plan moves to the next month, overspending is taken from the next month. */
+    val carryOver: Boolean = false,
 ) {
     /** The category and its subcategories, depth first. */
     fun flatten(): List<Category> = listOf(this) + children.flatMap { it.flatten() }

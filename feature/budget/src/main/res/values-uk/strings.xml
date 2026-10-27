@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_budget_title">Бюджет</string>
+    <string name="feature_budget_more">Інші дії</string>
+    <string name="feature_budget_copy_previous">Як минулого місяця</string>
+    <string name="feature_budget_copy_previous_body">Кожна категорія без плану цього місяця отримає свій план минулого місяця.</string>
+    <string name="feature_budget_copy_previous_confirm">Скопіювати</string>
+    <string name="feature_budget_move">Перенести план</string>
+    <string name="feature_budget_move_from">Звідки</string>
+    <string name="feature_budget_move_to">Куди</string>
+    <string name="feature_budget_move_submit">Перемістити</string>
+    <string name="feature_budget_move_different">Оберіть іншу категорію</string>
+    <string name="feature_budget_max">Макс.: %1$s</string>
+    <string name="feature_budget_amount">Сума</string>
+    <string name="feature_budget_ready_to_assign">Вільно після плану</string>
+    <string name="feature_budget_ready_positive">Дохід місяця більший за план: ці гроші ще можна запланувати або відкласти.</string>
+    <string name="feature_budget_ready_zero">План дорівнює доходу місяця.</string>
+    <string name="feature_budget_ready_negative">План більший за дохід місяця. Зменште план або дочекайтесь доходів.</string>
+    <string name="feature_budget_inflow">Дохід місяця</string>
+    <string name="feature_budget_assigned">План</string>
+    <string name="feature_budget_spent">Витрачено</string>
+    <string name="feature_budget_available">Залишок</string>
+    <string name="feature_budget_unconverted">Без курсу: %1$s. Ці суми не враховано.</string>
+    <string name="feature_budget_overspent">Перевитрата: %1$s. Збільште план або перенесіть з іншої категорії.</string>
+    <string name="feature_budget_cover">Покрити</string>
+    <string name="feature_budget_ahead">Випереджає темп на %1$d%%</string>
+    <string name="feature_budget_progress">Витрачено %1$s із %2$s</string>
+    <string name="feature_budget_plan_value">План %1$s</string>
+    <string name="feature_budget_spent_value">Витрачено %1$s</string>
+    <string name="feature_budget_assign_title">План: %1$s</string>
+    <string name="feature_budget_assign_save">Зберегти</string>
+    <string name="feature_budget_assign_as_spent">Як витрачено</string>
+    <string name="feature_budget_assign_as_last_month">Як минулого місяця</string>
+    <string name="feature_budget_carry_over">перенесення</string>
+    <string name="feature_budget_empty_title">Ще нічого не заплановано</string>
+    <string name="feature_budget_empty_body">Задайте план по категоріях або візьміть план минулого місяця.</string>
+</resources>

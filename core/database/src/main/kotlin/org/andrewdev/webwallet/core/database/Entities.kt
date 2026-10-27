@@ -34,6 +34,7 @@ data class CategoryEntity(
     val necessity: String?,
     val archived: Boolean,
     val sortOrder: Int,
+    val carryOver: Boolean = false,
 )
 
 @Entity(tableName = "tags")

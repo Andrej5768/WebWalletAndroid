@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_budget_title">Budget</string>
+    <string name="feature_budget_more">More actions</string>
+    <string name="feature_budget_copy_previous">Same as last month</string>
+    <string name="feature_budget_copy_previous_body">Every category without a plan this month gets the plan it had last month.</string>
+    <string name="feature_budget_copy_previous_confirm">Copy</string>
+    <string name="feature_budget_move">Move plan</string>
+    <string name="feature_budget_move_from">From</string>
+    <string name="feature_budget_move_to">To</string>
+    <string name="feature_budget_move_submit">Move</string>
+    <string name="feature_budget_move_different">Choose another category</string>
+    <string name="feature_budget_max">Max: %1$s</string>
+    <string name="feature_budget_amount">Amount</string>
+    <string name="feature_budget_ready_to_assign">Free after the plan</string>
+    <string name="feature_budget_ready_positive">The month\'s income exceeds the plan: this money can still be planned or set aside.</string>
+    <string name="feature_budget_ready_zero">The plan equals the month\'s income.</string>
+    <string name="feature_budget_ready_negative">The plan exceeds the month\'s income. Lower the plan or wait for income.</string>
+    <string name="feature_budget_inflow">Month\'s income</string>
+    <string name="feature_budget_assigned">Plan</string>
+    <string name="feature_budget_spent">Spent</string>
+    <string name="feature_budget_available">Left</string>
+    <string name="feature_budget_unconverted">No rate: %1$s. These amounts are not counted.</string>
+    <string name="feature_budget_overspent">Overspent: %1$s. Raise the plan or move some from another category.</string>
+    <string name="feature_budget_cover">Cover</string>
+    <string name="feature_budget_ahead">Ahead of pace by %1$d%%</string>
+    <string name="feature_budget_progress">%1$s spent of %2$s</string>
+    <string name="feature_budget_plan_value">Plan %1$s</string>
+    <string name="feature_budget_spent_value">Spent %1$s</string>
+    <string name="feature_budget_assign_title">Plan: %1$s</string>
+    <string name="feature_budget_assign_save">Save</string>
+    <string name="feature_budget_assign_as_spent">As spent</string>
+    <string name="feature_budget_assign_as_last_month">As last month</string>
+    <string name="feature_budget_carry_over">carry-over</string>
+    <string name="feature_budget_empty_title">Nothing planned yet</string>
+    <string name="feature_budget_empty_body">Set a plan per category, or take last month\'s.</string>
+</resources>

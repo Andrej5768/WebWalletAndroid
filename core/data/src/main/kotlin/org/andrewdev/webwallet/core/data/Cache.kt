@@ -84,6 +84,11 @@ class Cache @Inject constructor(private val clock: KyivClock) {
         fetchedAt.clear()
     }
 
+    /** After a write stored the server's answer: what is cached is as good as fetched now. */
+    fun markFresh(key: String) {
+        fetchedAt[key] = clock.now()
+    }
+
     /**
      * @param local the cached value, null while nothing was stored
      * @param fetch reads the backend and stores the result; its outcome decides fresh or stale

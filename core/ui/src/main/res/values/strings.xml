@@ -11,4 +11,8 @@
     <string name="core_ui_offline">Offline</string>
     <string name="core_ui_stale">Could not refresh</string>
     <string name="core_ui_type_to_confirm">Type %1$s to confirm</string>
+    <string name="core_ui_previous_month">Previous month</string>
+    <string name="core_ui_next_month">Next month</string>
+    <string name="core_ui_previous_year">Previous year</string>
+    <string name="core_ui_next_year">Next year</string>
 </resources>

@@ -38,6 +38,7 @@ dependencies {
     implementation(projects.feature.overview)
     implementation(projects.feature.accounts)
     implementation(projects.feature.transactions)
+    implementation(projects.feature.budget)
     implementation(projects.feature.more)
     implementation(projects.feature.settings)
 

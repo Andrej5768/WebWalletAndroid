@@ -131,6 +131,7 @@ fun CategoryResponse.flattenToEntities(): List<CategoryEntity> = listOf(
         necessity = necessity?.value,
         archived = archived,
         sortOrder = sortOrder,
+        carryOver = carryOver,
     ),
 ) + children.flatMap { it.flattenToEntities() }
 
@@ -148,6 +149,7 @@ fun List<CategoryEntity>.toTree(): List<Category> {
         archived = entity.archived,
         sortOrder = entity.sortOrder,
         children = byParent[entity.id].orEmpty().map(::build),
+        carryOver = entity.carryOver,
     )
     return byParent[null].orEmpty().map(::build)
 }

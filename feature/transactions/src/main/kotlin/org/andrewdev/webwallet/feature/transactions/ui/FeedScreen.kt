@@ -87,6 +87,7 @@ import org.andrewdev.webwallet.feature.transactions.FeedRow
 import org.andrewdev.webwallet.feature.transactions.FeedUiState
 import org.andrewdev.webwallet.feature.transactions.FeedViewModel
 import org.andrewdev.webwallet.feature.transactions.R
+import java.time.YearMonth
 
 /** How the feed was opened: the plain tab, one account, or one payee (the person of a debt). */
 sealed interface FeedScope {
@@ -95,6 +96,9 @@ sealed interface FeedScope {
     data class Account(val accountId: Long) : FeedScope
 
     data class Payee(val payeeId: Long, val name: String) : FeedScope
+
+    /** One category in one month (`yyyy-MM`), from the budget. */
+    data class Category(val categoryId: Long, val name: String, val month: String) : FeedScope
 }
 
 class FeedActions(
@@ -116,6 +120,7 @@ fun FeedRoute(scope: FeedScope, actions: FeedActions, viewModel: FeedViewModel =
         when (scope) {
             is FeedScope.Account -> viewModel.presetAccount(scope.accountId)
             is FeedScope.Payee -> viewModel.presetPayee(scope.payeeId)
+            is FeedScope.Category -> viewModel.presetCategory(scope.categoryId, YearMonth.parse(scope.month))
             FeedScope.All -> Unit
         }
     }
@@ -127,6 +132,7 @@ fun FeedRoute(scope: FeedScope, actions: FeedActions, viewModel: FeedViewModel =
             it.id == scope.accountId
         }?.name ?: stringResource(R.string.feature_transactions_title)
         is FeedScope.Payee -> scope.name
+        is FeedScope.Category -> scope.name
     }
     FeedScreen(
         title = title,

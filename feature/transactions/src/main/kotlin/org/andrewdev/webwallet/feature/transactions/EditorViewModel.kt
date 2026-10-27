@@ -30,6 +30,7 @@ import org.andrewdev.webwallet.core.network.ApiResult
 import org.andrewdev.webwallet.core.network.ErrorCode
 import java.math.BigDecimal
 import java.time.LocalDate
+import java.util.UUID
 import javax.inject.Inject
 
 /** What the form offers: the API types plus a debt, saved as a transfer with the debt account (web `FormType`). */
@@ -45,6 +46,8 @@ data class SplitValue(
 data class EditorUiState(
     val loaded: Boolean = false,
     val editing: Transaction? = null,
+    /** The key of this creation: a retry after a lost response does not create the transaction twice. */
+    val creationKey: UUID = UUID.randomUUID(),
     val type: FormType = FormType.EXPENSE,
     val debtDirection: DebtDirection = DebtDirection.GAVE,
     val amountText: String = "",
@@ -331,7 +334,8 @@ class EditorViewModel @Inject constructor(
                 }
                 else -> plainDraft(current, tagIds)
             }
-            val result = current.editing?.let { transactions.update(it.id, draft) } ?: transactions.create(draft)
+            val result = current.editing?.let { transactions.update(it.id, draft) }
+                ?: transactions.create(draft, current.creationKey)
             when (result) {
                 is ApiResult.Ok -> onSaved(result.value)
                 is ApiResult.Err -> fail(result.error)
@@ -409,6 +413,7 @@ class EditorViewModel @Inject constructor(
         return when (
             val created = accounts.create(
                 AccountDraft(name = name, type = AccountType.DEBT, currency = current.baseCurrency, inBudget = false),
+                current.creationKey,
             )
         ) {
             is ApiResult.Ok -> created.value.id

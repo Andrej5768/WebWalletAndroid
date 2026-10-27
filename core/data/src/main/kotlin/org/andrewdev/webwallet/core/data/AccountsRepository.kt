@@ -15,6 +15,7 @@ import org.andrewdev.webwallet.core.network.generated.model.AccountRequest
 import org.andrewdev.webwallet.core.network.map
 import org.andrewdev.webwallet.core.network.onOk
 import java.math.BigDecimal
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -69,8 +70,9 @@ class AccountsRepository @Inject constructor(
 
     fun invalidate() = cache.invalidate(KEY_ACCOUNTS, KEY_SUMMARY)
 
-    suspend fun create(draft: AccountDraft): ApiResult<Account> =
-        apiCall { api.create8(draft.toRequest()) }.map { it.toEntity().toModel() }.onOk { invalidate() }
+    /** [key] names the attempt: a retry with the same key gets the first response back instead of a duplicate. */
+    suspend fun create(draft: AccountDraft, key: UUID): ApiResult<Account> =
+        apiCall { api.create8(draft.toRequest(), key) }.map { it.toEntity().toModel() }.onOk { invalidate() }
 
     suspend fun update(id: Long, draft: AccountDraft): ApiResult<Account> =
         apiCall { api.update7(id, draft.toRequest()) }.map { it.toEntity().toModel() }.onOk { invalidate() }

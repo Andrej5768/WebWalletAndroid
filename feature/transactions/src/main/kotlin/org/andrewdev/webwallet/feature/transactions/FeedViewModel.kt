@@ -38,6 +38,7 @@ import org.andrewdev.webwallet.core.network.ApiResult
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDate
+import java.time.YearMonth
 import javax.inject.Inject
 
 /** One day of the feed with its net change per currency, transfers excluded (web `groupByDay`). */
@@ -230,6 +231,15 @@ class FeedViewModel @Inject constructor(
     ) = filtersState.update { it.copy(accountId = accountId, preset = PeriodPreset.ALL) }
 
     fun presetPayee(payeeId: Long) = filtersState.update { it.copy(payeeId = payeeId, preset = PeriodPreset.ALL) }
+
+    /** From the budget: the category's operations of that month. */
+    fun presetCategory(categoryId: Long, month: YearMonth) = filtersState.update {
+        it.copy(
+            categoryId = categoryId,
+            preset = PeriodPreset.CUSTOM,
+            custom = Period(month.atDay(1), month.atEndOfMonth()),
+        )
+    }
 
     fun refresh() = transactions.invalidateAll()
 

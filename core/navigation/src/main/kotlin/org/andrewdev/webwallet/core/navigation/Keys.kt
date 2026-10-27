@@ -76,6 +76,9 @@ data class TransactionEditorKey(
 
 @Serializable data object TransferPairsKey : NavKey
 
+/** The transactions of a category in one month, opened from the budget; [month] is `yyyy-MM`. */
+@Serializable data class CategoryTransactionsKey(val categoryId: Long, val name: String, val month: String) : NavKey
+
 // More and settings (docs/04 §8, §14)
 
 @Serializable data object SettingsKey : NavKey

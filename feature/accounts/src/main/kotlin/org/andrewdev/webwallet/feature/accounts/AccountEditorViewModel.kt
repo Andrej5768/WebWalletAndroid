@@ -18,11 +18,14 @@ import org.andrewdev.webwallet.core.network.ApiError
 import org.andrewdev.webwallet.core.network.ApiResult
 import org.andrewdev.webwallet.core.network.ErrorCode
 import java.math.BigDecimal
+import java.util.UUID
 import javax.inject.Inject
 
 data class AccountEditorUiState(
     val loaded: Boolean = false,
     val editing: Account? = null,
+    /** The key of this creation: a retry after a lost response does not create the account twice. */
+    val creationKey: UUID = UUID.randomUUID(),
     val name: String = "",
     val type: AccountType = AccountType.CARD,
     val currency: String = "UAH",
@@ -122,7 +125,8 @@ class AccountEditorViewModel @Inject constructor(
             archived = if (current.isNew) null else current.archived,
         )
         viewModelScope.launch {
-            val result = current.editing?.let { accounts.update(it.id, draft) } ?: accounts.create(draft)
+            val result = current.editing?.let { accounts.update(it.id, draft) }
+                ?: accounts.create(draft, current.creationKey)
             when (result) {
                 is ApiResult.Ok -> onSaved()
                 is ApiResult.Err -> state.update {
