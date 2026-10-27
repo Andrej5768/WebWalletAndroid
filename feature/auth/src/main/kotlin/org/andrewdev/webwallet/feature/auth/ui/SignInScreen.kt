@@ -10,19 +10,24 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import org.andrewdev.webwallet.core.designsystem.theme.WebWalletTheme
 import org.andrewdev.webwallet.core.network.ApiError
 import org.andrewdev.webwallet.core.network.ErrorCode
+import org.andrewdev.webwallet.core.ui.GoogleIdTokenResult
 import org.andrewdev.webwallet.core.ui.WarnCard
 import org.andrewdev.webwallet.core.ui.message
+import org.andrewdev.webwallet.core.ui.requestGoogleIdToken
 import org.andrewdev.webwallet.feature.auth.R
 import org.andrewdev.webwallet.feature.auth.SignInEffect
 import org.andrewdev.webwallet.feature.auth.SignInUiState
@@ -50,6 +55,9 @@ fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val googleUnavailable = stringResource(R.string.feature_auth_login_google_unavailable)
     LaunchedEffect(prefillEmail) { prefillEmail?.let(viewModel::prefill) }
     LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
@@ -72,6 +80,22 @@ fun SignInRoute(
         onSubmit = viewModel::submit,
         onResend = viewModel::resendVerification,
         onDemo = viewModel::startDemo,
+        onGoogle = {
+            viewModel.setGoogleError(null)
+            viewModel.googleWebClientId { clientId ->
+                if (clientId == null) {
+                    viewModel.setGoogleError(googleUnavailable)
+                } else {
+                    scope.launch {
+                        when (val result = requestGoogleIdToken(context, clientId)) {
+                            is GoogleIdTokenResult.Token -> viewModel.signInWithGoogle(result.idToken)
+                            GoogleIdTokenResult.Cancelled -> Unit
+                            is GoogleIdTokenResult.Failed -> viewModel.setGoogleError(googleUnavailable)
+                        }
+                    }
+                }
+            }
+        },
     )
 }
 
@@ -85,6 +109,7 @@ fun SignInScreen(
     onSubmit: () -> Unit,
     onResend: () -> Unit,
     onDemo: () -> Unit = {},
+    onGoogle: () -> Unit = {},
 ) {
     AuthScaffold(
         title = stringResource(R.string.feature_auth_login_title),
@@ -141,6 +166,18 @@ fun SignInScreen(
         }
         TextButton(onClick = actions.openForgotPassword, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text(stringResource(R.string.feature_auth_login_forgot))
+        }
+        if (state.googleOffered) {
+            OutlinedButton(
+                onClick = onGoogle,
+                enabled = !state.signingInWithGoogle && !state.submitting,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(R.string.feature_auth_login_google))
+            }
+            state.googleError?.let {
+                Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            }
         }
         if (state.demoOffered) {
             OutlinedButton(

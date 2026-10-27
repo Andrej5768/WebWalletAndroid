@@ -9,6 +9,7 @@ import org.andrewdev.webwallet.core.network.generated.api.CurrentUserApi
 import org.andrewdev.webwallet.core.network.generated.api.DemoApi
 import org.andrewdev.webwallet.core.network.generated.model.ClaimRequest
 import org.andrewdev.webwallet.core.network.generated.model.EmailRequest
+import org.andrewdev.webwallet.core.network.generated.model.GoogleIdTokenRequest
 import org.andrewdev.webwallet.core.network.generated.model.LoginRequest
 import org.andrewdev.webwallet.core.network.generated.model.LoginResponse
 import org.andrewdev.webwallet.core.network.generated.model.RegisterRequest
@@ -17,6 +18,7 @@ import org.andrewdev.webwallet.core.network.generated.model.RestoreAccountReques
 import org.andrewdev.webwallet.core.network.generated.model.TokenResponse
 import org.andrewdev.webwallet.core.network.generated.model.TwoFactorLoginRequest
 import org.andrewdev.webwallet.core.network.generated.model.VerifyEmailRequest
+import org.andrewdev.webwallet.core.network.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,6 +47,13 @@ class AuthRepository @Inject constructor(
         )
         return apiCall { api.login(request) }.flatMap { complete(it) }
     }
+
+    /** Signs in with the ID token Google handed the app (docs/03 §3.7); the trusted device skips the 2FA step. */
+    suspend fun signInWithGoogle(idToken: String): ApiResult<SignInOutcome> =
+        apiCall { api.nativeSignIn(GoogleIdTokenRequest(idToken, store.trustedDeviceToken())) }.flatMap { complete(it) }
+
+    /** The web client the app hands to Google as the server client; null while Google sign-in is off. */
+    suspend fun googleWebClientId(): ApiResult<String?> = apiCall { api.options() }.map { it.googleWebClientId }
 
     /** Opens a demo sandbox with example data and signs in to it; no registration needed. */
     suspend fun signInDemo(): ApiResult<SignInOutcome> = apiCall { demoApi.startDemo() }.flatMap { complete(it) }

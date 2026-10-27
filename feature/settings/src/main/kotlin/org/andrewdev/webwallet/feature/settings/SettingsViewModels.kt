@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.andrewdev.webwallet.core.auth.AppLock
+import org.andrewdev.webwallet.core.auth.AuthRepository
 import org.andrewdev.webwallet.core.data.TwoFactorSetup
 import org.andrewdev.webwallet.core.data.UserRepository
 import org.andrewdev.webwallet.core.datastore.LanguageSetting
@@ -163,13 +164,20 @@ data class SecurityUiState(
     val working: Boolean = false,
     val twoFactorError: ApiError? = null,
     val recoveryCodes: List<String>? = null,
+    val googleWorking: Boolean = false,
 )
 
 enum class TwoFactorStep { NONE, CONFIRM_IDENTITY, SCAN, DISABLE, REGENERATE }
 
 @Suppress("TooManyFunctions")
 @HiltViewModel
-class SecurityViewModel @Inject constructor(private val users: UserRepository, lock: AppLock) : ViewModel() {
+class SecurityViewModel @Inject constructor(
+    private val users: UserRepository,
+    private val auth: AuthRepository,
+    lock: AppLock,
+) : ViewModel() {
+
+    suspend fun googleWebClientId(): ApiResult<String?> = auth.googleWebClientId()
 
     private val form = MutableStateFlow(SecurityUiState())
 
@@ -329,6 +337,25 @@ class SecurityViewModel @Inject constructor(private val users: UserRepository, l
                 }
                 is ApiResult.Err -> form.update { it.copy(working = false, twoFactorError = result.error) }
             }
+        }
+    }
+
+    /** Links the Google account behind the ID token; the identity was confirmed in the sheet. */
+    fun linkGoogle(idToken: String, password: String?, code: String?, onResult: (ApiError?) -> Unit) {
+        form.update { it.copy(googleWorking = true) }
+        viewModelScope.launch {
+            val result = users.linkGoogle(idToken, password, code)
+            form.update { it.copy(googleWorking = false) }
+            onResult((result as? ApiResult.Err)?.error)
+        }
+    }
+
+    fun unlinkGoogle(onError: (ApiError) -> Unit) {
+        form.update { it.copy(googleWorking = true) }
+        viewModelScope.launch {
+            val result = users.unlinkGoogle()
+            form.update { it.copy(googleWorking = false) }
+            if (result is ApiResult.Err) onError(result.error)
         }
     }
 

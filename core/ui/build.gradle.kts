@@ -8,6 +8,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services)
+    implementation(libs.googleid)
+    implementation(libs.timber)
     api(projects.core.designsystem)
     api(projects.core.common)
     api(projects.core.model)

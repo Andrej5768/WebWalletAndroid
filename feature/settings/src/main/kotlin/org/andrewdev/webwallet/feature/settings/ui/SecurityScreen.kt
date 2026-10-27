@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,11 +36,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import org.andrewdev.webwallet.core.designsystem.theme.Spacing
 import org.andrewdev.webwallet.core.designsystem.theme.WwTheme
+import org.andrewdev.webwallet.core.network.ApiError
+import org.andrewdev.webwallet.core.network.ApiResult
 import org.andrewdev.webwallet.core.ui.CodeField
+import org.andrewdev.webwallet.core.ui.GoogleIdTokenResult
 import org.andrewdev.webwallet.core.ui.WwCard
 import org.andrewdev.webwallet.core.ui.message
+import org.andrewdev.webwallet.core.ui.requestGoogleIdToken
 import org.andrewdev.webwallet.feature.settings.R
 import org.andrewdev.webwallet.feature.settings.SecurityUiState
 import org.andrewdev.webwallet.feature.settings.SecurityViewModel
@@ -52,6 +58,7 @@ fun SecurityRoute(onBack: () -> Unit, onAppLock: () -> Unit, viewModel: Security
     SettingsPage(title = stringResource(R.string.feature_settings_security), onBack = onBack) {
         PasswordCard(state, viewModel)
         TwoFactorCard(state, viewModel)
+        GoogleCard(state, viewModel)
         ListItem(
             headlineContent = { Text(stringResource(R.string.feature_settings_app_lock)) },
             supportingContent = {
@@ -460,4 +467,74 @@ private fun copySensitive(context: Context, text: String) {
     val clip = ClipData.newPlainText("WebWallet", text)
     clip.description.extras = PersistableBundle().apply { putBoolean("android.content.extra.IS_SENSITIVE", true) }
     clipboard.setPrimaryClip(clip)
+}
+
+/** The Google account (docs/03 §3.7): linked with the identity check and Credential Manager, or unlinked. */
+@Composable
+private fun GoogleCard(state: SecurityUiState, viewModel: SecurityViewModel) {
+    val user = state.user ?: return
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var confirming by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf<ApiError?>(null) }
+    val unavailable = stringResource(R.string.feature_settings_google_unavailable)
+    WwCard {
+        Column(modifier = Modifier.padding(Spacing.md), verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+            Text(stringResource(R.string.feature_settings_google_title), style = MaterialTheme.typography.titleMedium)
+            val linked = user.googleEmail
+            if (linked != null) {
+                Text(
+                    stringResource(R.string.feature_settings_google_linked, linked),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OutlinedButton(
+                    onClick = { viewModel.unlinkGoogle { error = it } },
+                    enabled = !state.googleWorking && user.hasPassword,
+                ) { Text(stringResource(R.string.feature_settings_google_unlink)) }
+                if (!user.hasPassword) {
+                    Text(
+                        stringResource(R.string.feature_settings_google_unlink_needs_password),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            } else {
+                Text(
+                    stringResource(R.string.feature_settings_google_text),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Button(onClick = { confirming = true }, enabled = !state.googleWorking) {
+                    Text(stringResource(R.string.feature_settings_google_link))
+                }
+            }
+            error?.let { Text(it.message(), color = MaterialTheme.colorScheme.error) }
+        }
+    }
+    if (confirming) {
+        ConfirmIdentitySheet(
+            user = user,
+            onSubmit = { password, code, onDone ->
+                scope.launch {
+                    val clientId = (viewModel.googleWebClientId() as? ApiResult.Ok)?.value
+                    if (clientId == null) {
+                        onDone(ApiError.Unexpected(null, IllegalStateException(unavailable)))
+                        return@launch
+                    }
+                    when (val result = requestGoogleIdToken(context, clientId)) {
+                        is GoogleIdTokenResult.Token -> viewModel.linkGoogle(result.idToken, password, code) { e ->
+                            onDone(e)
+                            if (e == null) confirming = false
+                        }
+                        GoogleIdTokenResult.Cancelled -> onDone(null).also { confirming = false }
+                        is GoogleIdTokenResult.Failed -> onDone(
+                            ApiError.Unexpected(null, IllegalStateException(unavailable)),
+                        )
+                    }
+                }
+            },
+            onDismiss = { confirming = false },
+        )
+    }
 }

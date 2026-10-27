@@ -246,4 +246,11 @@
     <string name="feature_settings_delete_done_title">Видалення заплановано</string>
     <string name="feature_settings_delete_done_text">Акаунт буде видалено %1$s. Ми надіслали на %2$s лист із посиланням, щоб скасувати видалення. Зараз ви вийдете з акаунта.</string>
     <string name="feature_settings_delete_ok">Зрозуміло</string>
+    <string name="feature_settings_google_title">Google</string>
+    <string name="feature_settings_google_text">Входьте через акаунт Google замість пароля.</string>
+    <string name="feature_settings_google_linked">Підключено: %1$s</string>
+    <string name="feature_settings_google_link">Підключити Google</string>
+    <string name="feature_settings_google_unlink">Відключити</string>
+    <string name="feature_settings_google_unlink_needs_password">Спершу задайте пароль: без Google акаунт не матиме способу входу.</string>
+    <string name="feature_settings_google_unavailable">Вхід через Google зараз недоступний.</string>
 </resources>

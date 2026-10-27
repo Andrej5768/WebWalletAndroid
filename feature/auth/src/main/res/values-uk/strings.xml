@@ -99,4 +99,6 @@
     <string name="feature_auth_sign_in_link">Увійти</string>
     <string name="feature_auth_login_demo">Спробувати демо</string>
     <string name="feature_auth_login_demo_hint">Без реєстрації: рахунки, операції та бюджет уже заповнені прикладами</string>
+    <string name="feature_auth_login_google">Продовжити з Google</string>
+    <string name="feature_auth_login_google_unavailable">Вхід через Google зараз недоступний.</string>
 </resources>

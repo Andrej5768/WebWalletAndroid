@@ -10,6 +10,7 @@ import org.andrewdev.webwallet.core.network.generated.api.CurrentUserApi
 import org.andrewdev.webwallet.core.network.generated.model.ChangePasswordRequest
 import org.andrewdev.webwallet.core.network.generated.model.ConfirmIdentityRequest
 import org.andrewdev.webwallet.core.network.generated.model.DisableTwoFactorRequest
+import org.andrewdev.webwallet.core.network.generated.model.GoogleLinkNativeRequest
 import org.andrewdev.webwallet.core.network.generated.model.TwoFactorCodeRequest
 import org.andrewdev.webwallet.core.network.generated.model.UpdateProfileRequest
 import org.andrewdev.webwallet.core.network.map
@@ -63,6 +64,13 @@ class UserRepository @Inject constructor(
 
     suspend fun enableTwoFactor(code: String): ApiResult<List<String>> =
         apiCall { api.enable(TwoFactorCodeRequest(code.trim())) }.map { it.recoveryCodes }.onOk { fetch() }
+
+    /** Links the Google account behind the ID token after the identity check (docs/03 §3.7). */
+    suspend fun linkGoogle(idToken: String, password: String?, code: String?): ApiResult<Unit> =
+        apiCall { api.linkNative(GoogleLinkNativeRequest(idToken, code = code, password = password)) }.onOk { fetch() }
+
+    /** CONFLICT for an account without a password, which could not sign in otherwise. */
+    suspend fun unlinkGoogle(): ApiResult<Unit> = apiCall { api.unlink() }.onOk { fetch() }
 
     suspend fun disableTwoFactor(code: String, password: String?): ApiResult<Unit> =
         apiCall { api.disable(DisableTwoFactorRequest(code.trim(), password)) }.onOk { fetch() }

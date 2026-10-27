@@ -34,6 +34,11 @@ data class SignInUiState(
     /** The server offers a demo sandbox (B8 feature flag). */
     val demoOffered: Boolean = false,
     val startingDemo: Boolean = false,
+    /** Google sign-in is on (B8 feature flag). */
+    val googleOffered: Boolean = false,
+    val signingInWithGoogle: Boolean = false,
+    /** Google could not be asked for an account; shown under the button. */
+    val googleError: String? = null,
 ) {
     val canSubmit: Boolean get() = email.isNotBlank() && password.isNotEmpty() && !submitting && cooldownSeconds == 0
 }
@@ -57,7 +62,14 @@ class SignInViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            appConfig.config.collect { config -> state.update { it.copy(demoOffered = config?.demo ?: false) } }
+            appConfig.config.collect { config ->
+                state.update {
+                    it.copy(
+                        demoOffered = config?.demo ?: false,
+                        googleOffered = config?.googleSignIn ?: false,
+                    )
+                }
+            }
         }
     }
 
@@ -101,6 +113,34 @@ class SignInViewModel @Inject constructor(
                 is ApiResult.Err -> fail(result.error)
             }
         }
+    }
+
+    /** "Continue with Google": the screen asks Google for the account, the token signs in like a password would. */
+    fun signInWithGoogle(idToken: String) {
+        if (state.value.signingInWithGoogle) return
+        state.update { it.copy(signingInWithGoogle = true, error = null, notVerified = false) }
+        viewModelScope.launch {
+            when (val result = auth.signInWithGoogle(idToken)) {
+                is ApiResult.Ok -> when (val outcome = result.value) {
+                    SignInOutcome.SignedIn -> state.update { it.copy(signingInWithGoogle = false) }
+                    is SignInOutcome.TwoFactorRequired -> {
+                        state.update { it.copy(signingInWithGoogle = false) }
+                        effects.send(SignInEffect.TwoFactor(outcome.challenge))
+                    }
+                }
+                is ApiResult.Err -> {
+                    state.update { it.copy(signingInWithGoogle = false) }
+                    fail(result.error)
+                }
+            }
+        }
+    }
+
+    fun setGoogleError(message: String?) = state.update { it.copy(googleError = message) }
+
+    /** The web client id Google needs, read from the server so the app does not carry it. */
+    fun googleWebClientId(onResult: (String?) -> Unit) {
+        viewModelScope.launch { onResult((auth.googleWebClientId() as? ApiResult.Ok)?.value) }
     }
 
     /** "Try the demo": a sandbox with example data, signed in like any other session. */

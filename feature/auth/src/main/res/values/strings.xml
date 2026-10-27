@@ -99,4 +99,6 @@
     <string name="feature_auth_sign_in_link">Sign in</string>
     <string name="feature_auth_login_demo">Try the demo</string>
     <string name="feature_auth_login_demo_hint">No sign-up: accounts, transactions and the budget are already filled with examples</string>
+    <string name="feature_auth_login_google">Continue with Google</string>
+    <string name="feature_auth_login_google_unavailable">Google sign-in is not available right now.</string>
 </resources>

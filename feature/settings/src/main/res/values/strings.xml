@@ -240,4 +240,11 @@
     <string name="feature_settings_delete_done_title">Deletion scheduled</string>
     <string name="feature_settings_delete_done_text">The account will be deleted on %1$s. We sent a link to cancel to %2$s. You will be signed out now.</string>
     <string name="feature_settings_delete_ok">Got it</string>
+    <string name="feature_settings_google_title">Google</string>
+    <string name="feature_settings_google_text">Sign in with your Google account instead of the password.</string>
+    <string name="feature_settings_google_linked">Linked: %1$s</string>
+    <string name="feature_settings_google_link">Link Google</string>
+    <string name="feature_settings_google_unlink">Unlink</string>
+    <string name="feature_settings_google_unlink_needs_password">Set a password first: without Google the account would have no way to sign in.</string>
+    <string name="feature_settings_google_unavailable">Google sign-in is not available right now.</string>
 </resources>
