@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,7 +25,6 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -308,24 +306,6 @@ fun CustomPeriodDialog(initial: Period, onPick: (Period) -> Unit, onDismiss: () 
 }
 
 /** A single date for the editor, Material date picker. */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DatePickerDialogOf(initial: LocalDate, onPick: (LocalDate) -> Unit, onDismiss: () -> Unit) {
-    val state = rememberDatePickerState(initialSelectedDateMillis = initial.toEpochMillis())
-    DatePickerDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {
-            TextButton(onClick = {
-                state.selectedDateMillis?.toLocalDate()?.let(onPick)
-            }) { Text(stringResource(R.string.feature_transactions_form_ok)) }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = onDismiss,
-            ) { Text(stringResource(R.string.feature_transactions_form_cancel)) }
-        },
-    ) { DatePicker(state = state) }
-}
 
 private fun LocalDate.toEpochMillis(): Long = atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 

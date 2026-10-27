@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_goals_title">Goals</string>
+    <string name="feature_goals_tab_goals">Goals</string>
+    <string name="feature_goals_tab_fire">FIRE</string>
+    <string name="feature_goals_tab_fym">FYM</string>
+    <string name="feature_goals_tab_calc">Calculator</string>
+    <string name="feature_goals_add">New goal</string>
+    <string name="feature_goals_saved">Saved for goals</string>
+    <string name="feature_goals_saved_of">of %1$s</string>
+    <string name="feature_goals_monthly">To set aside</string>
+    <string name="feature_goals_monthly_note">a month to make it in time</string>
+    <string name="feature_goals_average_savings">Average savings</string>
+    <plurals name="feature_goals_average_savings_note">
+        <item quantity="one">%1$s of income over %2$d complete month</item>
+        <item quantity="other">%1$s of income over %2$d complete months</item>
+    </plurals>
+    <string name="feature_goals_average_savings_empty">No complete month with income yet</string>
+    <string name="feature_goals_unconverted">No rate: %1$s. These amounts are not counted.</string>
+    <string name="feature_goals_empty">No goals yet. Add the first one, for example a trip or an emergency fund.</string>
+    <string name="feature_goals_edit">Edit</string>
+    <string name="feature_goals_contribute">Add money</string>
+    <string name="feature_goals_mark_achieved">Mark as achieved</string>
+    <string name="feature_goals_mark_active">Make active again</string>
+    <string name="feature_goals_delete">Delete</string>
+    <string name="feature_goals_delete_title">Delete the goal “%1$s”?</string>
+    <string name="feature_goals_delete_text">The account and transactions stay.</string>
+    <string name="feature_goals_progress">of %1$s</string>
+    <string name="feature_goals_until">by %1$s</string>
+    <string name="feature_goals_manual">Tracked by hand</string>
+    <string name="feature_goals_status_achieved">Achieved</string>
+    <string name="feature_goals_status_no_date">No deadline</string>
+    <string name="feature_goals_status_on_track">On track</string>
+    <string name="feature_goals_status_behind">Behind</string>
+    <string name="feature_goals_status_overdue">Overdue</string>
+    <string name="feature_goals_pace_achieved">Goal achieved</string>
+    <string name="feature_goals_pace_achieved_on">Goal achieved on %1$s</string>
+    <string name="feature_goals_pace_no_date">%1$s to go</string>
+    <string name="feature_goals_pace_ahead">Ahead of schedule by %1$s</string>
+    <string name="feature_goals_pace_on_pace">Right on schedule</string>
+    <string name="feature_goals_pace_behind">By today you should have %1$s, %2$s short</string>
+    <string name="feature_goals_pace_overdue">The deadline has passed, %1$s short</string>
+    <plurals name="feature_goals_monthly_label">
+        <item quantity="one">Set aside monthly, %d month</item>
+        <item quantity="other">Set aside monthly, %d months</item>
+    </plurals>
+    <string name="feature_goals_monthly_now">Needed now</string>
+    <string name="feature_goals_form_new_title">New goal</string>
+    <string name="feature_goals_form_edit_title">Edit goal</string>
+    <string name="feature_goals_form_name">Name</string>
+    <string name="feature_goals_form_target">Target amount</string>
+    <string name="feature_goals_form_currency">Currency</string>
+    <string name="feature_goals_form_date">Date</string>
+    <string name="feature_goals_form_date_hint">Without a date the goal has no deadline</string>
+    <string name="feature_goals_form_account">Account to save on</string>
+    <string name="feature_goals_form_no_account">No account — track by hand</string>
+    <string name="feature_goals_form_account_hint">Progress follows the account balance</string>
+    <string name="feature_goals_form_manual_hint">You record the money you add yourself</string>
+    <string name="feature_goals_form_saved">Already saved</string>
+    <string name="feature_goals_form_icon">Icon</string>
+    <string name="feature_goals_form_color">Colour</string>
+    <string name="feature_goals_form_required">Required</string>
+    <string name="feature_goals_form_save">Save</string>
+    <string name="feature_goals_form_close">Close</string>
+    <string name="feature_goals_form_clear">Clear</string>
+    <string name="feature_goals_contribution_title">Add money to “%1$s”</string>
+    <string name="feature_goals_contribution_amount">Amount</string>
+    <string name="feature_goals_contribution_withdraw">Take out of the goal</string>
+    <string name="feature_goals_contribution_hint">Saved so far: %1$s</string>
+    <plurals name="feature_goals_short_history">
+        <item quantity="one">The averages rest on %d complete month only — the estimates are rough.</item>
+        <item quantity="other">The averages rest on %d complete months only — the estimates are rough.</item>
+    </plurals>
+
+    <string name="feature_goals_fire_inputs">Inputs</string>
+    <string name="feature_goals_fire_reset">Back to the data</string>
+    <string name="feature_goals_fire_monthly_expenses">Monthly expenses</string>
+    <string name="feature_goals_fire_withdrawal_rate">Safe withdrawal rate</string>
+    <string name="feature_goals_fire_withdrawal_rate_hint">How much of the capital can be spent each year</string>
+    <string name="feature_goals_fire_real_return">Expected real return</string>
+    <string name="feature_goals_fire_real_return_hint">After inflation</string>
+    <string name="feature_goals_fire_monthly_savings">Monthly savings</string>
+    <string name="feature_goals_fire_number">FIRE number</string>
+    <string name="feature_goals_fire_number_note">Yearly expenses %1$s ÷ %2$s</string>
+    <string name="feature_goals_fire_years">Years to FIRE</string>
+    <string name="feature_goals_fire_year_note">Around %1$d</string>
+    <string name="feature_goals_fire_too_far">Over 60 years at the current pace</string>
+    <string name="feature_goals_fire_capital_now">Capital now %1$s</string>
+    <string name="feature_goals_fire_projection">Capital projection</string>
+    <string name="feature_goals_fire_reached_in">FIRE in %1$d</string>
+    <string name="feature_goals_fire_lean">Lean FIRE</string>
+    <string name="feature_goals_fire_lean_note">Modest expenses, 70%</string>
+    <string name="feature_goals_fire_regular">FIRE</string>
+    <string name="feature_goals_fire_regular_note">Current expenses</string>
+    <string name="feature_goals_fire_fat">Fat FIRE</string>
+    <string name="feature_goals_fire_fat_note">Expenses ×1.5</string>
+    <string name="feature_goals_fire_coast">Coast FIRE</string>
+    <string name="feature_goals_fire_coast_note">No contributions, 20 years of growth</string>
+    <string name="feature_goals_fire_barista">Barista FIRE</string>
+    <string name="feature_goals_fire_barista_note">Half of the expenses from the capital</string>
+    <plurals name="feature_goals_fire_expenses_hint">
+        <item quantity="one">Average of %d complete month</item>
+        <item quantity="other">Average of %d complete months</item>
+    </plurals>
+    <plurals name="feature_goals_fire_monthly_savings_hint">
+        <item quantity="one">Average of %1$d complete month; savings rate %2$s</item>
+        <item quantity="other">Average of %1$d complete months; savings rate %2$s</item>
+    </plurals>
+    <plurals name="feature_goals_fire_overspending_hint">
+        <item quantity="one">Over %1$d complete month the expenses exceed the income by %2$s, nothing is saved</item>
+        <item quantity="other">Over %1$d complete months the expenses exceed the income by %2$s, nothing is saved</item>
+    </plurals>
+
+    <string name="feature_goals_fym_title">FYM — freedom money</string>
+    <string name="feature_goals_fym_subtitle">How many months you would live without income at your current expenses</string>
+    <string name="feature_goals_fym_no_expenses">No complete month with expenses to count with yet</string>
+    <string name="feature_goals_fym_expenses">Monthly expenses</string>
+    <plurals name="feature_goals_fym_expenses_hint">
+        <item quantity="one">Average of %d complete month; can be changed</item>
+        <item quantity="other">Average of %d complete months; can be changed</item>
+    </plurals>
+    <string name="feature_goals_fym_reset_expenses">Back to the average</string>
+    <string name="feature_goals_fym_months_without_income">months without income</string>
+    <string name="feature_goals_fym_liquid_note">Available %1$s · expenses %2$s a month</string>
+    <string name="feature_goals_fym_incomplete">accounts without a rate are left out</string>
+    <plurals name="feature_goals_fym_milestone">
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
+    </plurals>
+    <string name="feature_goals_fym_target">Target</string>
+    <string name="feature_goals_fym_need">Needed: %1$s</string>
+    <string name="feature_goals_fym_left">Still needed: %1$s</string>
+    <string name="feature_goals_fym_reached">Target reached</string>
+    <string name="feature_goals_fym_eta">Saving %1$s a month — %2$s months</string>
+    <string name="feature_goals_fym_no_savings">No savings over the complete months of the last year</string>
+    <string name="feature_goals_fym_liquid_title">What counts as available money</string>
+
+    <string name="feature_goals_calc_parameters">Parameters</string>
+    <string name="feature_goals_calc_initial">Initial amount</string>
+    <string name="feature_goals_calc_monthly">Monthly contribution</string>
+    <string name="feature_goals_calc_rate">Rate per year</string>
+    <string name="feature_goals_calc_years">Term, years</string>
+    <string name="feature_goals_calc_capitalization">Compounding</string>
+    <string name="feature_goals_calc_monthly_cap">Monthly</string>
+    <string name="feature_goals_calc_quarterly_cap">Quarterly</string>
+    <string name="feature_goals_calc_yearly_cap">Yearly</string>
+    <string name="feature_goals_calc_growth">Yearly increase of the contribution</string>
+    <string name="feature_goals_calc_inflation">Inflation</string>
+    <string name="feature_goals_calc_real">Show in today\'s prices</string>
+    <string name="feature_goals_calc_final">Final amount</string>
+    <string name="feature_goals_calc_contributed">Contributed</string>
+    <string name="feature_goals_calc_interest_total">Interest earned</string>
+    <string name="feature_goals_calc_real_final">In today\'s prices</string>
+    <string name="feature_goals_calc_by_year">Growth by year</string>
+    <string name="feature_goals_calc_year">Year</string>
+</resources>

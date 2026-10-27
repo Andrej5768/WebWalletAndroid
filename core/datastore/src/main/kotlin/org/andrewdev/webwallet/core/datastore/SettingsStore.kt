@@ -26,6 +26,44 @@ data class SettingsData(
     /** The minimum balance of the forecast chart in the base currency, as the web stores it. */
     val forecastMinimum: String? = null,
     val appConfig: AppConfigData? = null,
+    /** The inputs of the goal calculators (docs/04 §10.2), like the web's local storage; reset on sign-out. */
+    val calculators: CalculatorInputs = CalculatorInputs(),
+)
+
+/** What the viewer typed into FIRE, FYM and the compound calculator; a null field follows the data. */
+@Serializable
+data class CalculatorInputs(
+    val fire: FireInputs = FireInputs(),
+    val fym: FymInputs = FymInputs(),
+    val compound: CompoundInputs = CompoundInputs(),
+)
+
+@Serializable
+data class FireInputs(
+    val monthlyExpenses: String? = null,
+    val withdrawalRate: String? = null,
+    val realReturn: String? = null,
+    val monthlySavings: String? = null,
+)
+
+@Serializable
+data class FymInputs(
+    /** Choices by account id; other accounts follow their type. */
+    val accounts: Map<Long, Boolean> = emptyMap(),
+    val target: Int = 12,
+    val expenses: String? = null,
+)
+
+@Serializable
+data class CompoundInputs(
+    val initial: String? = "100000",
+    val monthly: String? = "10000",
+    val rate: String? = "12",
+    val years: String? = "10",
+    val capitalization: String = "MONTHLY",
+    val growth: String? = "5",
+    val inflation: String? = "8",
+    val real: Boolean = false,
 )
 
 /** The cached `GET /app/config` (B8) with when it was fetched. */

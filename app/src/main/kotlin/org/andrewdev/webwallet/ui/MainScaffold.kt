@@ -48,6 +48,8 @@ import org.andrewdev.webwallet.core.navigation.CategoryTransactionsKey
 import org.andrewdev.webwallet.core.navigation.ClaimDemoKey
 import org.andrewdev.webwallet.core.navigation.ComingSoonKey
 import org.andrewdev.webwallet.core.navigation.DeepLink
+import org.andrewdev.webwallet.core.navigation.GoalEditorKey
+import org.andrewdev.webwallet.core.navigation.GoalsKey
 import org.andrewdev.webwallet.core.navigation.MoreKey
 import org.andrewdev.webwallet.core.navigation.OverviewKey
 import org.andrewdev.webwallet.core.navigation.PayeeTransactionsKey
@@ -67,6 +69,9 @@ import org.andrewdev.webwallet.feature.accounts.ui.AccountsActions
 import org.andrewdev.webwallet.feature.accounts.ui.AccountsRoute
 import org.andrewdev.webwallet.feature.budget.ui.BudgetActions
 import org.andrewdev.webwallet.feature.budget.ui.BudgetRoute
+import org.andrewdev.webwallet.feature.goals.GoalsActions
+import org.andrewdev.webwallet.feature.goals.ui.GoalEditorRoute
+import org.andrewdev.webwallet.feature.goals.ui.GoalsRoute
 import org.andrewdev.webwallet.feature.lock.ui.PinSetupRoute
 import org.andrewdev.webwallet.feature.lock.ui.biometricAvailable
 import org.andrewdev.webwallet.feature.more.ClaimDemoRoute
@@ -74,6 +79,7 @@ import org.andrewdev.webwallet.feature.more.ComingSoonScreen
 import org.andrewdev.webwallet.feature.more.DemoBanner
 import org.andrewdev.webwallet.feature.more.MoreActions
 import org.andrewdev.webwallet.feature.more.MoreRoute
+import org.andrewdev.webwallet.feature.more.MoreSection
 import org.andrewdev.webwallet.feature.overview.ui.OverviewActions
 import org.andrewdev.webwallet.feature.overview.ui.OverviewRoute
 import org.andrewdev.webwallet.feature.settings.ui.AboutScreen
@@ -266,9 +272,25 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                             MoreActions(
                                 openSettings = { stack.add(SettingsKey) },
                                 openAbout = { stack.add(AboutKey) },
-                                openSection = { section -> stack.add(ComingSoonKey(section.name.lowercase())) },
+                                openSection = { section ->
+                                    when (section) {
+                                        MoreSection.GOALS -> stack.add(GoalsKey)
+                                        else -> stack.add(ComingSoonKey(section.name.lowercase()))
+                                    }
+                                },
                             ),
                         )
+                    }
+                    entry<GoalsKey> {
+                        GoalsRoute(
+                            GoalsActions(
+                                openEditor = { stack.add(GoalEditorKey(it)) },
+                                back = { stack.removeLastOrNull() },
+                            ),
+                        )
+                    }
+                    entry<GoalEditorKey> { key ->
+                        GoalEditorRoute(id = key.id, onClose = { stack.removeLastOrNull() })
                     }
                     entry<ComingSoonKey> { key ->
                         ComingSoonScreen(

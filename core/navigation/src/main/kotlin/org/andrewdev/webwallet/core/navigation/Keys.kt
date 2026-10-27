@@ -85,6 +85,12 @@ data class TransactionEditorKey(
 /** The transactions of a category in one month, opened from the budget; [month] is `yyyy-MM`. */
 @Serializable data class CategoryTransactionsKey(val categoryId: Long, val name: String, val month: String) : NavKey
 
+// Goals (docs/04 §10)
+
+@Serializable data object GoalsKey : NavKey
+
+@Serializable data class GoalEditorKey(val id: Long? = null) : NavKey
+
 // More and settings (docs/04 §8, §14)
 
 @Serializable data object SettingsKey : NavKey

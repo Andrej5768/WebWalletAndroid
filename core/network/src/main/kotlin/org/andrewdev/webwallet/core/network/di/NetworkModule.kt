@@ -14,14 +14,17 @@ import org.andrewdev.webwallet.core.network.IdempotencyInterceptor
 import org.andrewdev.webwallet.core.network.RedactingLogger
 import org.andrewdev.webwallet.core.network.TokenAuthenticator
 import org.andrewdev.webwallet.core.network.generated.api.AccountsApi
+import org.andrewdev.webwallet.core.network.generated.api.AnalyticsApi
 import org.andrewdev.webwallet.core.network.generated.api.AppApi
 import org.andrewdev.webwallet.core.network.generated.api.AuthenticationApi
 import org.andrewdev.webwallet.core.network.generated.api.BudgetApi
 import org.andrewdev.webwallet.core.network.generated.api.CategoriesApi
+import org.andrewdev.webwallet.core.network.generated.api.CategorizationRulesApi
 import org.andrewdev.webwallet.core.network.generated.api.CurrentUserApi
 import org.andrewdev.webwallet.core.network.generated.api.DebtsApi
 import org.andrewdev.webwallet.core.network.generated.api.DemoApi
 import org.andrewdev.webwallet.core.network.generated.api.ForecastApi
+import org.andrewdev.webwallet.core.network.generated.api.GoalsApi
 import org.andrewdev.webwallet.core.network.generated.api.MonobankApi
 import org.andrewdev.webwallet.core.network.generated.api.NotificationsApi
 import org.andrewdev.webwallet.core.network.generated.api.PayeesApi
@@ -129,4 +132,13 @@ object NetworkModule {
 
     @Provides @Singleton
     fun demoApi(client: ApiClient): DemoApi = client.createService(DemoApi::class.java)
+
+    @Provides @Singleton
+    fun goalsApi(client: ApiClient): GoalsApi = client.createService(GoalsApi::class.java)
+
+    @Provides @Singleton
+    fun rulesApi(client: ApiClient): CategorizationRulesApi = client.createService(CategorizationRulesApi::class.java)
+
+    @Provides @Singleton
+    fun analyticsApi(client: ApiClient): AnalyticsApi = client.createService(AnalyticsApi::class.java)
 }

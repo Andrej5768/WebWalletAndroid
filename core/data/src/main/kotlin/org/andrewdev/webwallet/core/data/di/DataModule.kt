@@ -10,6 +10,8 @@ import kotlinx.coroutines.withContext
 import org.andrewdev.webwallet.core.auth.SessionCleanup
 import org.andrewdev.webwallet.core.data.Cache
 import org.andrewdev.webwallet.core.database.WebWalletDatabase
+import org.andrewdev.webwallet.core.datastore.CalculatorInputs
+import org.andrewdev.webwallet.core.datastore.SettingsStore
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,5 +23,12 @@ object DataModule {
     fun clearCacheOnSignOut(database: WebWalletDatabase, cache: Cache): SessionCleanup = SessionCleanup {
         withContext(Dispatchers.IO) { database.clearAllTables() }
         cache.forgetAll()
+    }
+
+    /** The calculator inputs belong to the account that was signed in (docs/04 §10.2). */
+    @Provides
+    @IntoSet
+    fun resetCalculatorsOnSignOut(settings: SettingsStore): SessionCleanup = SessionCleanup {
+        settings.update { it.copy(calculators = CalculatorInputs()) }
     }
 }
