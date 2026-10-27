@@ -65,6 +65,7 @@ import org.andrewdev.webwallet.core.navigation.PrivacySettingsKey
 import org.andrewdev.webwallet.core.navigation.ProfileSettingsKey
 import org.andrewdev.webwallet.core.navigation.RecurringEditorKey
 import org.andrewdev.webwallet.core.navigation.RecurringListKey
+import org.andrewdev.webwallet.core.navigation.ReportsKey
 import org.andrewdev.webwallet.core.navigation.RuleEditorKey
 import org.andrewdev.webwallet.core.navigation.RulesSettingsKey
 import org.andrewdev.webwallet.core.navigation.SecuritySettingsKey
@@ -91,6 +92,8 @@ import org.andrewdev.webwallet.feature.more.MoreRoute
 import org.andrewdev.webwallet.feature.more.MoreSection
 import org.andrewdev.webwallet.feature.overview.ui.OverviewActions
 import org.andrewdev.webwallet.feature.overview.ui.OverviewRoute
+import org.andrewdev.webwallet.feature.reports.ReportsActions
+import org.andrewdev.webwallet.feature.reports.ui.ReportsRoute
 import org.andrewdev.webwallet.feature.settings.CategoriesActions
 import org.andrewdev.webwallet.feature.settings.ui.AboutScreen
 import org.andrewdev.webwallet.feature.settings.ui.AppLockSettingsRoute
@@ -122,6 +125,7 @@ private val TABS: List<NavKey> = listOf(OverviewKey, TransactionsKey, BudgetKey,
 private const val STORE_URL = "https://play.google.com/store/apps/details?id=org.andrewdev.webwallet"
 
 @Composable
+@Suppress("CyclomaticComplexMethod", "LongMethod")
 fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val stacks = TABS.map { rememberNavBackStack(it) }
@@ -296,9 +300,21 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                                 openSection = { section ->
                                     when (section) {
                                         MoreSection.GOALS -> stack.add(GoalsKey)
+                                        MoreSection.REPORTS -> stack.add(ReportsKey)
                                         else -> stack.add(ComingSoonKey(section.name.lowercase()))
                                     }
                                 },
+                            ),
+                        )
+                    }
+                    entry<ReportsKey> {
+                        ReportsRoute(
+                            ReportsActions(
+                                openCategory = { id, name, month ->
+                                    stack.add(CategoryTransactionsKey(id, name, month.toString()))
+                                },
+                                openPayee = { id, name -> stack.add(PayeeTransactionsKey(id, name)) },
+                                back = { stack.removeLastOrNull() },
                             ),
                         )
                     }

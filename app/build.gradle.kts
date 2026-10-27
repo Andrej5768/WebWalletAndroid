@@ -40,6 +40,7 @@ dependencies {
     implementation(projects.feature.transactions)
     implementation(projects.feature.budget)
     implementation(projects.feature.goals)
+    implementation(projects.feature.reports)
     implementation(projects.feature.more)
     implementation(projects.feature.settings)
 

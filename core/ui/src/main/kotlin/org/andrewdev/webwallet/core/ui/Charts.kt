@@ -197,3 +197,47 @@ private const val BAR_SHARE = 0.7f
 private const val BAR_GAP = 0.9f
 private const val FULL_SWEEP = 360f
 private const val START_ANGLE = -90f
+
+/** One slice of a [DonutChart]. */
+data class DonutSlice(val value: Float, val color: Color)
+
+/** A ring split into shares (docs/05 §5), the selected slice drawn a little thicker; the text sits in the middle. */
+@Composable
+fun DonutChart(
+    slices: List<DonutSlice>,
+    modifier: Modifier = Modifier,
+    size: Dp = 160.dp,
+    thickness: Dp = 22.dp,
+    selected: Int? = null,
+    label: @Composable () -> Unit = {},
+) {
+    val total = slices.sumOf { it.value.toDouble() }.toFloat().takeIf { it > 0f } ?: 1f
+    val track = MaterialTheme.colorScheme.surfaceVariant
+    Box(modifier = modifier.size(size), contentAlignment = Alignment.Center) {
+        Canvas(modifier = Modifier.size(size)) {
+            val stroke = thickness.toPx()
+            val inset = stroke / 2 + SELECTED_EXTRA
+            val arc = Size(this.size.width - inset * 2, this.size.height - inset * 2)
+            drawArc(track, 0f, FULL_SWEEP, false, Offset(inset, inset), arc, style = Stroke(width = stroke))
+            var start = START_ANGLE
+            slices.forEachIndexed { index, slice ->
+                val sweep = FULL_SWEEP * slice.value / total
+                val width = if (index == selected) stroke + SELECTED_EXTRA * 2 else stroke
+                drawArc(
+                    slice.color,
+                    start,
+                    sweep - SLICE_GAP,
+                    false,
+                    Offset(inset, inset),
+                    arc,
+                    style = Stroke(width = width),
+                )
+                start += sweep
+            }
+        }
+        label()
+    }
+}
+
+private const val SELECTED_EXTRA = 6f
+private const val SLICE_GAP = 1.5f
