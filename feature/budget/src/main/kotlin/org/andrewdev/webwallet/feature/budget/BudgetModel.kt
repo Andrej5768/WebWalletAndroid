@@ -1,6 +1,7 @@
 package org.andrewdev.webwallet.feature.budget
 
 import org.andrewdev.webwallet.core.model.BudgetRow
+import org.andrewdev.webwallet.core.model.IncomeRow
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
@@ -32,6 +33,32 @@ data class EnvelopeGroup(
     /** A category without subcategories: one row, without a group heading repeating it. */
     val single: Boolean,
 )
+
+/** The income expected in one income category and the income received in it, without its subcategories. */
+data class IncomeLine(
+    val categoryId: Long,
+    val name: String,
+    val planned: BigDecimal,
+    val received: BigDecimal,
+    /** Under a parent income category. */
+    val nested: Boolean,
+) {
+    /** What is still expected; zero once the plan is reached. */
+    val remaining: BigDecimal get() = (planned - received).max(BigDecimal.ZERO)
+
+    /** Received share of the plan, 0..1; 1 without a plan once something came in. */
+    val share: Float
+        get() = when {
+            planned.signum() > 0 ->
+                received.divide(planned, SHARE_SCALE, RoundingMode.HALF_UP).toFloat().coerceIn(0f, 1f)
+            received.signum() > 0 -> 1f
+            else -> 0f
+        }
+
+    private companion object {
+        const val SHARE_SCALE = 4
+    }
+}
 
 /** The web's `budget/model.ts`: grouping, pace and shares, with the plans being saved laid over the server's. */
 object BudgetModel {
@@ -66,6 +93,29 @@ object BudgetModel {
         val none = emptyMap<Long, BigDecimal>()
         return rows.flatMap { row -> (listOf(row) + row.children).map { it.ownEnvelope(none, carryOver) } }
     }
+
+    /**
+     * The income categories as lines, with the plans being saved laid over the server's. A category with
+     * subcategories shows them, and itself only when it has its own plan or income.
+     */
+    fun incomeLines(rows: List<IncomeRow>, pending: Map<Long, BigDecimal> = emptyMap()): List<IncomeLine> =
+        rows.flatMap { head ->
+            fun line(row: IncomeRow, nested: Boolean) = IncomeLine(
+                categoryId = row.categoryId,
+                name = row.name,
+                planned = pending[row.categoryId] ?: row.ownPlanned,
+                received = row.ownReceived,
+                nested = nested,
+            )
+            val own = line(head, nested = false)
+            if (head.children.isEmpty()) {
+                listOf(own)
+            } else {
+                val children = head.children.map { line(it, nested = true) }
+                val ownHasMoney = own.planned.signum() != 0 || own.received.signum() != 0
+                (if (ownHasMoney) listOf(own) else emptyList()) + children
+            }
+        }
 
     fun overspent(rows: List<BudgetRow>): List<Envelope> = flatEnvelopes(rows).filter { it.available.signum() < 0 }
 

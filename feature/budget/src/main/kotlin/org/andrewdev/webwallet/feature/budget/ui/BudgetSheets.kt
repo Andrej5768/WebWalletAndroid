@@ -35,6 +35,8 @@ import java.math.BigDecimal
 @Composable
 internal fun AssignSheet(
     envelope: Envelope,
+    /** The shortcut that takes the actual value of the month: spent for an envelope, received for income. */
+    asActualLabel: String,
     currency: String,
     onPreviousAssigned: (categoryId: Long, onResult: (BigDecimal?) -> Unit) -> Unit,
     onSave: (BigDecimal) -> Unit,
@@ -71,7 +73,7 @@ internal fun AssignSheet(
                         text = text(envelope.spent)
                         value = envelope.spent.max(BigDecimal.ZERO)
                     },
-                    label = { Text(stringResource(R.string.feature_budget_assign_as_spent)) },
+                    label = { Text(asActualLabel) },
                 )
                 AssistChip(
                     onClick = {

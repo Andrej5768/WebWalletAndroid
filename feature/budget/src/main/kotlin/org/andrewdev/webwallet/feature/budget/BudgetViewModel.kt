@@ -37,6 +37,8 @@ sealed interface BudgetUiState {
         override val month: YearMonth,
         val data: BudgetMonth,
         val groups: List<EnvelopeGroup>,
+        /** The income categories with their expected and received income. */
+        val income: List<IncomeLine>,
         val overspent: List<Envelope>,
         /** Share of the month that has passed, for the "today" marker; null for other months. */
         val progress: Float?,
@@ -52,13 +54,18 @@ sealed interface BudgetUiState {
     ) : BudgetUiState {
         /** Nothing planned or spent: the screen offers to take last month's plan. */
         val isEmpty: Boolean
-            get() = !data.hasMoney && groups.flatMap { it.envelopes }.none { it.assigned.signum() != 0 }
+            get() = !data.hasMoney &&
+                groups.flatMap { it.envelopes }.none { it.assigned.signum() != 0 } &&
+                income.none { it.planned.signum() != 0 }
     }
 
     val month: YearMonth
 }
 
-/** The budget tab (docs/04 §7): one month at a time, plans saved optimistically, moves and the copy of last month. */
+/**
+ * The budget tab (docs/04 §7): one month at a time with its expected and received income above the envelopes, plans
+ * saved optimistically, moves and the copy of last month.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class BudgetViewModel @Inject constructor(
@@ -146,6 +153,7 @@ class BudgetViewModel @Inject constructor(
             month = month,
             data = data,
             groups = BudgetModel.groupEnvelopes(data.rows, pendingPlans, carryOver),
+            income = BudgetModel.incomeLines(data.incomeRows, pendingPlans),
             overspent = BudgetModel.overspent(data.rows),
             progress = BudgetModel.monthProgress(month, clock.today()),
             categoriesById = flat.associateBy { it.id },

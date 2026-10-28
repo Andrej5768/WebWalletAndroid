@@ -34,4 +34,14 @@
     <string name="feature_budget_carry_over">перенесення</string>
     <string name="feature_budget_empty_title">Ще нічого не заплановано</string>
     <string name="feature_budget_empty_body">Задайте план по категоріях або візьміть план минулого місяця.</string>
+    <string name="feature_budget_income">Доходи</string>
+    <string name="feature_budget_income_columns">отримано · план</string>
+    <string name="feature_budget_income_total">Разом</string>
+    <string name="feature_budget_income_of_plan">%1$s з %2$s</string>
+    <string name="feature_budget_income_progress">Отримано %1$s з %2$s</string>
+    <string name="feature_budget_income_remaining">ще %1$s</string>
+    <string name="feature_budget_income_received_all">Отримано повністю</string>
+    <string name="feature_budget_income_no_plan">Без плану</string>
+    <string name="feature_budget_income_uncategorized">Без категорії</string>
+    <string name="feature_budget_assign_as_received">Як отримано</string>
 </resources>

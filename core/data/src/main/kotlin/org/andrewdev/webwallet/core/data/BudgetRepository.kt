@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 import org.andrewdev.webwallet.core.model.BudgetMonth
 import org.andrewdev.webwallet.core.model.BudgetRow
 import org.andrewdev.webwallet.core.model.CurrencyCode
+import org.andrewdev.webwallet.core.model.IncomeRow
 import org.andrewdev.webwallet.core.network.ApiResult
 import org.andrewdev.webwallet.core.network.apiCall
 import org.andrewdev.webwallet.core.network.generated.api.BudgetApi
@@ -18,6 +19,7 @@ import java.math.BigDecimal
 import java.time.YearMonth
 import javax.inject.Inject
 import javax.inject.Singleton
+import org.andrewdev.webwallet.core.network.generated.model.IncomeRow as IncomeRowResponse
 
 @Serializable
 internal data class BudgetMonthJson(
@@ -30,6 +32,24 @@ internal data class BudgetMonthJson(
     val available: String,
     val rows: List<BudgetRowJson>,
     val unconverted: List<String>,
+    // Defaults keep months cached before the income was added readable
+    val plannedIncome: String = "0",
+    val income: String = "0",
+    val uncategorizedIncome: String = "0",
+    val incomeRows: List<IncomeRowJson> = emptyList(),
+)
+
+@Serializable
+internal data class IncomeRowJson(
+    val categoryId: Long,
+    val name: String,
+    val parentId: Long?,
+    val archived: Boolean,
+    val planned: String,
+    val received: String,
+    val ownPlanned: String,
+    val ownReceived: String,
+    val children: List<IncomeRowJson>,
 )
 
 @Serializable
@@ -76,7 +96,10 @@ class BudgetRepository @Inject constructor(
     suspend fun previousAssigned(month: YearMonth, categoryId: Long): ApiResult<BigDecimal> {
         val previous = month.minusMonths(1)
         return apiCall { api.month(previous.toString()) }.map { response ->
-            stored(response).flatten().firstOrNull { it.categoryId == categoryId }?.ownAssigned ?: BigDecimal.ZERO
+            val stored = stored(response)
+            stored.flatten().firstOrNull { it.categoryId == categoryId }?.ownAssigned
+                ?: stored.flattenIncome().firstOrNull { it.categoryId == categoryId }?.ownPlanned
+                ?: BigDecimal.ZERO
         }
     }
 
@@ -105,6 +128,22 @@ class BudgetRepository @Inject constructor(
         available = available.toPlainString(),
         rows = categories.map { it.toJson() },
         unconverted = unconvertedCurrencies,
+        plannedIncome = plannedIncome.toPlainString(),
+        income = income.toPlainString(),
+        uncategorizedIncome = uncategorizedIncome.toPlainString(),
+        incomeRows = incomeCategories.map { it.toJson() },
+    )
+
+    private fun IncomeRowResponse.toJson(): IncomeRowJson = IncomeRowJson(
+        categoryId = categoryId,
+        name = name,
+        parentId = parentId,
+        archived = archived,
+        planned = planned.toPlainString(),
+        received = received.toPlainString(),
+        ownPlanned = ownPlanned.toPlainString(),
+        ownReceived = ownReceived.toPlainString(),
+        children = children.map { it.toJson() },
     )
 
     private fun CategoryRow.toJson(): BudgetRowJson = BudgetRowJson(
@@ -137,6 +176,22 @@ internal fun BudgetMonthJson.toModel() = BudgetMonth(
     available = BigDecimal(available),
     rows = rows.map { it.toModel() },
     unconvertedCurrencies = unconverted,
+    plannedIncome = BigDecimal(plannedIncome),
+    income = BigDecimal(income),
+    uncategorizedIncome = BigDecimal(uncategorizedIncome),
+    incomeRows = incomeRows.map { it.toModel() },
+)
+
+internal fun IncomeRowJson.toModel(): IncomeRow = IncomeRow(
+    categoryId = categoryId,
+    name = name,
+    parentId = parentId,
+    archived = archived,
+    planned = BigDecimal(planned),
+    received = BigDecimal(received),
+    ownPlanned = BigDecimal(ownPlanned),
+    ownReceived = BigDecimal(ownReceived),
+    children = children.map { it.toModel() },
 )
 
 internal fun BudgetRowJson.toModel(): BudgetRow = BudgetRow(

@@ -46,6 +46,7 @@ import org.andrewdev.webwallet.core.designsystem.theme.WwTheme
 import org.andrewdev.webwallet.core.model.BudgetMonth
 import org.andrewdev.webwallet.core.model.BudgetRow
 import org.andrewdev.webwallet.core.model.CurrencyCode
+import org.andrewdev.webwallet.core.model.IncomeRow
 import org.andrewdev.webwallet.core.ui.Amount
 import org.andrewdev.webwallet.core.ui.AmountTone
 import org.andrewdev.webwallet.core.ui.BottomSheetMenu
@@ -68,6 +69,7 @@ import org.andrewdev.webwallet.feature.budget.BudgetUiState
 import org.andrewdev.webwallet.feature.budget.BudgetViewModel
 import org.andrewdev.webwallet.feature.budget.Envelope
 import org.andrewdev.webwallet.feature.budget.EnvelopeGroup
+import org.andrewdev.webwallet.feature.budget.IncomeLine
 import org.andrewdev.webwallet.feature.budget.R
 import java.math.BigDecimal
 import java.time.YearMonth
@@ -119,7 +121,8 @@ private sealed interface BudgetSheet {
 
     data object ConfirmCopy : BudgetSheet
 
-    data class Assign(val envelope: Envelope) : BudgetSheet
+    /** The plan of an envelope, or of an income category when [income] is set. */
+    data class Assign(val envelope: Envelope, val income: Boolean = false) : BudgetSheet
 
     data class Move(val from: Long?, val to: Long?, val amount: BigDecimal?) : BudgetSheet
 }
@@ -160,6 +163,17 @@ fun BudgetScreen(
                         onRefresh = callbacks.onRefresh,
                         onCategory = { actions.openCategoryTransactions(it.categoryId, it.name, state.month) },
                         onAssign = { sheet = BudgetSheet.Assign(it) },
+                        onPlanIncome = { line ->
+                            // The sheet's "as spent" shortcut takes the received income for an income category
+                            val envelope = Envelope(
+                                categoryId = line.categoryId,
+                                name = line.name,
+                                assigned = line.planned,
+                                activity = line.received.negate(),
+                                available = BigDecimal.ZERO,
+                            )
+                            sheet = BudgetSheet.Assign(envelope, income = true)
+                        },
                         onCover = {
                             sheet = BudgetSheet.Move(from = null, to = it.categoryId, amount = it.available.negate())
                         },
@@ -214,6 +228,11 @@ private fun BudgetSheets(
         )
         is BudgetSheet.Assign -> AssignSheet(
             envelope = sheet.envelope,
+            asActualLabel = if (sheet.income) {
+                stringResource(R.string.feature_budget_assign_as_received)
+            } else {
+                stringResource(R.string.feature_budget_assign_as_spent)
+            },
             currency = state.data.currency.code,
             onPreviousAssigned = callbacks.onPreviousAssigned,
             onSave = { amount ->
@@ -241,6 +260,7 @@ private fun BudgetContent(
     onRefresh: () -> Unit,
     onCategory: (Envelope) -> Unit,
     onAssign: (Envelope) -> Unit,
+    onPlanIncome: (IncomeLine) -> Unit,
     onCover: (Envelope) -> Unit,
     onCopyPrevious: () -> Unit,
 ) {
@@ -289,6 +309,9 @@ private fun BudgetContent(
                     onAction = onCopyPrevious,
                 )
             }
+        }
+        if (state.income.isNotEmpty() || state.data.income.signum() != 0) {
+            item(key = "income") { IncomeCard(state.data, state.income, state.pending, onPlan = onPlanIncome) }
         }
         state.groups.forEach { group ->
             if (!group.single) item(key = "group-${group.categoryId}") { GroupHeader(group, currency) }
@@ -475,6 +498,12 @@ private fun BudgetPreview() {
         available = BigDecimal("1500"),
         rows = rows,
         unconvertedCurrencies = emptyList(),
+        plannedIncome = BigDecimal("64000"),
+        income = BigDecimal("32000"),
+        incomeRows = listOf(
+            previewIncome(10, "Зарплата", "60000", "32000"),
+            previewIncome(11, "Кешбек", "4000", "0"),
+        ),
     )
     WebWalletTheme {
         BudgetScreen(
@@ -482,6 +511,7 @@ private fun BudgetPreview() {
                 month = data.month,
                 data = data,
                 groups = BudgetModel.groupEnvelopes(rows),
+                income = BudgetModel.incomeLines(data.incomeRows),
                 overspent = BudgetModel.overspent(rows),
                 progress = 0.6f,
                 categoriesById = emptyMap(),
@@ -498,6 +528,17 @@ private fun BudgetPreview() {
         )
     }
 }
+
+private fun previewIncome(id: Long, name: String, planned: String, received: String) = IncomeRow(
+    categoryId = id,
+    name = name,
+    parentId = null,
+    archived = false,
+    planned = BigDecimal(planned),
+    received = BigDecimal(received),
+    ownPlanned = BigDecimal(planned),
+    ownReceived = BigDecimal(received),
+)
 
 @Suppress("LongParameterList")
 private fun previewRow(

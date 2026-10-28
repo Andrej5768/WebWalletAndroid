@@ -1,6 +1,7 @@
 package org.andrewdev.webwallet.feature.budget
 
 import org.andrewdev.webwallet.core.model.BudgetRow
+import org.andrewdev.webwallet.core.model.IncomeRow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -96,5 +97,61 @@ class BudgetModelTest {
         assertEquals(40, BudgetModel.aheadPercent(ahead, 0.5f))
         assertNull(BudgetModel.aheadPercent(overspent, 0.5f))
         assertNull(BudgetModel.aheadPercent(ahead, null))
+    }
+
+    private fun income(
+        id: Long,
+        name: String,
+        planned: String,
+        received: String,
+        children: List<IncomeRow> = emptyList(),
+    ) = IncomeRow(
+        categoryId = id,
+        name = name,
+        parentId = null,
+        archived = false,
+        planned = children.fold(BigDecimal(planned)) { sum, child -> sum + child.planned },
+        received = children.fold(BigDecimal(received)) { sum, child -> sum + child.received },
+        ownPlanned = BigDecimal(planned),
+        ownReceived = BigDecimal(received),
+        children = children,
+    )
+
+    @Test
+    fun `income lines list subcategories and a parent only when it has its own plan or income`() {
+        val children = listOf(income(2, "Оклад", "50000", "50000"), income(3, "Бонус", "5000", "0"))
+        val salary = income(1, "Зарплата", "0", "0", children)
+        val gifts = income(4, "Подарунки", "0", "0")
+
+        val lines = BudgetModel.incomeLines(listOf(salary, gifts))
+
+        assertEquals(
+            listOf("Оклад" to true, "Бонус" to true, "Подарунки" to false),
+            lines.map { it.name to it.nested },
+        )
+        val withOwn = income(1, "Зарплата", "1000", "0", salary.children)
+        assertEquals(listOf("Зарплата", "Оклад", "Бонус"), BudgetModel.incomeLines(listOf(withOwn)).map { it.name })
+    }
+
+    @Test
+    fun `a plan being saved shows at once in the income line`() {
+        val lines = BudgetModel.incomeLines(listOf(income(4, "Подарунки", "0", "0")), mapOf(4L to BigDecimal("700")))
+
+        assertEquals(BigDecimal("700"), lines.single().planned)
+    }
+
+    @Test
+    fun `an income line tells what is still expected and how much of the plan came in`() {
+        val line = BudgetModel.incomeLines(listOf(income(1, "ФОП", "60000", "45000"))).single()
+        assertEquals(BigDecimal("15000"), line.remaining)
+        assertEquals(0.75f, line.share)
+
+        val over = BudgetModel.incomeLines(listOf(income(1, "ФОП", "60000", "70000"))).single()
+        assertEquals(BigDecimal.ZERO, over.remaining)
+        assertEquals(1f, over.share)
+
+        val unplanned = BudgetModel.incomeLines(listOf(income(1, "Кешбек", "0", "120"))).single()
+        assertEquals(1f, unplanned.share)
+        assertEquals(0f, BudgetModel.incomeLines(listOf(income(1, "Кешбек", "0", "0"))).single().share)
     }
 }
