@@ -145,7 +145,8 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
     LaunchedEffect(deepLink) {
         if (deepLink == null) return@LaunchedEffect
         tab = TABS.indexOf(deepLink.tab).coerceAtLeast(0)
-        deepLink.key?.let { stacks[tab].add(it) }
+        // A second shared file arrives while the imports are open: the screen there picks it up
+        deepLink.key?.takeIf { it != stacks[tab].lastOrNull() }?.let { stacks[tab].add(it) }
         onDeepLinkConsumed()
     }
 

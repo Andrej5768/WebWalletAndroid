@@ -69,6 +69,11 @@
     <string name="feature_imports_privat_file">Statement file</string>
     <string name="feature_imports_privat_account">Account</string>
     <string name="feature_imports_privat_account_hint">By default the account with the card number of the statement; created if there is none.</string>
+    <string name="feature_imports_detecting">Recognizing the file…</string>
+    <string name="feature_imports_what_file">What is “%1$s”?</string>
+    <string name="feature_imports_mono_pdf_title">Monobank — PDF statement</string>
+    <string name="feature_imports_mono_pdf_subtitle">Card statement from the Monobank app</string>
+    <string name="feature_imports_mono_pdf_account_hint">By default the account of the card, e.g. the one of the Monobank connection; operations it already has are skipped.</string>
     <string name="feature_imports_zen_title">Zen Money</string>
     <string name="feature_imports_zen_subtitle">Move the whole history: accounts, categories, operations, budgets</string>
     <string name="feature_imports_zen_token">Token</string>

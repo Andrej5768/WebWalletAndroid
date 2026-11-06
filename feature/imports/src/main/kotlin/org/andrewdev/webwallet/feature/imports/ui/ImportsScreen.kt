@@ -33,6 +33,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,7 @@ import org.andrewdev.webwallet.core.designsystem.theme.Spacing
 import org.andrewdev.webwallet.core.designsystem.theme.WwTheme
 import org.andrewdev.webwallet.core.model.Account
 import org.andrewdev.webwallet.core.model.AccountType
+import org.andrewdev.webwallet.core.model.DetectedSource
 import org.andrewdev.webwallet.core.model.MonobankConnection
 import org.andrewdev.webwallet.core.model.MonobankLink
 import org.andrewdev.webwallet.core.model.MonobankSchedule
@@ -126,6 +128,7 @@ private class ImportsCallbacks(
     val forms: ((SourceForms) -> SourceForms) -> Unit,
     val preview: (FileSource) -> Unit,
     val fileProblem: (FileProblem) -> Unit,
+    val importAs: (UploadFile, DetectedSource?) -> Unit,
 )
 
 @Composable
@@ -143,6 +146,12 @@ fun ImportsRoute(actions: ImportsActions, viewModel: ImportsViewModel = hiltView
     LifecycleResumeEffect(Unit) {
         viewModel.onResume()
         onPauseOrDispose { viewModel.onPause() }
+    }
+    LaunchedEffect(state.ready) {
+        state.ready?.let {
+            viewModel.consumeReady()
+            actions.openPreview(it)
+        }
     }
     ImportsScreen(
         state = state,
@@ -163,7 +172,8 @@ fun ImportsRoute(actions: ImportsActions, viewModel: ImportsViewModel = hiltView
             addOperation = actions.addOperation,
             disconnect = { viewModel.disconnect(showError) },
             forms = viewModel::updateForms,
-            preview = { viewModel.preview(it, actions.openPreview) },
+            preview = viewModel::preview,
+            importAs = viewModel::importAs,
             fileProblem = { problem ->
                 scope.launch { snackbar.showSnackbar(if (problem == FileProblem.TOO_BIG) tooBig else unreadable) }
             },
@@ -196,17 +206,38 @@ private fun ImportsScreen(
                 .padding(Spacing.lg),
             verticalArrangement = Arrangement.spacedBy(Spacing.md),
         ) {
+            if (state.detecting) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    CircularProgressIndicator(Modifier.padding(end = Spacing.sm))
+                    Text(stringResource(R.string.feature_imports_detecting))
+                }
+            }
             when {
                 state.loading -> SkeletonList(rows = 3)
                 state.error != null && state.connection == null -> ErrorState(state.error, onRetry = callbacks.refresh)
                 else -> MonobankCard(state, callbacks)
             }
             PrivatCard(state, callbacks)
+            MonobankPdfCard(state, callbacks)
             ZenCard(state, callbacks)
             FreedomCard(state, callbacks)
         }
     }
     if (state.connect != ConnectStep.Closed) ConnectSheet(state, callbacks)
+    state.unrecognized?.let { file ->
+        PickerSheet(
+            title = stringResource(R.string.feature_imports_what_file, file.name),
+            options = listOf(
+                PickerOption(DetectedSource.PRIVATBANK, stringResource(R.string.feature_imports_privat_title)),
+                PickerOption(DetectedSource.MONOBANK, stringResource(R.string.feature_imports_mono_pdf_title)),
+                PickerOption(DetectedSource.ZENMONEY, stringResource(R.string.feature_imports_zen_file_label)),
+                PickerOption(DetectedSource.FREEDOM, stringResource(R.string.feature_imports_freedom_title)),
+            ),
+            selected = null,
+            onPick = { callbacks.importAs(file, it) },
+            onDismiss = { callbacks.importAs(file, null) },
+        )
+    }
 }
 
 // --- Monobank
@@ -665,6 +696,38 @@ private fun PrivatCard(state: ImportsUiState, callbacks: ImportsCallbacks) {
             enabled = forms.privatFile != null,
             busy = forms.busy == FileSource.PRIVATBANK,
         ) { callbacks.preview(FileSource.PRIVATBANK) }
+    }
+}
+
+@Composable
+private fun MonobankPdfCard(state: ImportsUiState, callbacks: ImportsCallbacks) {
+    val forms = state.sources
+    SourceCard(
+        stringResource(R.string.feature_imports_mono_pdf_title),
+        stringResource(R.string.feature_imports_mono_pdf_subtitle),
+    ) {
+        FileField(
+            label = stringResource(R.string.feature_imports_privat_file),
+            file = forms.monoFile,
+            mimeTypes = PDF,
+            onFile = { file -> callbacks.forms { it.copy(monoFile = file) } },
+            onProblem = callbacks.fileProblem,
+        )
+        Hint(stringResource(R.string.feature_imports_not_stored))
+        AccountChoice(
+            label = stringResource(R.string.feature_imports_privat_account),
+            auto = stringResource(R.string.feature_imports_auto_account),
+            accounts = state.accounts.filter { it.type == AccountType.CARD || it.type == AccountType.CREDIT_CARD },
+            selected = forms.monoAccountId,
+            onPick = { id -> callbacks.forms { it.copy(monoAccountId = id) } },
+        )
+        Hint(stringResource(R.string.feature_imports_mono_pdf_account_hint))
+        SourceError(state, FileSource.MONOBANK_PDF)
+        SubmitButton(
+            stringResource(R.string.feature_imports_preview_submit),
+            enabled = forms.monoFile != null,
+            busy = forms.busy == FileSource.MONOBANK_PDF,
+        ) { callbacks.preview(FileSource.MONOBANK_PDF) }
     }
 }
 

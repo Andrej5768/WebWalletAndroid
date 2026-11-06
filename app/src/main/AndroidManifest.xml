@@ -62,6 +62,21 @@
                 <data android:path="/reports" />
                 <data android:path="/settings" />
             </intent-filter>
+            <!-- Statements and exports shared from other apps or opened with this one (WebWallet-docs imports/monobank-pdf.md) -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/pdf" />
+                <data android:mimeType="text/csv" />
+                <data android:mimeType="text/comma-separated-values" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:mimeType="application/pdf" />
+            </intent-filter>
             <!-- Internal shortcuts and widgets, not advertised -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

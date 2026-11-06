@@ -60,7 +60,10 @@ data class ProviderAuth(
     val status: ProviderAuthStatus,
 )
 
-enum class ImportSource { PRIVATBANK, ZENMONEY, FREEDOM }
+enum class ImportSource { PRIVATBANK, MONOBANK, ZENMONEY, FREEDOM }
+
+/** What a file shared into the app turned out to be; UNKNOWN lets the user choose. */
+enum class DetectedSource { PRIVATBANK, MONOBANK, ZENMONEY, FREEDOM, UNKNOWN }
 
 /** A file picked by the user, read into memory for the upload. */
 class UploadFile(val name: String, val mimeType: String, val bytes: ByteArray)

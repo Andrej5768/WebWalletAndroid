@@ -12,4 +12,5 @@
     <string name="app_update_required_title">Потрібне оновлення</string>
     <string name="app_update_required_text">Ця версія WebWallet застаріла й не працює із сервісом. Оновіть її, щоб продовжити.</string>
     <string name="app_update_required_action">Оновити</string>
+    <string name="app_shared_file_unreadable">Не вдалося прочитати файл.</string>
 </resources>

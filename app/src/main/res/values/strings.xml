@@ -12,4 +12,5 @@
     <string name="app_update_required_title">Update required</string>
     <string name="app_update_required_text">This version of WebWallet is too old to work with the service. Update it to go on.</string>
     <string name="app_update_required_action">Update</string>
+    <string name="app_shared_file_unreadable">The shared file could not be read.</string>
 </resources>

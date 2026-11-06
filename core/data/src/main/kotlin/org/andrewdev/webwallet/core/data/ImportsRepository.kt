@@ -10,6 +10,7 @@ import org.andrewdev.webwallet.core.model.BrokerOperationType
 import org.andrewdev.webwallet.core.model.BrokerPreview
 import org.andrewdev.webwallet.core.model.BrokerTicker
 import org.andrewdev.webwallet.core.model.CurrencyCode
+import org.andrewdev.webwallet.core.model.DetectedSource
 import org.andrewdev.webwallet.core.model.ImportAccount
 import org.andrewdev.webwallet.core.model.ImportOperation
 import org.andrewdev.webwallet.core.model.ImportPreview
@@ -64,6 +65,8 @@ data class TickerChoiceRequest(val ticker: String, val manual: Boolean)
  * Monobank connection and the file imports (docs/04 §13). Nothing here is cached: the screens ask the server each
  * time, and every change invalidates the ledger caches the other screens read.
  */
+/* One method per endpoint of the imports and the Monobank connection. */
+@Suppress("TooManyFunctions")
 @Singleton
 class ImportsRepository @Inject constructor(
     private val monobankApi: MonobankApi,
@@ -157,6 +160,15 @@ class ImportsRepository @Inject constructor(
 
     suspend fun previewPrivatBank(file: UploadFile, accountId: Long?): ApiResult<ImportPreview> =
         apiCall { importsApi.preview(file.part("file"), accountId) }.map { remember(it.toModel()) }
+
+    suspend fun previewMonobankPdf(file: UploadFile, accountId: Long?): ApiResult<ImportPreview> =
+        apiCall { importsApi.preview1(file.part("file"), accountId) }.map { remember(it.toModel()) }
+
+    /** Which import a shared file belongs to; UNKNOWN also when the server cannot tell or cannot be reached. */
+    suspend fun detect(file: UploadFile): DetectedSource =
+        apiCall { importsApi.detect(file.part("file")) }.valueOrNull
+            ?.let { DetectedSource.valueOf(it.source.name) }
+            ?: DetectedSource.UNKNOWN
 
     suspend fun previewZenMoneyToken(token: String): ApiResult<ImportPreview> =
         apiCall { importsApi.previewWithToken(TokenRequest(token.trim())) }.map { remember(it.toModel()) }

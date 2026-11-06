@@ -17,9 +17,12 @@ import kotlinx.coroutines.launch
 import org.andrewdev.webwallet.core.common.KyivClock
 import org.andrewdev.webwallet.core.data.AccountsRepository
 import org.andrewdev.webwallet.core.data.ImportsRepository
+import org.andrewdev.webwallet.core.data.SharedFileInbox
 import org.andrewdev.webwallet.core.data.TransactionDraft
 import org.andrewdev.webwallet.core.data.TransactionsRepository
 import org.andrewdev.webwallet.core.model.Account
+import org.andrewdev.webwallet.core.model.DetectedSource
+import org.andrewdev.webwallet.core.model.ImportPreview
 import org.andrewdev.webwallet.core.model.MonobankConnection
 import org.andrewdev.webwallet.core.model.MonobankLink
 import org.andrewdev.webwallet.core.model.MonobankSchedule
@@ -48,13 +51,15 @@ sealed interface ConnectStep {
 }
 
 /** The file sources of the screen; each has its own form and its own progress. */
-enum class FileSource { PRIVATBANK, ZENMONEY, FREEDOM }
+enum class FileSource { PRIVATBANK, MONOBANK_PDF, ZENMONEY, FREEDOM }
 
 enum class ZenMode { TOKEN, FILE }
 
 data class SourceForms(
     val privatFile: UploadFile? = null,
     val privatAccountId: Long? = null,
+    val monoFile: UploadFile? = null,
+    val monoAccountId: Long? = null,
     val zenMode: ZenMode = ZenMode.TOKEN,
     val zenToken: String = "",
     val zenFile: UploadFile? = null,
@@ -81,6 +86,12 @@ data class ImportsUiState(
     val disconnecting: Boolean = false,
     val adjusting: Long? = null,
     val sources: SourceForms = SourceForms(),
+    /** A file shared from another app is being recognized. */
+    val detecting: Boolean = false,
+    /** A shared file the server could not recognize: the user says what it is. */
+    val unrecognized: UploadFile? = null,
+    /** A preview is ready to open; the screen navigates and clears it. */
+    val ready: PreviewReady? = null,
 ) {
     val schedule: MonobankSchedule get() = scheduleDraft ?: connection?.schedule ?: MonobankSchedule()
 }
@@ -100,6 +111,7 @@ class ImportsViewModel @Inject constructor(
     private val transactions: TransactionsRepository,
     private val clock: KyivClock,
     private val savedState: SavedStateHandle,
+    private val inbox: SharedFileInbox,
     accounts: AccountsRepository,
 ) : ViewModel() {
 
@@ -179,10 +191,52 @@ class ImportsViewModel @Inject constructor(
     }
 
     /** Back from the bank app: ask at once instead of waiting for the next tick. */
+    /** Back from the bank app or from the app that shared a file. */
     fun onResume() {
+        inbox.take()?.let { receive(it) }
         val waiting = state.value.connect as? ConnectStep.Waiting ?: return
         poll(waiting.auth.id)
     }
+
+    /** A file shared into the app: recognized by the server, then previewed like one picked on the screen. */
+    private fun receive(file: UploadFile) {
+        state.update { it.copy(detecting = true, unrecognized = null) }
+        viewModelScope.launch {
+            val source = imports.detect(file)
+            state.update { it.copy(detecting = false) }
+            if (source == DetectedSource.UNKNOWN) {
+                state.update { it.copy(unrecognized = file) }
+            } else {
+                importAs(file, source)
+            }
+        }
+    }
+
+    /** The user's answer for an unrecognized file; null dismisses it. */
+    fun importAs(file: UploadFile, source: DetectedSource?) {
+        state.update { it.copy(unrecognized = null) }
+        when (source) {
+            DetectedSource.PRIVATBANK -> {
+                updateForms { it.copy(privatFile = file) }
+                preview(FileSource.PRIVATBANK)
+            }
+            DetectedSource.MONOBANK -> {
+                updateForms { it.copy(monoFile = file) }
+                preview(FileSource.MONOBANK_PDF)
+            }
+            DetectedSource.ZENMONEY -> {
+                updateForms { it.copy(zenMode = ZenMode.FILE, zenFile = file) }
+                preview(FileSource.ZENMONEY)
+            }
+            // The broker needs both reports: the second one is added on the screen
+            DetectedSource.FREEDOM -> updateForms {
+                if (it.freedomTrades == null) it.copy(freedomTrades = file) else it.copy(freedomCash = file)
+            }
+            DetectedSource.UNKNOWN, null -> Unit
+        }
+    }
+
+    fun consumeReady() = state.update { it.copy(ready = null) }
 
     fun onPause() {
         pollJob?.cancel()
@@ -334,35 +388,20 @@ class ImportsViewModel @Inject constructor(
         it.copy(sources = transform(it.sources).copy(error = null))
     }
 
-    fun preview(source: FileSource, onReady: (PreviewReady) -> Unit) {
+    fun preview(source: FileSource) {
         val forms = state.value.sources
         if (forms.busy != null) return
         state.update { it.copy(sources = it.sources.copy(busy = source, error = null)) }
         viewModelScope.launch {
-            val result: ApiResult<PreviewReady> = when (source) {
-                FileSource.PRIVATBANK -> {
-                    val file = forms.privatFile ?: return@launch idle()
-                    imports.previewPrivatBank(file, forms.privatAccountId).toReady { PreviewReady.Bank(it.id) }
-                }
-                FileSource.ZENMONEY -> when (forms.zenMode) {
-                    ZenMode.TOKEN -> imports.previewZenMoneyToken(forms.zenToken).toReady { PreviewReady.Bank(it.id) }
-                    ZenMode.FILE -> {
-                        val file = forms.zenFile ?: return@launch idle()
-                        imports.previewZenMoneyFile(file).toReady { PreviewReady.Bank(it.id) }
-                    }
-                }
-                FileSource.FREEDOM -> {
-                    val files = listOfNotNull(forms.freedomTrades, forms.freedomCash)
-                    if (files.isEmpty()) return@launch idle()
-                    imports.previewFreedom(files, forms.freedomAccountId).toReady { PreviewReady.Broker(it.id) }
-                }
-            }
+            val result = request(source, forms) ?: return@launch idle()
             when (result) {
                 is ApiResult.Ok -> {
                     state.update {
-                        it.copy(sources = it.sources.copy(busy = null, zenToken = "").let { s -> clearFile(s, source) })
+                        it.copy(
+                            sources = it.sources.copy(busy = null, zenToken = "").let { s -> clearFile(s, source) },
+                            ready = result.value,
+                        )
                     }
-                    onReady(result.value)
                 }
                 is ApiResult.Err -> state.update {
                     it.copy(sources = it.sources.copy(busy = null, error = source to result.error))
@@ -371,10 +410,37 @@ class ImportsViewModel @Inject constructor(
         }
     }
 
+    /** The upload of the source's form; null when the form has no file. */
+    private suspend fun request(source: FileSource, forms: SourceForms): ApiResult<PreviewReady>? {
+        val bank = { preview: ImportPreview -> PreviewReady.Bank(preview.id) }
+        return when (source) {
+            FileSource.PRIVATBANK -> forms.privatFile?.let {
+                imports.previewPrivatBank(it, forms.privatAccountId).toReady(bank)
+            }
+            FileSource.MONOBANK_PDF -> forms.monoFile?.let {
+                imports.previewMonobankPdf(it, forms.monoAccountId).toReady(bank)
+            }
+            FileSource.ZENMONEY -> when (forms.zenMode) {
+                ZenMode.TOKEN -> imports.previewZenMoneyToken(forms.zenToken).toReady(bank)
+                ZenMode.FILE -> forms.zenFile?.let { imports.previewZenMoneyFile(it).toReady(bank) }
+            }
+            FileSource.FREEDOM -> listOfNotNull(
+                forms.freedomTrades,
+                forms.freedomCash,
+            ).takeIf { it.isNotEmpty() }?.let {
+                imports.previewFreedom(
+                    it,
+                    forms.freedomAccountId,
+                ).toReady { preview -> PreviewReady.Broker(preview.id) }
+            }
+        }
+    }
+
     private fun idle() = state.update { it.copy(sources = it.sources.copy(busy = null)) }
 
     private fun clearFile(forms: SourceForms, source: FileSource) = when (source) {
         FileSource.PRIVATBANK -> forms.copy(privatFile = null)
+        FileSource.MONOBANK_PDF -> forms.copy(monoFile = null)
         FileSource.ZENMONEY -> forms.copy(zenFile = null)
         FileSource.FREEDOM -> forms.copy(freedomTrades = null, freedomCash = null)
     }

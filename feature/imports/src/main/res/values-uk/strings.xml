@@ -67,6 +67,11 @@
     <string name="feature_imports_privat_file">Файл виписки</string>
     <string name="feature_imports_privat_account">Рахунок</string>
     <string name="feature_imports_privat_account_hint">За замовчуванням — рахунок із номером картки з виписки; якщо такого немає, його буде створено.</string>
+    <string name="feature_imports_detecting">Визначаємо тип файлу…</string>
+    <string name="feature_imports_what_file">Що це за файл «%1$s»?</string>
+    <string name="feature_imports_mono_pdf_title">Monobank — виписка PDF</string>
+    <string name="feature_imports_mono_pdf_subtitle">Виписка по картці із застосунку Monobank</string>
+    <string name="feature_imports_mono_pdf_account_hint">За замовчуванням — рахунок цієї картки, зокрема з підключення Monobank; операції, які вже є, пропускаються.</string>
     <string name="feature_imports_zen_title">Дзен-мані</string>
     <string name="feature_imports_zen_subtitle">Перенесіть усю історію: рахунки, категорії, операції, бюджети</string>
     <string name="feature_imports_zen_token">Токен</string>
