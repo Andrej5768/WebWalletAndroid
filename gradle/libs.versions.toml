@@ -2,7 +2,7 @@
 # Build
 agp = "9.4.1"
 kotlin = "2.4.21"
-ksp = "2.3.12"
+ksp = "2.3.13"
 hilt = "2.60.1"
 detekt = "1.23.8"
 detektComposeRules = "0.6.8"
