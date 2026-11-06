@@ -6,6 +6,7 @@
   },
   "features": {
     "googleSignIn": true,
+    "monobankProvider": true,
     "marketSearch": true,
     "telegram": true,
     "push": false,

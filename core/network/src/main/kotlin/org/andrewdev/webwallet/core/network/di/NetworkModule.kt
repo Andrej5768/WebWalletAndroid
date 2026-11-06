@@ -10,6 +10,7 @@ import org.andrewdev.webwallet.core.network.AccessTokenProvider
 import org.andrewdev.webwallet.core.network.AuthInterceptor
 import org.andrewdev.webwallet.core.network.ClientHeadersInterceptor
 import org.andrewdev.webwallet.core.network.ClientInfo
+import org.andrewdev.webwallet.core.network.FreedomUploadApi
 import org.andrewdev.webwallet.core.network.IdempotencyInterceptor
 import org.andrewdev.webwallet.core.network.RedactingLogger
 import org.andrewdev.webwallet.core.network.TokenAuthenticator
@@ -25,6 +26,7 @@ import org.andrewdev.webwallet.core.network.generated.api.DebtsApi
 import org.andrewdev.webwallet.core.network.generated.api.DemoApi
 import org.andrewdev.webwallet.core.network.generated.api.ForecastApi
 import org.andrewdev.webwallet.core.network.generated.api.GoalsApi
+import org.andrewdev.webwallet.core.network.generated.api.ImportsApi
 import org.andrewdev.webwallet.core.network.generated.api.MonobankApi
 import org.andrewdev.webwallet.core.network.generated.api.NotificationsApi
 import org.andrewdev.webwallet.core.network.generated.api.PayeesApi
@@ -141,4 +143,10 @@ object NetworkModule {
 
     @Provides @Singleton
     fun analyticsApi(client: ApiClient): AnalyticsApi = client.createService(AnalyticsApi::class.java)
+
+    @Provides @Singleton
+    fun importsApi(client: ApiClient): ImportsApi = client.createService(ImportsApi::class.java)
+
+    @Provides @Singleton
+    fun freedomUploadApi(client: ApiClient): FreedomUploadApi = client.createService(FreedomUploadApi::class.java)
 }

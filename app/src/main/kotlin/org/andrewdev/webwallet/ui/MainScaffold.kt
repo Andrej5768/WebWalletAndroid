@@ -44,6 +44,7 @@ import org.andrewdev.webwallet.core.navigation.AccountEditorKey
 import org.andrewdev.webwallet.core.navigation.AccountTransactionsKey
 import org.andrewdev.webwallet.core.navigation.AccountsKey
 import org.andrewdev.webwallet.core.navigation.AppLockSettingsKey
+import org.andrewdev.webwallet.core.navigation.BrokerPreviewKey
 import org.andrewdev.webwallet.core.navigation.BudgetKey
 import org.andrewdev.webwallet.core.navigation.CategoriesSettingsKey
 import org.andrewdev.webwallet.core.navigation.CategoryEditorKey
@@ -54,6 +55,8 @@ import org.andrewdev.webwallet.core.navigation.DataSettingsKey
 import org.andrewdev.webwallet.core.navigation.DeepLink
 import org.andrewdev.webwallet.core.navigation.GoalEditorKey
 import org.andrewdev.webwallet.core.navigation.GoalsKey
+import org.andrewdev.webwallet.core.navigation.ImportPreviewKey
+import org.andrewdev.webwallet.core.navigation.ImportsKey
 import org.andrewdev.webwallet.core.navigation.MoreKey
 import org.andrewdev.webwallet.core.navigation.NotificationsSettingsKey
 import org.andrewdev.webwallet.core.navigation.OverviewKey
@@ -82,6 +85,11 @@ import org.andrewdev.webwallet.feature.budget.ui.BudgetRoute
 import org.andrewdev.webwallet.feature.goals.GoalsActions
 import org.andrewdev.webwallet.feature.goals.ui.GoalEditorRoute
 import org.andrewdev.webwallet.feature.goals.ui.GoalsRoute
+import org.andrewdev.webwallet.feature.imports.PreviewReady
+import org.andrewdev.webwallet.feature.imports.ui.BrokerPreviewRoute
+import org.andrewdev.webwallet.feature.imports.ui.ImportPreviewRoute
+import org.andrewdev.webwallet.feature.imports.ui.ImportsActions
+import org.andrewdev.webwallet.feature.imports.ui.ImportsRoute
 import org.andrewdev.webwallet.feature.lock.ui.PinSetupRoute
 import org.andrewdev.webwallet.feature.lock.ui.biometricAvailable
 import org.andrewdev.webwallet.feature.more.ClaimDemoRoute
@@ -241,6 +249,7 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                                 key.categoryId,
                                 key.payeeId,
                                 key.fromFab,
+                                key.amount?.toBigDecimalOrNull(),
                             ),
                             onClose = { stack.removeLastOrNull() },
                             onSaved = { _, fromFab ->
@@ -301,6 +310,7 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                                     when (section) {
                                         MoreSection.GOALS -> stack.add(GoalsKey)
                                         MoreSection.REPORTS -> stack.add(ReportsKey)
+                                        MoreSection.IMPORTS -> stack.add(ImportsKey)
                                         else -> stack.add(ComingSoonKey(section.name.lowercase()))
                                     }
                                 },
@@ -328,6 +338,41 @@ fun MainScaffold(deepLink: DeepLink.Main?, onDeepLinkConsumed: () -> Unit) {
                     }
                     entry<GoalEditorKey> { key ->
                         GoalEditorRoute(id = key.id, onClose = { stack.removeLastOrNull() })
+                    }
+                    entry<ImportsKey> {
+                        ImportsRoute(
+                            ImportsActions(
+                                back = { stack.removeLastOrNull() },
+                                openPreview = { ready ->
+                                    when (ready) {
+                                        is PreviewReady.Bank -> stack.add(ImportPreviewKey(ready.id))
+                                        is PreviewReady.Broker -> stack.add(BrokerPreviewKey(ready.id))
+                                    }
+                                },
+                                addOperation = { type, accountId, amount ->
+                                    stack.add(
+                                        TransactionEditorKey(
+                                            type = type,
+                                            accountId = accountId,
+                                            amount = amount.toPlainString(),
+                                        ),
+                                    )
+                                },
+                            ),
+                        )
+                    }
+                    entry<ImportPreviewKey> { key ->
+                        ImportPreviewRoute(
+                            id = key.id,
+                            onClose = { stack.removeLastOrNull() },
+                            openTransactions = {
+                                stack.removeLastOrNull()
+                                tab = TABS.indexOf(TransactionsKey)
+                            },
+                        )
+                    }
+                    entry<BrokerPreviewKey> { key ->
+                        BrokerPreviewRoute(id = key.id, onClose = { stack.removeLastOrNull() })
                     }
                     entry<ComingSoonKey> { key ->
                         ComingSoonScreen(

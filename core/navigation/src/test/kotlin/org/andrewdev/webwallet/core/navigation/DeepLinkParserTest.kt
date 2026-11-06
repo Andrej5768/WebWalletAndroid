@@ -59,6 +59,10 @@ class DeepLinkParserTest {
             DeepLink.Main(MoreKey, ComingSoonKey("goals")),
             DeepLinkParser.parse("https://wallet.andrew-dev.org/goals"),
         )
+        assertEquals(
+            DeepLink.Main(MoreKey, ImportsKey),
+            DeepLinkParser.parse("https://wallet.andrew-dev.org/imports"),
+        )
         assertEquals(DeepLink.Main(OverviewKey), DeepLinkParser.parse("https://wallet.andrew-dev.org/whatever"))
     }
 

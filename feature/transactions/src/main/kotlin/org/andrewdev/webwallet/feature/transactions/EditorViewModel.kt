@@ -142,7 +142,14 @@ class EditorViewModel @Inject constructor(
     private val state = MutableStateFlow(EditorUiState(date = clock.today()))
     val uiState: StateFlow<EditorUiState> = state.asStateFlow()
 
-    fun load(id: Long?, type: TransactionType?, accountId: Long?, categoryId: Long?, payeeId: Long?) {
+    fun load(
+        id: Long?,
+        type: TransactionType?,
+        accountId: Long?,
+        categoryId: Long?,
+        payeeId: Long?,
+        amount: BigDecimal? = null,
+    ) {
         if (state.value.loaded) return
         viewModelScope.launch {
             val accountList = accounts.accounts.first().dataOrNull.orEmpty()
@@ -165,6 +172,8 @@ class EditorViewModel @Inject constructor(
                     accountId = defaultAccount,
                     categoryId = categoryId,
                     payee = payeeId?.let { wanted -> payees.firstOrNull { it.id == wanted }?.name }.orEmpty(),
+                    amountText = amount?.toPlainString().orEmpty(),
+                    amount = amount,
                 )
                 return@launch
             }

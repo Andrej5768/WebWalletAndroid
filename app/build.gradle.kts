@@ -43,6 +43,7 @@ dependencies {
     implementation(projects.feature.reports)
     implementation(projects.feature.more)
     implementation(projects.feature.settings)
+    implementation(projects.feature.imports)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.splashscreen)

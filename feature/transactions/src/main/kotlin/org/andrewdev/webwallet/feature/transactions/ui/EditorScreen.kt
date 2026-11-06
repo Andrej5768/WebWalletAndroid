@@ -89,6 +89,7 @@ data class EditorArgs(
     val categoryId: Long? = null,
     val payeeId: Long? = null,
     val fromFab: Boolean = false,
+    val amount: BigDecimal? = null,
 )
 
 @Composable
@@ -99,7 +100,9 @@ fun EditorRoute(
     viewModel: EditorViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    LaunchedEffect(args) { viewModel.load(args.id, args.type, args.accountId, args.categoryId, args.payeeId) }
+    LaunchedEffect(
+        args,
+    ) { viewModel.load(args.id, args.type, args.accountId, args.categoryId, args.payeeId, args.amount) }
     val debtAccountName = stringResource(R.string.feature_transactions_form_debt_account_name)
     EditorScreen(
         state = state,

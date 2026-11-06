@@ -53,7 +53,8 @@ object DeepLinkParser {
             "/accounts" -> DeepLink.Main(AccountsKey)
             "/budget" -> DeepLink.Main(BudgetKey)
             "/settings" -> DeepLink.Main(MoreKey, SettingsKey)
-            "/goals", "/investments", "/taxes", "/reports", "/analytics", "/imports" ->
+            "/imports" -> DeepLink.Main(MoreKey, ImportsKey)
+            "/goals", "/investments", "/taxes", "/reports", "/analytics" ->
                 DeepLink.Main(MoreKey, ComingSoonKey(uri.path.trim('/')))
             else -> DeepLink.Main(OverviewKey)
         }

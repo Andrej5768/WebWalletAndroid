@@ -72,6 +72,8 @@ data class TransactionEditorKey(
     val payeeId: Long? = null,
     /** From the FAB: "Add another" after saving. */
     val fromFab: Boolean = false,
+    /** A prefilled amount as a plain decimal, e.g. the difference to the bank balance. */
+    val amount: String? = null,
 ) : NavKey
 
 @Serializable data object TransferPairsKey : NavKey
@@ -94,6 +96,15 @@ data class TransactionEditorKey(
 @Serializable data object GoalsKey : NavKey
 
 @Serializable data class GoalEditorKey(val id: Long? = null) : NavKey
+
+// Imports (docs/04 §13)
+@Serializable data object ImportsKey : NavKey
+
+/** The preview of a bank statement or a Zen Money export, by its server id. */
+@Serializable data class ImportPreviewKey(val id: String) : NavKey
+
+/** The preview of broker reports; it is held in memory by the repository. */
+@Serializable data class BrokerPreviewKey(val id: String) : NavKey
 
 // More and settings (docs/04 §8, §14)
 
